@@ -24,9 +24,8 @@
             overflow-x: hidden;
             cursor: auto;
             -webkit-tap-highlight-color: transparent;
-            /* Улучшает сглаживание шрифтов в Safari */
-            -webkit-font-smoothing: antialiased; 
-            -moz-osx-font-smoothing: grayscale;
+            /* Сглаживание шрифтов */
+            -webkit-font-smoothing: antialiased;
         }
 
         @media (min-width: 768px) {
@@ -45,7 +44,7 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            transform: translate3d(-50%, -50%, 0); /* GPU ускорение для курсора */
+            transform: translate3d(-50%, -50%, 0);
             transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, opacity 0.3s;
             will-change: transform, width, height;
         }
@@ -78,47 +77,38 @@
             font-weight: 600;
         }
 
-        /* --- ГАЛЕРЕЯ (ОПТИМИЗАЦИЯ SAFARI) --- */
+        /* --- ГАЛЕРЕЯ (Оптимизация) --- */
         .art-item {
             overflow: hidden;
             position: relative;
-            /* Обрезаем всё, что выходит за рамки, аппаратно */
-            transform: translateZ(0); 
-            border-radius: 0; /* Иногда радиус вызывает лаги, убираем на всякий */
+            transform: translateZ(0); /* Фикс для Safari */
         }
 
         .art-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            
-            /* Эффекты */
-            filter: grayscale(100%) brightness(0.95);
+            /* Начальное состояние */
+            filter: grayscale(100%);
             transform: scale(1);
             
-            /* --- МАГИЯ ДЛЯ SAFARI --- */
-            /* Включаем аппаратное ускорение */
-            transform: translateZ(0); 
+            /* Включаем GPU */
+            transform: translateZ(0);
             backface-visibility: hidden;
-            perspective: 1000px;
             
-            /* Подсказываем браузеру, что будем менять, чтобы он подготовился */
+            transition: filter 0.5s ease, transform 0.6s ease;
             will-change: filter, transform;
-            
-            /* Плавность */
-            transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .art-item:hover .art-image {
-            filter: grayscale(0%) brightness(1);
-            transform: scale(1.03) translateZ(0); /* Сохраняем translateZ при ховере */
+            filter: grayscale(0%);
+            transform: scale(1.05) translateZ(0);
         }
 
         /* --- ХУДОЖНИКИ --- */
         .artist-row {
             border-top: 1px solid #e5e5e5;
-            transition: background-color 0.3s ease, padding-left 0.3s ease;
+            transition: background-color 0.2s ease;
             background-color: #fff;
             user-select: none;
             cursor: pointer;
@@ -131,7 +121,7 @@
             background-color: #fafafa;
         }
 
-        /* Плавающее фото (Оптимизация) */
+        /* Плавающее фото */
         .artist-float-img {
             position: fixed;
             pointer-events: none;
@@ -142,19 +132,16 @@
             z-index: 50;
             top: 0;
             left: 0;
-            
-            /* GPU ускорение для плавающего фото */
             transform: translate3d(-50%, -50%, 0) scale(0.8);
             will-change: transform, opacity;
-            
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
             border-radius: 4px;
         }
 
         @media (max-width: 768px) {
             .artist-float-img {
-                width: 240px;
-                height: 300px;
+                width: 220px; /* Еще меньше для телефона */
+                height: 280px;
                 z-index: 100;
             }
         }
@@ -164,7 +151,6 @@
             display: inline-block;
             opacity: 0;
             transform: translateY(100%);
-            will-change: transform, opacity; /* Оптимизация текста */
         }
         
         .reveal-wrap { overflow: hidden; display: block; }
@@ -174,13 +160,13 @@
 
     <div class="custom-cursor" id="cursor"></div>
     
-    <!-- ИЗОБРАЖЕНИЯ ХУДОЖНИКОВ (БЫСТРЫЕ ОБЛАЧНЫЕ ССЫЛКИ) -->
-    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-1" alt="Elena Kvo">
-    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-2" alt="Marcus Thorne">
-    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-3" alt="Yuki Sato">
+    <!-- КАРТИНКИ ХУДОЖНИКОВ (ИЩЕМ .jpeg) -->
+    <img src="images/4.jpeg" class="artist-float-img" id="artist-img-1" alt="Elena Kvo">
+    <img src="images/5.jpeg" class="artist-float-img" id="artist-img-2" alt="Marcus Thorne">
+    <img src="images/6.jpeg" class="artist-float-img" id="artist-img-3" alt="Yuki Sato">
 
     <!-- HEADER -->
-    <header class="fixed w-full top-0 p-6 md:p-8 flex justify-between items-center z-40 bg-white/85 backdrop-blur-sm border-b border-transparent transition-colors duration-300">
+    <header class="fixed w-full top-0 p-6 md:p-8 flex justify-between items-center z-40 bg-white/90 backdrop-blur-sm border-b border-transparent transition-colors duration-300">
         <a href="#" class="text-lg font-bold tracking-[0.15em] uppercase hover:text-[#D62C2C] transition-colors z-50 hover-trigger" data-cursor="active">
             Aether
         </a>
@@ -211,10 +197,10 @@
         <!-- CATALOG -->
         <section id="catalog" class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32 mb-40">
             
-            <!-- Work 01 -->
+            <!-- Work 01 (ИЩЕМ .jpeg) -->
             <div class="group cursor-none" data-cursor="view">
                 <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?auto=format&fit=crop&q=80&w=800" class="art-image" alt="White Silence">
+                    <img src="images/1.jpeg" class="art-image" alt="White Silence">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -225,10 +211,10 @@
                 </div>
             </div>
 
-            <!-- Work 02 -->
+            <!-- Work 02 (ИЩЕМ .jpeg) -->
             <div class="group cursor-none md:mt-40" data-cursor="view">
                 <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=800" class="art-image" alt="Fluid Motion">
+                    <img src="images/2.jpeg" class="art-image" alt="Fluid Motion">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -239,10 +225,10 @@
                 </div>
             </div>
 
-            <!-- Work 03 -->
+            <!-- Work 03 (ИЩЕМ .jpeg) -->
             <div class="group cursor-none" data-cursor="view">
                 <div class="art-item aspect-[4/3] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1481018085669-2bc6e4f00eed?auto=format&fit=crop&q=80&w=800" class="art-image" alt="Concrete Void">
+                    <img src="images/3.jpeg" class="art-image" alt="Concrete Void">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -255,7 +241,7 @@
 
         </section>
 
-        <!-- ARTISTS (МОБИЛЬНАЯ ЛОГИКА СОХРАНЕНА) -->
+        <!-- ARTISTS -->
         <section id="artists" class="mb-40 max-w-5xl mx-auto">
             <h2 class="text-xs font-bold tracking-[0.3em] uppercase mb-10 text-gray-400">Избранные Художники</h2>
             <div class="flex flex-col">
