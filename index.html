@@ -161,7 +161,8 @@
     <div class="scanline"></div>
 
     <!-- Липкая кнопка Telegram -->
-    <a href="https://t.me/your_bot_link" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center bg-black border border-cyber-green text-cyber-green rounded-full h-14 transition-all duration-500 hover:shadow-[0_0_20px_#00ff9d] group w-14 hover:w-auto overflow-hidden">
+    <!-- ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЮ -->
+    <a href="https://t.me/rob_stk" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center bg-black border border-cyber-green text-cyber-green rounded-full h-14 transition-all duration-500 hover:shadow-[0_0_20px_#00ff9d] group w-14 hover:w-auto overflow-hidden">
         <div class="w-14 h-14 flex items-center justify-center flex-shrink-0">
             <i data-lucide="send" class="w-6 h-6 transform group-hover:rotate-12 transition-transform"></i>
         </div>
@@ -491,6 +492,7 @@
                     
                     <!-- Case 1: Aether -->
                     <a href="./cases/aether/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
                         <img src="images/case1.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
                         <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
@@ -504,6 +506,7 @@
 
                      <!-- Case 2: Archimedes -->
                      <a href="./cases/archimedes/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
                         <img src="images/case2.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
                         <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
@@ -517,6 +520,7 @@
 
                      <!-- Case 3: Quantum -->
                      <a href="./cases/quantum/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
                         <img src="images/case3.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
                         <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
@@ -530,6 +534,7 @@
 
                      <!-- Case 4: Summit -->
                      <a href="./cases/summit/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
                         <img src="images/case4.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
                         <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
@@ -666,23 +671,41 @@
                 <form id="projectForm" class="space-y-6" action="https://formspree.io/f/mqaogzrv" method="POST"> 
                     <!-- ИЗМЕНЕНИЕ: 3 колонки для Имя, Контакт, Телеграм -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="relative group">
-                            <label for="name" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green">ИМЯ *</label>
-                            <input type="text" id="name" name="Name" placeholder="Иван Петров" required class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+                        <!-- ИМЯ (Обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="name" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ИМЯ *</label>
+                                <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
+                            </div>
+                            <input type="text" id="name" name="Name" placeholder="Иван Петров" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
                         </div>
-                        <div class="relative group">
-                            <label for="contact" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green">КОНТАКТ *</label>
-                            <input type="text" id="contact" name="Contact" placeholder="+7 (999) 000-00-00" required class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+
+                        <!-- КОНТАКТ (Обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="contact" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">КОНТАКТ *</label>
+                                <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
+                            </div>
+                            <input type="text" id="contact" name="Contact" placeholder="+7 (999) 000-00-00" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
                         </div>
-                        <div class="relative group">
-                            <label for="telegram" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green">TELEGRAM *</label>
-                            <input type="text" id="telegram" name="Telegram" placeholder="@username" required class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+
+                        <!-- TELEGRAM (НЕ обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="telegram" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">TELEGRAM</label>
+                                <!-- Тут нет сообщения об ошибке, так как поле не обязательное -->
+                            </div>
+                            <input type="text" id="telegram" name="Telegram" placeholder="@username" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
                         </div>
                     </div>
                     
-                    <div class="relative group pt-4">
-                        <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green">ДЕТАЛИ ПРОЕКТА *</label>
-                        <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." required class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800 resize-none"></textarea>
+                    <!-- СООБЩЕНИЕ (Обязательно) -->
+                    <div class="relative group pt-4 input-container">
+                        <div class="flex justify-between">
+                            <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ДЕТАЛИ ПРОЕКТА *</label>
+                            <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ОПИШИТЕ ЗАДАЧУ</span>
+                        </div>
+                        <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800 resize-none"></textarea>
                     </div>
 
                     <div class="pt-6 w-full relative z-30">
@@ -739,20 +762,51 @@
             });
         });
 
-        // Form Validation (Updated for Telegram)
+        // ИЗМЕНЕНИЕ: НОВАЯ ВАЛИДАЦИЯ БЕЗ ALERT (И ТЕЛЕГРАМ НЕ ОБЯЗАТЕЛЕН)
         document.getElementById('projectForm').addEventListener('submit', function(e) {
-            const name = document.getElementById('name').value.trim();
-            const contact = document.getElementById('contact').value.trim();
-            const telegram = document.getElementById('telegram').value.trim();
-            const message = document.getElementById('message').value.trim();
+            let isValid = true;
+            
+            // Функция проверки поля
+            function validateField(id) {
+                const field = document.getElementById(id);
+                const container = field.closest('.input-container');
+                const errorMsg = container.querySelector('.error-msg');
+                
+                if (!field.value.trim()) {
+                    // Показываем ошибку
+                    errorMsg.classList.remove('hidden');
+                    field.classList.add('border-red-500'); // Красная линия
+                    return false;
+                } else {
+                    // Скрываем ошибку
+                    errorMsg.classList.add('hidden');
+                    field.classList.remove('border-red-500');
+                    return true;
+                }
+            }
 
-            if (!name || !contact || !telegram || !message) {
-                e.preventDefault(); 
-                alert('SYSTEM ERROR: Заполните все обязательные поля для отправки протокола.');
+            // Проверяем только обязательные поля
+            const isNameValid = validateField('name');
+            const isContactValid = validateField('contact');
+            const isMessageValid = validateField('message');
+            // Telegram НЕ проверяем
+
+            if (!isNameValid || !isContactValid || !isMessageValid) {
+                e.preventDefault(); // Останавливаем отправку только если есть ошибки
             }
         });
 
-        // AI Logic
+        // Убираем ошибки, когда пользователь начинает писать
+        ['name', 'contact', 'message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                const container = this.closest('.input-container');
+                const errorMsg = container.querySelector('.error-msg');
+                errorMsg.classList.add('hidden');
+                this.classList.remove('border-red-500');
+            });
+        });
+
+        // ИЗМЕНЕНИЕ: Умная логика Генератора (На русском)
         function generateBrief() {
             const input = document.getElementById('ai-input').value;
             const outputContainer = document.getElementById('ai-output-container');
@@ -763,15 +817,18 @@
                 return;
             }
 
+            // Массивы для "Галлюцинаций" ИИ (Mock Data) RU
             const styles = ['Киберпанк / Неоновый Мрак', 'Минимализм / Швейцарский стиль', 'Премиум Корпоративный', 'Брутализм / Экспериментальный'];
             const techStack = ['Tailwind CSS + HTML5', 'React + GSAP Анимации', 'WebGL + Three.js Элементы', 'Vue.js + Canvas'];
             const audiences = ['Поколение Z & Диджитал-нативы', 'B2B Принимающие решения', 'Премиум сегмент', 'Новаторы и ранние последователи'];
 
+            // Выбор случайных значений
             const randomStyle = styles[Math.floor(Math.random() * styles.length)];
             const randomTech = techStack[Math.floor(Math.random() * techStack.length)];
             const randomAudience = audiences[Math.floor(Math.random() * audiences.length)];
             const sessionId = Math.floor(Math.random() * 999999);
 
+            // Формирование "умного" ответа RU
             const generatedText = `// ЯДРО_SYNAPSE_AI // ID_СЕССИИ: ${sessionId}
 // СИСТЕМНЫЙ_АНАЛИЗ_ЗАВЕРШЕН
 
@@ -809,6 +866,7 @@
             outputContainer.classList.remove('hidden');
             resultArea.textContent = "ИНИЦИАЛИЗАЦИЯ ЯДРА AI...";
             
+            // Эффект печати
             let i = 0;
             setTimeout(() => {
                 resultArea.textContent = "";
