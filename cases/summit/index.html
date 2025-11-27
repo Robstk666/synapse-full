@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innovation Leaders Summit 2026</title>
+    
+    <!-- Подключение шрифта Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Подключение Chart.js для графиков -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary-blue: #0077B6;
+            --primary-dark: #005f91;
+            --text-main: #333333;
+            --text-light: #666666;
+            --bg-white: #ffffff;
+            --bg-light-gray: #f9f9f9;
+            --border-color: #e0e0e0;
+            --transition-speed: 0.6s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-white);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Grid & Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: var(--text-light);
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+        }
+
+        /* --- Components --- */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--text-main);
+            color: var(--text-main);
+            background: transparent;
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background: var(--text-main);
+            color: white;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            letter-spacing: -0.5px;
+        }
+
+        nav a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* --- Hero Section with Charts --- */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 250px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .chart-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* --- Features / Grid Section --- */
+        .feature-card {
+            padding: 40px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-white);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+        }
+
+        /* --- Pricing / Trust --- */
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .stat-item h4 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            font-weight: 300;
+        }
+
+        .stat-item span {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Animation Classes (Intersection Observer) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all var(--transition-speed) ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            h1 { font-size: 2.5rem; }
+            .hero { padding-top: 120px; text-align: center; }
+            .hero .grid-2 { gap: 40px; }
+            .btn-outline { margin-left: 0; margin-top: 15px; display: block; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">ILS 2026</div>
+            <nav>
+                <a href="#about">О саммите</a>
+                <a href="#speakers">Спикеры</a>
+                <a href="#sponsors">Партнерство</a>
+                <a href="#tickets" style="color: var(--primary-blue); font-weight: 600;">Купить билет</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container grid-2">
+            <!-- Text Content -->
+            <div class="reveal">
+                <h1>Innovation Leaders<br><span style="color: var(--primary-blue);">Summit 2026</span></h1>
+                <p>
+                    Главная платформа для топ-менеджмента и визионеров. 
+                    Определяем стратегию развития глобального бизнеса на следующее десятилетие.
+                    Только данные, инсайты и нетворкинг уровня Tier-1.
+                </p>
+                <div style="margin-top: 30px;">
+                    <a href="#tickets" class="btn btn-primary">Забронировать место</a>
+                    <a href="#sponsors" class="btn btn-outline">Стать спонсором</a>
+                </div>
+            </div>
+
+            <!-- Technical Accent: Data Charts -->
+            <div class="chart-container reveal">
+                <span class="chart-label">Динамика участия C-Level (2021-2025)</span>
+                <div class="chart-wrapper">
+                    <canvas id="growthChart"></canvas>
+                </div>
+                
+                <span class="chart-label" style="margin-top: 20px;">Отраслевая структура участников</span>
+                <div class="chart-wrapper" style="height: 180px;">
+                    <canvas id="industryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Attend / Grid Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="reveal">Ключевые показатели эффективности</h2>
+            <div class="grid-3">
+                <div class="feature-card reveal">
+                    <h3>Доступ к инсайтам</h3>
+                    <p>Эксклюзивные аналитические отчеты, доступные только участникам саммита. Данные от McKinsey и Gartner.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <h3>Глобальный нетворкинг</h3>
+                    <p>85% участников — руководители уровня C-Suite и вице-президенты компаний Fortune 500.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <h3>ROI участия</h3>
+                    <p>Средняя сумма контрактов, заключаемых в кулуарах саммита, превышает $4.5 млн на компанию.</p>
+                </div>
+            </div>
+
+            <div class="stats-row reveal">
+                <div class="stat-item">
+                    <h4>2,500+</h4>
+                    <span>Участников</span>
+                </div>
+                <div class="stat-item">
+                    <h4>45</h4>
+                    <span>Стран</span>
+                </div>
+                <div class="stat-item">
+                    <h4>$12B+</h4>
+                    <span>Совокупная капитализация</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsorship / Ticket CTA -->
+    <section id="tickets" style="background-color: var(--bg-light-gray); border-bottom: none;">
+        <div class="container reveal">
+            <div class="grid-2">
+                <div>
+                    <h2>Инвестируйте в будущее вашего бизнеса</h2>
+                    <p>Количество билетов ограничено для поддержания высокого качества нетворкинга.</p>
+                </div>
+                <div style="background: white; padding: 40px; border: 1px solid var(--border-color);">
+                    <h3>Corporate Delegate</h3>
+                    <p style="font-size: 2rem; color: var(--text-main); font-weight: 700; margin-bottom: 10px;">$3,499</p>
+                    <ul style="list-style: none; margin-bottom: 30px; color: var(--text-light);">
+                        <li style="margin-bottom: 10px;">✓ Полный доступ к 3 дням форума</li>
+                        <li style="margin-bottom: 10px;">✓ Гала-ужин с инвесторами</li>
+                        <li style="margin-bottom: 10px;">✓ Доступ к базе данных участников</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%; text-align: center;">Оформить заявку</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 60px 0; background: var(--text-main); color: white;">
+        <div class="container">
+            <div class="grid-2" style="align-items: start;">
+                <div>
+                    <div class="logo" style="color: white; margin-bottom: 20px;">ILS 2026</div>
+                    <p style="color: #999; font-size: 0.9rem;">
+                        © 2026 Innovation Leaders Summit.<br>
+                        Все права защищены.
+                    </p>
+                </div>
+                <div style="text-align: right;">
+                    <a href="#" style="color: #999; text-decoration: none; margin-right: 20px;">Privacy Policy</a>
+                    <a href="#" style="color: #999; text-decoration: none;">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Animation Logic (IntersectionObserver) ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Animate only once
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver(revealCallback, revealOptions);
+        revealElements.forEach(el => observer.observe(el));
+
+        // --- 2. Chart.js Config (FinTech Style) ---
+        
+        // Common defaults for clean look
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = '#666';
+        Chart.defaults.scale.grid.color = '#f0f0f0';
+
+        // Chart 1: Growth (Line with fill)
+        const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+        
+        // Gradient for the chart fill
+        const gradientGrowth = ctxGrowth.createLinearGradient(0, 0, 0, 300);
+        gradientGrowth.addColorStop(0, 'rgba(0, 119, 182, 0.2)'); // Brand Blue low opacity
+        gradientGrowth.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        new Chart(ctxGrowth, {
+            type: 'line',
+            data: {
+                labels: ['2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: 'Участники уровня C-Level',
+                    data: [120, 180, 290, 450, 800],
+                    borderColor: '#0077B6',
+                    backgroundColor: gradientGrowth,
+                    borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#0077B6',
+                    pointRadius: 4,
+                    fill: true,
+                    tension: 0.4 // Smooth curve
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#333',
+                        padding: 10,
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 13 }
+                    }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { border: { display: false }, beginAtZero: true }
+                },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+
+        // Chart 2: Industry Breakdown (Doughnut)
+        const ctxIndustry = document.getElementById('industryChart').getContext('2d');
+        new Chart(ctxIndustry, {
+            type: 'doughnut',
+            data: {
+                labels: ['FinTech', 'Energy', 'Pharma', 'Retail', 'Other'],
+                datasets: [{
+                    data: [40, 25, 15, 10, 10],
+                    backgroundColor: [
+                        '#0077B6', // Primary Blue
+                        '#333333', // Dark Grey
+                        '#666666', // Medium Grey
+                        '#999999', // Light Grey
+                        '#e0e0e0'  // Very Light
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%', // Thinner ring for modern look
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 10, padding: 15, font: { size: 11 } }
+                    }
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500,
+                    easing: 'easeOutCirc'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

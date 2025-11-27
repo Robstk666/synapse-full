@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archimedes Design | Luxury Interiors</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis for Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'luxury-bg': '#F5F5F0',
+                        'luxury-black': '#111111',
+                        'luxury-gold': '#C5A059',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F5F5F0;
+            color: #111111;
+            overflow-x: hidden; /* Блокируем нативный горизонт. скролл */
+            margin: 0;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .img-mask {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #C5A059, transparent);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Preloader -->
+    <div id="loader" class="fixed inset-0 z-50 bg-luxury-bg flex items-center justify-center pointer-events-none">
+        <h1 class="font-serif text-2xl italic text-luxury-black tracking-widest">Archimedes</h1>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference text-white pointer-events-none">
+        <div class="text-xs tracking-[0.2em] uppercase font-sans pointer-events-auto">Est. 2024</div>
+        <div class="text-xs tracking-[0.2em] uppercase font-sans cursor-pointer hover:text-luxury-gold transition-colors pointer-events-auto">Menu</div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="hero" class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
+        <div class="absolute inset-0 z-0 img-mask">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2574&auto=format&fit=crop" 
+                 class="w-full h-full object-cover opacity-90 hero-img scale-110 origin-center" 
+                 alt="Luxury Interior">
+        </div>
+        
+        <div class="z-10 text-center relative mix-blend-multiply px-4">
+            <p class="hero-subtitle text-luxury-gold uppercase tracking-[0.4em] text-xs mb-4 opacity-0 transform translate-y-4">Architectural Excellence</p>
+            <h1 class="hero-title font-serif text-6xl md:text-9xl text-luxury-black leading-none opacity-0 transform translate-y-10">
+                Archimedes<br>
+                <span class="italic font-light">Design</span>
+            </h1>
+        </div>
+        
+        <div class="absolute bottom-10 z-10">
+            <div class="w-[1px] h-20 bg-luxury-black/30 mx-auto"></div>
+        </div>
+    </header>
+
+    <!-- INTRO -->
+    <section class="relative py-32 px-6 md:px-20 bg-luxury-bg z-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5 relative z-10 intro-text-col">
+                <div class="separator w-20 mb-8 ml-0"></div>
+                <h2 class="font-serif text-4xl md:text-5xl mb-8 leading-tight">
+                    Where space becomes <span class="text-luxury-gold italic">art</span>.
+                </h2>
+                <p class="font-sans text-lg text-gray-600 leading-relaxed">
+                    Мы создаем не просто интерьеры, а сценарии жизни. Баланс между классической пропорцией и современной функциональностью.
+                </p>
+            </div>
+            <div class="md:col-span-7 relative h-[60vh] img-mask group">
+                <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2592&auto=format&fit=crop" 
+                     class="absolute inset-0 w-full h-full object-cover intro-img transition-transform duration-1000 group-hover:scale-105" 
+                     alt="Interior Detail">
+            </div>
+        </div>
+    </section>
+
+    <!-- HORIZONTAL SCROLL PORTFOLIO (FIXED) -->
+    <!-- Важно: overflow-hidden на секции, чтобы не было полос прокрутки -->
+    <section id="portfolio-section" class="relative h-screen bg-luxury-black text-luxury-bg overflow-hidden">
+        
+        <!-- Заголовок, который остается на месте некоторое время -->
+        <div class="absolute top-10 left-6 md:left-20 z-20 pointer-events-none mix-blend-difference">
+            <h3 class="font-serif text-3xl italic text-white/80">Selected Works</h3>
+        </div>
+        
+        <!-- Wrapper с шириной 300vw (для 3 слайдов) -->
+        <div class="gallery-wrapper flex flex-nowrap h-full w-[300vw]">
+            
+            <!-- Slide 1 -->
+            <div class="w-screen h-full flex items-center justify-center relative border-r border-white/5 box-border p-0 m-0 shrink-0">
+                <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center">
+                    <div class="w-[70%] h-full img-mask relative overflow-hidden">
+                        <!-- Класс gallery-img для параллакса внутри слайда -->
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop" 
+                             class="gallery-img w-full h-full object-cover scale-125" 
+                             alt="Paris Project">
+                    </div>
+                    <div class="ml-8 md:ml-12 relative z-10 mix-blend-difference md:mix-blend-normal">
+                        <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Paris</span>
+                        <h2 class="font-serif text-5xl md:text-7xl text-white">Maison <br>Obscura</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="w-screen h-full flex items-center justify-center relative border-r border-white/5 box-border p-0 m-0 shrink-0">
+                <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center flex-row-reverse">
+                    <div class="w-[70%] h-full img-mask relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2670&auto=format&fit=crop" 
+                             class="gallery-img w-full h-full object-cover scale-125" 
+                             alt="Kyoto Project">
+                    </div>
+                    <div class="mr-8 md:mr-12 text-right relative z-10 mix-blend-difference md:mix-blend-normal">
+                        <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Kyoto</span>
+                        <h2 class="font-serif text-5xl md:text-7xl text-white">Silent <br>Villa</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="w-screen h-full flex items-center justify-center relative box-border p-0 m-0 shrink-0">
+                <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center">
+                    <div class="w-[70%] h-full img-mask relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2670&auto=format&fit=crop" 
+                             class="gallery-img w-full h-full object-cover scale-125" 
+                             alt="Milan Project">
+                    </div>
+                    <div class="ml-8 md:ml-12 relative z-10 mix-blend-difference md:mix-blend-normal">
+                        <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Milan</span>
+                        <h2 class="font-serif text-5xl md:text-7xl text-white">Palazzo <br>Vero</h2>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- DETAILS GRID -->
+    <section class="py-32 px-6 bg-luxury-bg z-10 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-24">
+                <span class="text-xs uppercase tracking-[0.4em] text-gray-400">Philosophy</span>
+                <h2 class="font-serif text-4xl md:text-5xl mt-6">"God is in the <span class="italic text-luxury-gold">details</span>"</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <!-- Card 1 -->
+                <div class="details-card group cursor-pointer">
+                    <div class="overflow-hidden mb-6 aspect-[4/5] relative">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000&auto=format&fit=crop" 
+                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Detail 1">
+                    </div>
+                    <div class="border-t border-luxury-gold/50 pt-4">
+                        <h3 class="font-serif text-2xl">Materials</h3>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="details-card group cursor-pointer md:mt-24">
+                    <div class="overflow-hidden mb-6 aspect-[4/5] relative">
+                        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=2676&auto=format&fit=crop" 
+                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Detail 2">
+                    </div>
+                    <div class="border-t border-luxury-gold/50 pt-4">
+                        <h3 class="font-serif text-2xl">Lighting</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-luxury-black text-luxury-bg py-24 px-6 border-t border-luxury-gold/20 relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between">
+            <div class="mb-12">
+                <h2 class="font-serif text-3xl mb-4">Archimedes Design</h2>
+                <p class="font-sans text-gray-500 text-sm">Amsterdam — Moscow — Dubai</p>
+            </div>
+            <div class="text-[10px] text-gray-600 uppercase tracking-widest self-end">
+                © 2024 Archimedes.
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Инициализация плавного скролла (Lenis)
+        const lenis = new Lenis({
+            duration: 1.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Лоадер
+        window.addEventListener('load', () => {
+            gsap.to("#loader", { opacity: 0, duration: 0.8, onComplete: initAnimations });
+        });
+
+        function initAnimations() {
+            
+            // --- Hero ---
+            const tlHero = gsap.timeline();
+            tlHero.to(".hero-subtitle", { opacity: 1, y: 0, duration: 1 })
+                  .to(".hero-title", { opacity: 1, y: 0, duration: 1.2 }, "-=0.8");
+
+            gsap.to(".hero-img", {
+                yPercent: 30,
+                ease: "none",
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
+            });
+
+            // --- Intro ---
+            gsap.from(".intro-img", {
+                scale: 1.2,
+                scrollTrigger: { trigger: ".intro-img", start: "top 90%", end: "bottom top", scrub: 1 }
+            });
+
+            // --- ИСПРАВЛЕННЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ---
+            const wrapper = document.querySelector(".gallery-wrapper");
+            const portfolioSection = document.querySelector("#portfolio-section");
+            
+            // Получаем точную ширину скролла: (ширина всего контента) - (ширина одного экрана)
+            // Это заставляет скролл остановиться ровно когда контент закончится
+            function getScrollAmount() {
+                let wrapperWidth = wrapper.scrollWidth;
+                return -(wrapperWidth - window.innerWidth);
+            }
+
+            const tween = gsap.to(wrapper, {
+                x: getScrollAmount, // Используем функцию для динамического расчета
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#portfolio-section",
+                    pin: true,
+                    scrub: 1,
+                    // end определяет "длину" скролла. Чем больше значение, тем медленнее листается
+                    end: () => "+=" + (wrapper.scrollWidth - window.innerWidth), 
+                    invalidateOnRefresh: true, // Пересчитывать при ресайзе окна
+                    anticipatePin: 1
+                }
+            });
+
+            // Добавляем эффект параллакса для картинок ВНУТРИ слайдов
+            // Картинки двигаются чуть медленнее контейнера, создавая эффект "окна"
+            gsap.utils.toArray(".gallery-img").forEach(img => {
+                gsap.to(img, {
+                    xPercent: -20, // Сдвиг внутри маски
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#portfolio-section",
+                        start: "top top", // Старт вместе с секцией
+                        end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
+                        scrub: 1
+                    }
+                });
+            });
+
+            // --- Details Cards ---
+            gsap.utils.toArray(".details-card").forEach((card) => {
+                gsap.from(card, {
+                    y: 60, opacity: 0, duration: 1,
+                    scrollTrigger: { trigger: card, start: "top 90%" }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
