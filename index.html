@@ -3,410 +3,890 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aether Gallery | Kinetic Minimalism</title>
+    <title>Synapse Studio | 72-Hour AI Pipeline</title>
     
-    <!-- Шрифт Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <style>
-        :root {
-            --cursor-size: 20px;
-            --accent-red: #D62C2C;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF;
-            color: #000000;
-            overflow-x: hidden;
-            /* На мобильных стандартный курсор, на ПК - свой */
-            cursor: auto;
-        }
-
-        @media (min-width: 768px) {
-            body {
-                cursor: none;
-            }
-        }
-
-        /* --- КУРСОР (Виден только на ПК) --- */
-        .custom-cursor {
-            display: none; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            background-color: #000;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, opacity 0.3s;
-        }
-
-        @media (min-width: 768px) {
-            .custom-cursor {
-                display: block; 
-            }
-        }
-
-        .custom-cursor.active {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(214, 44, 44, 0.15);
-            border: 1px solid var(--accent-red);
-        }
-
-        .custom-cursor.view-mode {
-            width: 90px;
-            height: 90px;
-            background-color: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .custom-cursor.view-mode::after {
-            content: 'VIEW';
-            font-size: 10px;
-            letter-spacing: 2px;
-            font-weight: 600;
-        }
-
-        /* --- ГАЛЕРЕЯ --- */
-        .art-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.95); 
-            transition: filter 0.5s ease, transform 0.7s ease;
-        }
-
-        .art-item {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .art-item:hover .art-image {
-            filter: grayscale(0%) brightness(1);
-            transform: scale(1.03);
-        }
-
-        /* --- ХУДОЖНИКИ --- */
-        .artist-row {
-            border-top: 1px solid #e5e5e5;
-            transition: all 0.4s ease;
-            background-color: #fff;
-            -webkit-tap-highlight-color: transparent; 
-            user-select: none;
-        }
-        
-        .artist-row:last-child {
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .artist-row:hover {
-            padding-left: 20px;
-            background-color: #fafafa;
-        }
-
-        /* Плавающее фото художника */
-        .artist-float-img {
-            position: fixed;
-            pointer-events: none;
-            width: 280px;
-            height: 350px;
-            object-fit: cover;
-            opacity: 0;
-            z-index: 50;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-        }
-
-        @media (max-width: 768px) {
-            .artist-float-img {
-                width: 200px;
-                height: 260px;
-                border-radius: 8px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
-        }
-
-        /* Анимация текста */
-        .reveal-text span {
-            display: inline-block;
-            opacity: 0;
-            transform: translateY(100%);
-        }
-        
-        .reveal-wrap {
-            overflow: hidden;
-            display: block;
-        }
-    </style>
-</head>
-<body class="antialiased selection:bg-red-100 selection:text-red-900">
-
-    <!-- Курсор -->
-    <div class="custom-cursor" id="cursor"></div>
-    
-    <!-- Изображения художников (ЛОКАЛЬНЫЕ ПУТИ) -->
-    <img src="img/artist-1.jpg" class="artist-float-img" id="artist-img-1" alt="Elena Kvo">
-    <img src="img/artist-2.jpg" class="artist-float-img" id="artist-img-2" alt="Marcus Thorne">
-    <img src="img/artist-3.jpg" class="artist-float-img" id="artist-img-3" alt="Yuki Sato">
-
-    <!-- HEADER -->
-    <header class="fixed w-full top-0 p-6 md:p-8 flex justify-between items-center z-40 bg-white/85 backdrop-blur-sm border-b border-transparent transition-colors duration-300">
-        <a href="#" class="text-lg font-bold tracking-[0.15em] uppercase hover:text-[#D62C2C] transition-colors z-50 hover-trigger" data-cursor="active">
-            Aether
-        </a>
-        
-        <nav class="hidden md:flex space-x-10 text-sm font-medium text-gray-800">
-            <a href="#catalog" class="hover:text-[#D62C2C] transition-colors hover-trigger" data-cursor="active">Каталог</a>
-            <a href="#artists" class="hover:text-[#D62C2C] transition-colors hover-trigger" data-cursor="active">Авторы</a>
-            <a href="#contact" class="hover:text-[#D62C2C] transition-colors hover-trigger" data-cursor="active">Контакты</a>
-        </nav>
-    </header>
-
-    <main class="pt-32 px-6 md:px-12 pb-20">
-        
-        <!-- HERO SECTION -->
-        <section class="min-h-[75vh] flex flex-col justify-center mb-20 relative">
-            <h1 class="text-[12vw] leading-[0.85] font-light tracking-tighter text-black mt-10">
-                <div class="reveal-wrap"><span class="reveal-text-anim">KINETIC</span></div>
-                <div class="reveal-wrap pl-[8vw]"><span class="reveal-text-anim text-gray-900">MINIMALISM</span></div>
-            </h1>
-            
-            <div class="flex flex-col md:flex-row justify-between items-end mt-16 border-t border-black pt-6 max-w-6xl">
-                <p class="max-w-md text-sm md:text-base leading-relaxed text-gray-600">
-                    Aether Gallery — это пространство между формой и пустотой. 
-                    Мы продаем не просто искусство, а состояние равновесия.
-                </p>
-                <div class="hidden md:block text-xs font-mono text-gray-400">
-                    SCROLL TO EXPLORE ↓
-                </div>
-            </div>
-        </section>
-
-        <!-- CATALOG SECTION -->
-        <section id="catalog" class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32 mb-40">
-            
-            <!-- Work 01 (ЛОКАЛЬНОЕ ФОТО) -->
-            <div class="group cursor-none" data-cursor="view">
-                <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="img/art-1.jpg" class="art-image" alt="White Silence">
-                </div>
-                <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
-                    <div>
-                        <h3 class="text-2xl font-light">White Silence</h3>
-                        <p class="text-xs text-gray-400 mt-1">Керамика / 2024</p>
-                    </div>
-                    <span class="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-[#D62C2C]">€ 14,000</span>
-                </div>
-            </div>
-
-            <!-- Work 02 (ЛОКАЛЬНОЕ ФОТО) -->
-            <div class="group cursor-none md:mt-40" data-cursor="view">
-                <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="img/art-2.jpg" class="art-image" alt="Fluid Motion">
-                </div>
-                <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
-                    <div>
-                        <h3 class="text-2xl font-light">Fluid Motion</h3>
-                        <p class="text-xs text-gray-400 mt-1">Холст, Масло</p>
-                    </div>
-                    <span class="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-[#D62C2C]">€ 9,500</span>
-                </div>
-            </div>
-
-            <!-- Work 03 (ЛОКАЛЬНОЕ ФОТО) -->
-            <div class="group cursor-none" data-cursor="view">
-                <div class="art-item aspect-[4/3] mb-5 bg-gray-100">
-                    <img src="img/art-3.jpg" class="art-image" alt="Concrete Void">
-                </div>
-                <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
-                    <div>
-                        <h3 class="text-2xl font-light">Concrete Void</h3>
-                        <p class="text-xs text-gray-400 mt-1">Фотография, Принт</p>
-                    </div>
-                    <span class="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity text-[#D62C2C]">€ 4,200</span>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ARTISTS LIST -->
-        <section id="artists" class="mb-40 max-w-5xl mx-auto">
-            <h2 class="text-xs font-bold tracking-[0.3em] uppercase mb-10 text-gray-400">Избранные Художники</h2>
-            
-            <div class="flex flex-col">
-                <!-- Artist 1 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
-                     data-cursor="active" 
-                     onmouseenter="showArtist(1)" onmouseleave="hideArtist(1)"
-                     ontouchstart="showArtist(1)" ontouchend="hideArtist(1)">
-                    <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Elena Kvo</h3>
-                    <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">Moscow</span>
-                </div>
-
-                <!-- Artist 2 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
-                     data-cursor="active" 
-                     onmouseenter="showArtist(2)" onmouseleave="hideArtist(2)"
-                     ontouchstart="showArtist(2)" ontouchend="hideArtist(2)">
-                    <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Marcus Thorne</h3>
-                    <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">London</span>
-                </div>
-
-                <!-- Artist 3 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
-                     data-cursor="active" 
-                     onmouseenter="showArtist(3)" onmouseleave="hideArtist(3)"
-                     ontouchstart="showArtist(3)" ontouchend="hideArtist(3)">
-                    <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Yuki Sato</h3>
-                    <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">Tokyo</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="pt-20 border-t border-black">
-            <div class="flex flex-col md:flex-row justify-between gap-10">
-                <div class="w-full md:w-1/2">
-                    <h2 class="text-xs font-bold tracking-[0.3em] uppercase mb-6 text-[#D62C2C]">Связаться</h2>
-                    <a href="mailto:art@aether.gallery" class="text-[8vw] md:text-[5vw] font-bold leading-none hover:text-[#D62C2C] transition-colors hover-trigger block mb-10" data-cursor="active">
-                        art@aether
-                    </a>
-                </div>
-                
-                <div class="w-full md:w-1/3 text-sm font-light text-gray-600 flex flex-col justify-end">
-                    <div class="mb-6">
-                        <p class="font-medium text-black mb-2">Галерея</p>
-                        <p>Кузнецкий Мост, 12<br>Москва, Россия</p>
-                    </div>
-                    <div class="flex gap-6">
-                        <a href="#" class="hover:text-[#D62C2C] hover-trigger" data-cursor="active">Instagram</a>
-                        <a href="#" class="hover:text-[#D62C2C] hover-trigger" data-cursor="active">Telegram</a>
-                    </div>
-                    <p class="mt-10 text-xs text-gray-400">© 2024 Aether Gallery</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- GSAP Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // --- JS ЛОГИКА ---
-        const cursor = document.getElementById('cursor');
-        const artistImages = [
-            document.getElementById('artist-img-1'),
-            document.getElementById('artist-img-2'),
-            document.getElementById('artist-img-3')
-        ];
-        
-        let mouseX = 0, mouseY = 0;
-        let isTouchDevice = false;
-
-        window.addEventListener('touchstart', () => {
-            isTouchDevice = true;
-        }, {once: true});
-
-        // 1. КУРСОР
-        const xTo = gsap.quickTo(cursor, "x", {duration: 0.2, ease: "power3"});
-        const yTo = gsap.quickTo(cursor, "y", {duration: 0.2, ease: "power3"});
-
-        window.addEventListener("mousemove", (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            if (!isTouchDevice) {
-                xTo(mouseX);
-                yTo(mouseY);
-                
-                artistImages.forEach(img => {
-                    if(img.style.opacity > 0) {
-                        gsap.to(img, {
-                            x: mouseX,
-                            y: mouseY, 
-                            duration: 0.8,
-                            ease: "power2.out"
-                        });
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            dark: '#0a0a0a',
+                            panel: '#111111',
+                            green: '#00ff9d',
+                            greenDim: 'rgba(0, 255, 157, 0.1)',
+                            text: '#e0e0e0',
+                            gray: '#888888'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['JetBrains Mono', 'monospace'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'spin-slow': 'spin 10s linear infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        flicker: {
+                            '0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%': { 
+                                opacity: '1', 
+                                boxShadow: '0 0 10px #00ff9d',
+                                borderColor: '#00ff9d',
+                                color: '#00ff9d'
+                            },
+                            '20%, 24%, 55%': { 
+                                opacity: '0.4', 
+                                boxShadow: 'none',
+                                borderColor: '#333',
+                                color: '#555'
+                            }
+                        }
                     }
-                });
+                }
             }
-        });
+        }
+    </script>
 
-        // Hover эффекты
-        document.querySelectorAll('[data-cursor="active"]').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-        });
+    <style>
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
 
-        document.querySelectorAll('[data-cursor="view"]').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('view-mode'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('view-mode'));
-        });
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00ff9d; }
 
-        // 2. ХУДОЖНИКИ
-        window.showArtist = (index) => {
-            const img = artistImages[index - 1];
-            
-            if (window.innerWidth < 768) {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                
-                gsap.set(img, {
-                    x: centerX, 
-                    y: centerY, 
-                    rotation: 0,
-                    zIndex: 100 
-                });
-            } else {
-                gsap.set(img, {
-                    x: mouseX, 
-                    y: mouseY, 
-                    rotation: -10,
-                    zIndex: 50
-                });
-            }
-            
-            gsap.to(img, {opacity: 1, scale: 1, rotation: 0, duration: 0.4});
-        };
+        /* Grid Background Effect */
+        .bg-grid {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
 
-        window.hideArtist = (index) => {
-            const img = artistImages[index - 1];
-            gsap.to(img, {opacity: 0, scale: 0.8, duration: 0.3});
-        };
+        /* Neon Glow Utility */
+        .glow-text { text-shadow: 0 0 10px rgba(0, 255, 157, 0.5); }
+        .glow-box {
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glow-box:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 157, 0.3);
+            border-color: #00ff9d;
+        }
 
-        // 3. АНИМАЦИЯ ТЕКСТА
-        document.addEventListener("DOMContentLoaded", () => {
-            gsap.to(".reveal-text-anim", {
-                y: 0,
-                opacity: 1,
-                duration: 1.2,
-                stagger: 0.2,
-                ease: "power4.out",
-                delay: 0.2
-            });
-        });
+        /* Matrix Animation */
+        .matrix-mode {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            color: transparent;
+            background: linear-gradient(180deg, rgba(0, 255, 157, 0.2) 0%, rgba(0, 255, 157, 1) 50%, rgba(0, 255, 157, 0.2) 100%);
+            background-size: 100% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: matrix-rain 2s linear infinite;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+        }
+
+        @keyframes matrix-rain {
+            0% { background-position: 0% -100%; }
+            100% { background-position: 0% 200%; }
+        }
+
+        .matrix-mode::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 255, 157, 0.1);
+            opacity: 0;
+            animation: matrix-flicker 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes matrix-flicker {
+            0%, 90% { opacity: 0; }
+            92% { opacity: 0.5; transform: skewX(10deg); }
+            93% { opacity: 0; transform: skewX(0deg); }
+            94% { opacity: 0.5; transform: skewX(-10deg); }
+            100% { opacity: 0; }
+        }
         
-        // 4. СКРОЛЛ
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                gsap.to(window, {duration: 1, scrollTo: this.getAttribute('href'), ease: "power3.inOut"});
+        .animate-flicker-1 { animation: flicker 4s infinite; }
+        .animate-flicker-2 { animation: flicker 5s infinite; animation-delay: 0.5s; }
+        .animate-flicker-3 { animation: flicker 3s infinite; animation-delay: 1s; }
+
+        /* Scanline Effect */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+
+        /* Terminal Cursor */
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-cyber-green selection:text-black">
+
+    <div class="scanline"></div>
+
+    <!-- Липкая кнопка Telegram -->
+    <!-- ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЮ -->
+    <a href="https://t.me/rob_stk" target="_blank" class="fixed bottom-8 right-8 z-50 flex items-center bg-black border border-cyber-green text-cyber-green rounded-full h-14 transition-all duration-500 hover:shadow-[0_0_20px_#00ff9d] group w-14 hover:w-auto overflow-hidden">
+        <div class="w-14 h-14 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="send" class="w-6 h-6 transform group-hover:rotate-12 transition-transform"></i>
+        </div>
+        <span class="whitespace-nowrap font-tech text-xs font-bold text-black bg-cyber-green h-full flex items-center px-0 w-0 group-hover:w-auto group-hover:px-6 transition-all duration-500 opacity-0 group-hover:opacity-100">
+            СВЯЗАТЬСЯ С НАМИ
+        </span>
+    </a>
+
+    <!-- 0. Header (Navigation) -->
+    <header class="fixed top-0 w-full z-50 bg-cyber-black/90 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 group cursor-pointer z-50">
+                <i data-lucide="cpu" class="text-cyber-green w-8 h-8 group-hover:rotate-180 transition-transform duration-700"></i>
+                <div class="flex flex-col">
+                    <span class="font-display font-bold text-2xl tracking-wider leading-none">SYNAPSE</span>
+                    <span class="font-tech text-xs text-cyber-green tracking-[0.2em] leading-none">STUDIO_72H</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-8 text-sm font-tech tracking-widest uppercase">
+                <a href="#tariffs" class="hover:text-cyber-green transition-colors relative group">
+                    Цены [72ч]
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyber-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#cases" class="hover:text-cyber-green transition-colors relative group">
+                    Кейсы
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyber-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#process" class="hover:text-cyber-green transition-colors relative group">
+                    Процесс
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyber-green transition-all group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <!-- Desktop CTA -->
+            <a href="#ai-brief" class="hidden md:flex items-center gap-2 border border-cyber-green text-cyber-green px-6 py-2 font-tech text-xs uppercase hover:bg-cyber-green hover:text-black transition-all duration-300">
+                <span>AI ГЕНЕРАТОР БРИФА</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+            
+            <!-- Mobile Menu Btn -->
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50 focus:outline-none p-2">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black z-40 hidden flex-col items-center justify-start pt-32 gap-6 transition-all duration-300 h-screen w-screen overflow-y-auto">
+            <a href="#tariffs" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
+                Цены [72ч]
+            </a>
+            <a href="#cases" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
+                Кейсы
+            </a>
+            <a href="#process" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
+                Процесс
+            </a>
+            <a href="#ai-brief" class="mobile-link w-3/4 py-4 bg-transparent border-2 border-cyber-green text-cyber-green font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-cyber-green hover:text-black transition-all">
+                <i data-lucide="brain" class="inline-block w-5 h-5 mr-2 -mt-1"></i> AI Генератор
+            </a>
+            <div class="mt-auto pb-10 text-center opacity-50">
+                <div class="w-1 h-16 bg-gradient-to-b from-transparent via-cyber-green to-transparent mx-auto mb-4"></div>
+                <p class="font-tech text-xs text-cyber-green">SYNAPSE_MOBILE_NAV_V.2.0</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex items-center">
+        <!-- BG Grid -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-20 -z-10 bg-grid"></div>
+        <div class="absolute inset-0 -z-10 overflow-hidden">
+            <div class="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-green to-transparent opacity-30 animate-pulse"></div>
+            <div class="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-green to-transparent opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute top-0 right-1/4 h-full w-[1px] bg-gradient-to-b from-transparent via-cyber-green to-transparent opacity-20"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="space-y-8 z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 rounded text-xs font-tech text-cyber-green">
+                    <span class="w-2 h-2 rounded-full bg-cyber-green animate-pulse"></span>
+                    SYSTEM STATUS: ONLINE // 72H MODE
+                </div>
+                
+                <h1 class="font-display font-bold text-4xl md:text-6xl leading-tight">
+                    <div class="whitespace-nowrap flex items-baseline gap-2 md:gap-4">
+                        <span>САЙТ ЗА</span>
+                        <span class="text-7xl md:text-9xl text-cyber-green glow-text font-bold -mb-2 md:-mb-4">72</span> 
+                        <span class="matrix-mode">ЧАСА</span>
+                    </div>
+                    <span class="block mt-2">БЕЗ КОМПРОМИССОВ</span>
+                </h1>
+                
+                <p class="text-cyber-gray text-lg md:text-xl max-w-lg leading-relaxed border-l-2 border-cyber-green pl-6">
+                    Гибридная разработка:<br>
+                    <span class="text-white">Скорость AI + экспертиза Арт-Директора.</span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#ai-brief" class="px-8 py-4 bg-cyber-green text-black font-tech font-bold uppercase tracking-wider hover:bg-white transition-colors flex items-center justify-center gap-2 glow-box">
+                        <i data-lucide="play"></i> Запустить протокол
+                    </a>
+                    <a href="#cases" class="px-8 py-4 border border-white/20 hover:border-cyber-green hover:text-cyber-green font-tech uppercase tracking-wider transition-all flex items-center justify-center gap-2">
+                        Смотреть демо
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual Concept -->
+            <div class="relative flex justify-center items-center h-[400px]">
+                <div class="absolute w-[300px] h-[300px] border border-cyber-green/30 rounded-full animate-spin-slow border-dashed"></div>
+                <div class="absolute w-[280px] h-[280px] border border-white/10 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+                
+                <div class="relative w-64 h-64 border border-cyber-green/50 bg-cyber-green/5 backdrop-blur-sm flex items-center justify-center animate-float glow-box">
+                    <div class="grid grid-cols-3 grid-rows-3 gap-2 w-full h-full p-4 opacity-80">
+                        <div class="bg-cyber-green/80 animate-pulse"></div>
+                        <div class="bg-cyber-green/40"></div>
+                        <div class="bg-cyber-green/60 animate-pulse" style="animation-delay: 0.2s;"></div>
+                        <div class="bg-cyber-green/20"></div>
+                        <div class="flex items-center justify-center bg-black/50 border border-cyber-green text-cyber-green font-tech text-xs">AI</div>
+                        <div class="bg-cyber-green/30"></div>
+                        <div class="bg-cyber-green/50 animate-pulse" style="animation-delay: 0.5s;"></div>
+                        <div class="bg-cyber-green/20"></div>
+                        <div class="bg-cyber-green/70 animate-pulse" style="animation-delay: 0.1s;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. UTP -->
+    <section id="features" class="py-20 bg-cyber-panel border-y border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ВЫ ПЛАТИТЕ ЗА ЗАПУСК, <span class="text-cyber-gray">А НЕ ЗА ОЖИДАНИЕ</span></h2>
+                <div class="h-1 w-24 bg-cyber-green mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group bg-cyber-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative overflow-hidden glow-box">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="zap" class="text-cyber-green w-12 h-12"></i>
+                    </div>
+                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_01</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Радикальная Скорость</h3>
+                    <p class="text-cyber-gray text-sm leading-relaxed">
+                        Спринт 72 часа. Мы используем AI-генераторы для рутины, оставляя людям стратегию.
+                    </p>
+                    <div class="mt-6 font-tech text-4xl font-bold text-white">72<span class="text-sm text-cyber-green">h</span></div>
+                </div>
+
+                <div class="group bg-cyber-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative overflow-hidden glow-box">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="coins" class="text-cyber-green w-12 h-12"></i>
+                    </div>
+                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_02</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Умный Бюджет</h3>
+                    <p class="text-cyber-gray text-sm leading-relaxed">
+                        Вы не оплачиваете недели простоя. AI оптимизирует кодинг и верстку, снижая cost в 3 раза.
+                    </p>
+                    <div class="mt-6 font-tech text-4xl font-bold text-white">-60<span class="text-sm text-cyber-green">%</span></div>
+                </div>
+
+                <div class="group bg-cyber-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative overflow-hidden glow-box">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="trending-up" class="text-cyber-green w-12 h-12"></i>
+                    </div>
+                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_03</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Высокая Конверсия</h3>
+                    <p class="text-cyber-gray text-sm leading-relaxed">
+                        Дизайн от эксперта. AI делает структуру, человек докручивает эмоции и конверсию.
+                    </p>
+                    <div class="mt-6 font-tech text-4xl font-bold text-white">Hi<span class="text-sm text-cyber-green">Q</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Process -->
+    <section id="process" class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#00ff9d 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <h2 class="font-display font-bold text-3xl md:text-4xl">ГИБРИДНОЕ ПРОИЗВОДСТВО</h2>
+                    <p class="text-cyber-green font-tech mt-2 text-sm">SYNAPSE_PIPELINE_V.2.0</p>
+                </div>
+                <div class="hidden md:block w-1/3 h-[1px] bg-cyber-green/30 mb-2"></div>
+            </div>
+
+            <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
+                <div class="hidden md:block absolute top-12 left-0 w-full h-[2px] bg-gradient-to-r from-gray-800 via-cyber-green to-gray-800 -z-10"></div>
+
+                <div class="relative group">
+                    <div class="w-24 h-24 bg-cyber-black border-2 border-cyber-green rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6 group-hover:shadow-[0_0_20px_#00ff9d] transition-all z-20">
+                        <i data-lucide="brain-circuit" class="text-white w-10 h-10"></i>
+                    </div>
+                    <div class="md:pr-4">
+                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_01 // AI</div>
+                        <h4 class="font-display font-bold text-xl mb-2">Аналитика</h4>
+                        <p class="text-xs text-cyber-gray">Нейросеть сканирует нишу и конкурентов за 1 час. Сбор структуры.</p>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="w-24 h-24 bg-cyber-black border-2 border-cyber-green rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6 group-hover:shadow-[0_0_20px_#00ff9d] transition-all z-20">
+                        <i data-lucide="layers" class="text-white w-10 h-10"></i>
+                    </div>
+                    <div class="md:pr-4">
+                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_02 // HYBRID</div>
+                        <h4 class="font-display font-bold text-xl mb-2">Синтез</h4>
+                        <p class="text-xs text-cyber-gray">AI генерирует блоки. Арт-директор собирает композицию.</p>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="w-24 h-24 bg-cyber-black border-2 border-cyber-green rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6 group-hover:shadow-[0_0_20px_#00ff9d] transition-all z-20">
+                        <i data-lucide="pen-tool" class="text-white w-10 h-10"></i>
+                    </div>
+                    <div class="md:pr-4">
+                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_03 // HUMAN</div>
+                        <h4 class="font-display font-bold text-xl mb-2">UX Финализация</h4>
+                        <p class="text-xs text-cyber-gray">Человек дорабатывает копирайтинг, триггеры и эмоции.</p>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="w-24 h-24 bg-cyber-green rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6 shadow-[0_0_20px_rgba(0,255,157,0.5)] transition-all z-20 animate-pulse">
+                        <i data-lucide="rocket" class="text-black w-10 h-10"></i>
+                    </div>
+                    <div class="md:pr-4">
+                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_04 // DEPLOY</div>
+                        <h4 class="font-display font-bold text-xl mb-2">Запуск</h4>
+                        <p class="text-xs text-cyber-gray">Публикация, подключение домена, аналитика. Ровно через 72 часа.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Comparison -->
+    <section class="py-20 bg-cyber-panel">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12">
+                ПЕРЕПЛАЧИВАТЬ ЗА РУТИНУ <span class="text-red-500 line-through decoration-2">БОЛЬШЕ НЕ НУЖНО</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 border border-white/10">
+                <div class="p-10 bg-[#151515] opacity-60 grayscale hover:grayscale-0 transition-all duration-500 border-b md:border-b-0 md:border-r border-white/10">
+                    <h3 class="font-tech text-gray-500 text-sm mb-2">СТАНДАРТНАЯ СТУДИЯ</h3>
+                    <div class="text-4xl font-bold text-gray-400 mb-6">6 НЕДЕЛЬ</div>
+                    <ul class="space-y-4 font-tech text-sm text-gray-500">
+                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Долгие брифы</li>
+                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Оплата часов менеджера</li>
+                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Цена от 250,000 ₽</li>
+                    </ul>
+                </div>
+
+                <div class="p-10 bg-cyber-dark relative overflow-hidden">
+                    <div class="absolute inset-0 bg-cyber-green/5"></div>
+                    <div class="relative z-10">
+                        <h3 class="font-tech text-cyber-green text-sm mb-2 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-cyber-green rounded-full animate-pulse"></span> SYNAPSE STUDIO
+                        </h3>
+                        <div class="text-4xl font-bold text-white mb-6">72 ЧАСА</div>
+                        <ul class="space-y-4 font-tech text-sm text-gray-300">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Экспресс-брифинг</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Оплата результата</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Цена 50,000 ₽</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Cases & Niches -->
+    <section id="cases" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+                <div>
+                    <h2 class="font-display font-bold text-3xl md:text-4xl">ИДЕАЛЬНЫЕ НИШИ</h2>
+                    <p class="text-gray-400 mt-2">Кому нужна скорость света?</p>
+                </div>
+                <div class="flex gap-2 mt-4 md:mt-0 font-tech text-xs">
+                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-1">STARTUPS</span>
+                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-2">EVENTS</span>
+                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-3">MVP</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="rocket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Стартапы</h3>
+                    <p class="text-sm text-gray-500">MVP и Pre-Launch. Проверка гипотез без слива бюджета.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="ticket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Мероприятия</h3>
+                    <p class="text-sm text-gray-500">Анонс и продажа билетов. Срочный запуск под дату.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="briefcase" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Консалтинг</h3>
+                    <p class="text-sm text-gray-500">Упаковка экспертизы.<br> Личный бренд за выходные.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="monitor-play" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Продукт</h3>
+                    <p class="text-sm text-gray-500">Презентация нового гаджета или софта.</p>
+                </div>
+            </div>
+
+            <!-- ИЗМЕНЕНИЕ: Блок Кейсы с локальными картинками -->
+            <div class="space-y-6 pt-10 border-t border-white/10">
+                <div class="flex items-center gap-4 mb-8">
+                    <h3 class="font-tech text-cyber-green text-sm">АРХИТЕКТУРА В ДЕЙСТВИИ // КЕЙСЫ</h3>
+                    <div class="h-[1px] bg-cyber-green/30 flex-grow"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Case 1: Aether -->
+                    <a href="./cases/aether/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
+                        <img src="images/case1.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
+                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Aether Gallery</h4>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-gray-400">Art Space</span>
+                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
+                            </div>
+                        </div>
+                    </a>
+
+                     <!-- Case 2: Archimedes -->
+                     <a href="./cases/archimedes/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
+                        <img src="images/case2.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
+                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Archimedes</h4>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-gray-400">Interior</span>
+                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
+                            </div>
+                        </div>
+                    </a>
+
+                     <!-- Case 3: Quantum -->
+                     <a href="./cases/quantum/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
+                        <img src="images/case3.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
+                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Quantum Core</h4>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-gray-400">Tech</span>
+                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
+                            </div>
+                        </div>
+                    </a>
+
+                     <!-- Case 4: Summit -->
+                     <a href="./cases/summit/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
+                        <!-- ССЫЛКА ЗАМЕНЕНА НА ЛОКАЛЬНУЮ -->
+                        <img src="images/case4.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
+                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Summit 2026</h4>
+                            <div class="flex justify-between items-end">
+                                <span class="text-xs text-gray-400">Event</span>
+                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ТАРИФЫ -->
+    <section id="tariffs" class="py-20 bg-cyber-panel border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12 uppercase">Варианты Развертывания</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tariff 1 -->
+                <div class="group bg-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative">
+                    <div class="font-tech text-gray-500 text-xs mb-4">PROTOCOL_01</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Презентация</h3>
+                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: Быстрый старт, трипваер.</p>
+                    
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                        25 000 ₽
+                    </div>
+                    
+                    <ul class="space-y-3 font-tech text-xs text-gray-400">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 48 часов</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 1 итерация правок</li>
+                    </ul>
+                </div>
+
+                <!-- Tariff 2 (Highlighted) -->
+                <div class="group bg-black p-8 border border-cyber-green/50 hover:border-cyber-green transition-all duration-300 relative scale-105 shadow-[0_0_20px_rgba(0,255,157,0.1)]">
+                    <div class="absolute top-0 right-0 bg-cyber-green text-black px-2 py-1 font-tech text-xs font-bold">RECOMENDED</div>
+                    <div class="font-tech text-cyber-green text-xs mb-4">PROTOCOL_02</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Старт</h3>
+                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: MVP, тест гипотезы, срочный запуск.</p>
+                    
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                        50 000 ₽
+                    </div>
+                    
+                    <ul class="space-y-3 font-tech text-xs text-gray-400">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 72 часа</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 2 итерации правок</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 2 варианта дизайна на выбор</li>
+                    </ul>
+                </div>
+
+                <!-- Tariff 3 -->
+                <div class="group bg-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative">
+                    <div class="font-tech text-gray-500 text-xs mb-4">PROTOCOL_03</div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Бизнес</h3>
+                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: Максимальная конверсия, имидж, контроль.</p>
+                    
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                        90 000 ₽
+                    </div>
+                    
+                    <ul class="space-y-3 font-tech text-xs text-gray-400">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 7 дней</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 4 итерации правок</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 4 варианта дизайна на выбор</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI GENERATOR -->
+    <section id="ai-brief" class="py-20 bg-black relative border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 text-cyber-green font-tech text-xs mb-2">
+                    <i data-lucide="brain" class="w-4 h-4"></i> AI ARCHITECT MODULE
+                </div>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-white">ГЕНЕРАТОР БРИФА</h2>
+                <p class="text-gray-500 text-sm mt-2">Опишите идею хаотично. AI структурирует её и предложит стек.</p>
+            </div>
+
+            <div class="bg-[#0a0a0a] border border-cyber-green/30 p-1 rounded-lg">
+                <div class="bg-black p-6 md:p-8 rounded border border-white/5">
+                    <!-- Input Area -->
+                    <div class="space-y-4">
+                        <textarea id="ai-input" class="w-full bg-[#111] text-gray-300 p-4 border border-gray-800 focus:border-cyber-green focus:outline-none font-tech text-sm rounded h-32 resize-none" placeholder="Пример: Хочу сайт для продажи авторских туров на Марс. Нужно ярко, дорого, с анимацией ракеты..."></textarea>
+                        
+                        <button onclick="generateBrief()" class="w-full py-3 bg-cyber-green/10 border border-cyber-green text-cyber-green font-tech text-xs uppercase hover:bg-cyber-green hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> СИНТЕЗИРОВАТЬ БРИФ
+                        </button>
+                    </div>
+
+                    <!-- Output Area (Hidden by default) -->
+                    <div id="ai-output-container" class="hidden mt-8 pt-8 border-t border-dashed border-gray-800 animate-[pulse_0.5s_ease-in-out]">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-tech text-cyber-green">ВЫВОД_СИСТЕМЫ // РЕЗУЛЬТАТ:</span>
+                            <button onclick="copyBrief()" class="text-xs font-tech text-gray-500 hover:text-white flex items-center gap-1 transition-colors">
+                                <i data-lucide="copy" class="w-3 h-3"></i> КОПИРОВАТЬ
+                            </button>
+                        </div>
+                        <div class="bg-[#050505] p-4 border-l-2 border-cyber-green font-tech text-xs text-gray-300 leading-relaxed overflow-x-auto h-64 overflow-y-auto">
+                            <pre id="ai-result" class="whitespace-pre-wrap"></pre>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="text-xs text-cyber-green animate-pulse">Бриф сгенерирован. Скопируйте его и вставьте в форму ниже ↓</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CTA: Terminal Form -->
+    <section id="start" class="py-24 bg-black relative">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-[#0c0c0c] border border-cyber-green/30 p-2 rounded-t-lg flex items-center gap-2 px-4">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <div class="ml-4 font-tech text-xs text-gray-500">user@synapse-studio:~/start-project</div>
+            </div>
+            
+            <div class="bg-[#050505] border-x border-b border-cyber-green/30 p-8 md:p-12 shadow-[0_0_50px_rgba(0,255,157,0.1)]">
+                <h2 class="font-display text-3xl text-white mb-2">ВАШ БИЗНЕС НЕ ЖДЕТ.</h2>
+                <p class="font-tech text-cyber-green text-sm mb-8">Запуститесь уже вчера</p>
+
+                <form id="projectForm" class="space-y-6" action="https://formspree.io/f/mqaogzrv" method="POST"> 
+                    <!-- ИЗМЕНЕНИЕ: 3 колонки для Имя, Контакт, Телеграм -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- ИМЯ (Обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="name" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ИМЯ *</label>
+                                <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
+                            </div>
+                            <input type="text" id="name" name="Name" placeholder="Иван Петров" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+                        </div>
+
+                        <!-- КОНТАКТ (Обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="contact" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">КОНТАКТ *</label>
+                                <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
+                            </div>
+                            <input type="text" id="contact" name="Contact" placeholder="+7 (999) 000-00-00" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+                        </div>
+
+                        <!-- TELEGRAM (НЕ обязательно) -->
+                        <div class="relative group input-container">
+                            <div class="flex justify-between">
+                                <label for="telegram" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">TELEGRAM</label>
+                                <!-- Тут нет сообщения об ошибке, так как поле не обязательное -->
+                            </div>
+                            <input type="text" id="telegram" name="Telegram" placeholder="@username" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
+                        </div>
+                    </div>
+                    
+                    <!-- СООБЩЕНИЕ (Обязательно) -->
+                    <div class="relative group pt-4 input-container">
+                        <div class="flex justify-between">
+                            <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ДЕТАЛИ ПРОЕКТА *</label>
+                            <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ОПИШИТЕ ЗАДАЧУ</span>
+                        </div>
+                        <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800 resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-6 w-full relative z-30">
+                        <button type="submit" id="submit-button" class="w-full h-full cursor-pointer px-8 py-4 bg-cyber-green text-black font-tech font-bold uppercase tracking-wider hover:bg-white transition-colors flex items-center justify-center gap-2 glow-box">
+                            <span class="mr-2">&gt;</span> Отправить Запрос
+                            <span class="cursor-blink">|</span>
+                        </button>
+                    </div>
+                </form> 
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Footer -->
+    <footer class="py-10 bg-cyber-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center text-xs text-gray-600 font-tech">
+            <p>SYNAPSE STUDIO // PROTOCOL 72H // EST. 2025</p>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <script>
+        // ИЗМЕНЕНИЕ: Исправленный и улучшенный скрипт для Мобильного Меню
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="x"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu"></i>';
+                lucide.createIcons();
             });
         });
+
+        // ИЗМЕНЕНИЕ: НОВАЯ ВАЛИДАЦИЯ БЕЗ ALERT (И ТЕЛЕГРАМ НЕ ОБЯЗАТЕЛЕН)
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Функция проверки поля
+            function validateField(id) {
+                const field = document.getElementById(id);
+                const container = field.closest('.input-container');
+                const errorMsg = container.querySelector('.error-msg');
+                
+                if (!field.value.trim()) {
+                    // Показываем ошибку
+                    errorMsg.classList.remove('hidden');
+                    field.classList.add('border-red-500'); // Красная линия
+                    return false;
+                } else {
+                    // Скрываем ошибку
+                    errorMsg.classList.add('hidden');
+                    field.classList.remove('border-red-500');
+                    return true;
+                }
+            }
+
+            // Проверяем только обязательные поля
+            const isNameValid = validateField('name');
+            const isContactValid = validateField('contact');
+            const isMessageValid = validateField('message');
+            // Telegram НЕ проверяем
+
+            if (!isNameValid || !isContactValid || !isMessageValid) {
+                e.preventDefault(); // Останавливаем отправку только если есть ошибки
+            }
+        });
+
+        // Убираем ошибки, когда пользователь начинает писать
+        ['name', 'contact', 'message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function() {
+                const container = this.closest('.input-container');
+                const errorMsg = container.querySelector('.error-msg');
+                errorMsg.classList.add('hidden');
+                this.classList.remove('border-red-500');
+            });
+        });
+
+        // ИЗМЕНЕНИЕ: Умная логика Генератора (На русском)
+        function generateBrief() {
+            const input = document.getElementById('ai-input').value;
+            const outputContainer = document.getElementById('ai-output-container');
+            const resultArea = document.getElementById('ai-result');
+            
+            if(!input.trim()) {
+                alert('Сначала опишите вашу идею.');
+                return;
+            }
+
+            // Массивы для "Галлюцинаций" ИИ (Mock Data) RU
+            const styles = ['Киберпанк / Неоновый Мрак', 'Минимализм / Швейцарский стиль', 'Премиум Корпоративный', 'Брутализм / Экспериментальный'];
+            const techStack = ['Tailwind CSS + HTML5', 'React + GSAP Анимации', 'WebGL + Three.js Элементы', 'Vue.js + Canvas'];
+            const audiences = ['Поколение Z & Диджитал-нативы', 'B2B Принимающие решения', 'Премиум сегмент', 'Новаторы и ранние последователи'];
+
+            // Выбор случайных значений
+            const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+            const randomTech = techStack[Math.floor(Math.random() * techStack.length)];
+            const randomAudience = audiences[Math.floor(Math.random() * audiences.length)];
+            const sessionId = Math.floor(Math.random() * 999999);
+
+            // Формирование "умного" ответа RU
+            const generatedText = `// ЯДРО_SYNAPSE_AI // ID_СЕССИИ: ${sessionId}
+// СИСТЕМНЫЙ_АНАЛИЗ_ЗАВЕРШЕН
+
+[АНАЛИЗ ВВОДНЫХ ДАННЫХ]
+> ИСХОДНЫЙ_ЗАПРОС: "${input}"
+> ОБЛАСТЬ: Веб-разработка / Цифровой Продукт
+
+[СГЕНЕРИРОВАННЫЕ ИНСАЙТЫ]
+1. АНАЛИЗ ЦЕЛЕВОЙ АУДИТОРИИ:
+   - Сегмент: ${randomAudience}
+   - Ключевые триггеры: Скорость, Инновации, UX
+
+2. ВИЗУАЛЬНАЯ ИДЕНТИЧНОСТЬ:
+   - Стиль: ${randomStyle}
+   - Настроение: Прогрессивное, Доверие, Динамика
+   - Акцент UI: Mobile-First, Быстрая загрузка, Микровзаимодействия
+
+3. ТЕХНИЧЕСКАЯ АРХИТЕКТУРА (СТЕК):
+   - Фронтенд: ${randomTech}
+   - Интеграции: CRM-форма, Аналитика, Telegram-уведомления
+   - Производительность: < 90ms TBT (Total Blocking Time)
+
+4. РЕКОМЕНДУЕМАЯ СТРУКТУРА БЛОКОВ:
+   [Блок 01] Главный экран + УТП (Уникальное Торговое Предложение)
+   [Блок 02] Раскрытие преимуществ (Сетка / Grid)
+   [Блок 03] Социальное доказательство / Доверие
+   [Блок 04] Целевое действие (Форма / Покупка)
+
+[ПЛАН РЕАЛИЗАЦИИ]
+РЕКОМЕНДУЕМЫЙ ПРОТОКОЛ: Protocol_02 (Старт) или Protocol_03 (Бизнес)
+ОЖИДАЕМЫЙ ЭФФЕКТ: Высокий потенциал конверсии.
+
+// СТАТУС: ГОТОВ К РАЗВЕРТЫВАНИЮ`;
+
+            outputContainer.classList.remove('hidden');
+            resultArea.textContent = "ИНИЦИАЛИЗАЦИЯ ЯДРА AI...";
+            
+            // Эффект печати
+            let i = 0;
+            setTimeout(() => {
+                resultArea.textContent = "";
+                const interval = setInterval(() => {
+                    resultArea.textContent += generatedText.charAt(i);
+                    i++;
+                    resultArea.scrollTop = resultArea.scrollHeight;
+                    if (i > generatedText.length) {
+                        clearInterval(interval);
+                    }
+                }, 5); 
+            }, 500);
+        }
+
+        function copyBrief() {
+            const text = document.getElementById('ai-result').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Бриф скопирован. Вставьте его в поле "ДЕТАЛИ ПРОЕКТА" ниже.');
+            });
+        }
     </script>
 </body>
 </html>
