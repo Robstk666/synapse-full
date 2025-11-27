@@ -22,11 +22,19 @@
             background-color: #FFFFFF;
             color: #000000;
             overflow-x: hidden;
-            cursor: none; /* Скрываем системный курсор */
+            /* На мобильных стандартный курсор, на ПК - свой */
+            cursor: auto;
         }
 
-        /* --- КУРСОР --- */
+        @media (min-width: 768px) {
+            body {
+                cursor: none;
+            }
+        }
+
+        /* --- КУРСОР (Виден только на ПК) --- */
         .custom-cursor {
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -40,7 +48,12 @@
             transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, opacity 0.3s;
         }
 
-        /* Активный (наведение на ссылки) */
+        @media (min-width: 768px) {
+            .custom-cursor {
+                display: block; 
+            }
+        }
+
         .custom-cursor.active {
             width: 60px;
             height: 60px;
@@ -48,7 +61,6 @@
             border: 1px solid var(--accent-red);
         }
 
-        /* Режим просмотра (наведение на картины) */
         .custom-cursor.view-mode {
             width: 90px;
             height: 90px;
@@ -90,6 +102,8 @@
             border-top: 1px solid #e5e5e5;
             transition: all 0.4s ease;
             background-color: #fff;
+            -webkit-tap-highlight-color: transparent; 
+            user-select: none;
         }
         
         .artist-row:last-child {
@@ -115,6 +129,15 @@
             transform: translate(-50%, -50%) scale(0.8);
         }
 
+        @media (max-width: 768px) {
+            .artist-float-img {
+                width: 200px;
+                height: 260px;
+                border-radius: 8px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+        }
+
         /* Анимация текста */
         .reveal-text span {
             display: inline-block;
@@ -133,17 +156,10 @@
     <!-- Курсор -->
     <div class="custom-cursor" id="cursor"></div>
     
-    <!-- Изображения художников (скрыты) -->
-    
-    <!-- 1. Elena Kvo (без изменений) -->
-    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-1">
-    
-    <!-- 2. Marcus Thorne (Фото заменено на то, что было у Yuki) -->
-    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-2">
-    
-    <!-- 3. Yuki Sato (Фото заменено на то, что было у Marcus) -->
-    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600" class="artist-float-img" id="artist-img-3">
-
+    <!-- Изображения художников (ЛОКАЛЬНЫЕ ПУТИ) -->
+    <img src="img/artist-1.jpg" class="artist-float-img" id="artist-img-1" alt="Elena Kvo">
+    <img src="img/artist-2.jpg" class="artist-float-img" id="artist-img-2" alt="Marcus Thorne">
+    <img src="img/artist-3.jpg" class="artist-float-img" id="artist-img-3" alt="Yuki Sato">
 
     <!-- HEADER -->
     <header class="fixed w-full top-0 p-6 md:p-8 flex justify-between items-center z-40 bg-white/85 backdrop-blur-sm border-b border-transparent transition-colors duration-300">
@@ -181,10 +197,10 @@
         <!-- CATALOG SECTION -->
         <section id="catalog" class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-32 mb-40">
             
-            <!-- Work 01 -->
+            <!-- Work 01 (ЛОКАЛЬНОЕ ФОТО) -->
             <div class="group cursor-none" data-cursor="view">
                 <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?auto=format&fit=crop&q=80&w=800" class="art-image" alt="White Silence">
+                    <img src="img/art-1.jpg" class="art-image" alt="White Silence">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -195,10 +211,10 @@
                 </div>
             </div>
 
-            <!-- Work 02 -->
+            <!-- Work 02 (ЛОКАЛЬНОЕ ФОТО) -->
             <div class="group cursor-none md:mt-40" data-cursor="view">
                 <div class="art-item aspect-[3/4] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=800" class="art-image" alt="Abstract">
+                    <img src="img/art-2.jpg" class="art-image" alt="Fluid Motion">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -209,10 +225,10 @@
                 </div>
             </div>
 
-            <!-- Work 03 -->
+            <!-- Work 03 (ЛОКАЛЬНОЕ ФОТО) -->
             <div class="group cursor-none" data-cursor="view">
                 <div class="art-item aspect-[4/3] mb-5 bg-gray-100">
-                    <img src="https://images.unsplash.com/photo-1481018085669-2bc6e4f00eed?auto=format&fit=crop&q=80&w=800" class="art-image" alt="Geometry">
+                    <img src="img/art-3.jpg" class="art-image" alt="Concrete Void">
                 </div>
                 <div class="flex justify-between items-baseline border-b border-gray-200 pb-3 group-hover:border-black transition-colors duration-500">
                     <div>
@@ -231,19 +247,28 @@
             
             <div class="flex flex-col">
                 <!-- Artist 1 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" data-cursor="active" onmouseenter="showArtist(1)" onmouseleave="hideArtist(1)">
+                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
+                     data-cursor="active" 
+                     onmouseenter="showArtist(1)" onmouseleave="hideArtist(1)"
+                     ontouchstart="showArtist(1)" ontouchend="hideArtist(1)">
                     <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Elena Kvo</h3>
                     <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">Moscow</span>
                 </div>
 
                 <!-- Artist 2 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" data-cursor="active" onmouseenter="showArtist(2)" onmouseleave="hideArtist(2)">
+                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
+                     data-cursor="active" 
+                     onmouseenter="showArtist(2)" onmouseleave="hideArtist(2)"
+                     ontouchstart="showArtist(2)" ontouchend="hideArtist(2)">
                     <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Marcus Thorne</h3>
                     <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">London</span>
                 </div>
 
                 <!-- Artist 3 -->
-                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" data-cursor="active" onmouseenter="showArtist(3)" onmouseleave="hideArtist(3)">
+                <div class="artist-row py-8 flex justify-between items-center group relative hover-trigger" 
+                     data-cursor="active" 
+                     onmouseenter="showArtist(3)" onmouseleave="hideArtist(3)"
+                     ontouchstart="showArtist(3)" ontouchend="hideArtist(3)">
                     <h3 class="text-4xl md:text-5xl font-thin group-hover:text-[#D62C2C] transition-colors">Yuki Sato</h3>
                     <span class="text-xs md:text-sm text-gray-400 uppercase tracking-widest">Tokyo</span>
                 </div>
@@ -289,31 +314,39 @@
             document.getElementById('artist-img-3')
         ];
         
-        // 1. КУРСОР
         let mouseX = 0, mouseY = 0;
+        let isTouchDevice = false;
+
+        window.addEventListener('touchstart', () => {
+            isTouchDevice = true;
+        }, {once: true});
+
+        // 1. КУРСОР
         const xTo = gsap.quickTo(cursor, "x", {duration: 0.2, ease: "power3"});
         const yTo = gsap.quickTo(cursor, "y", {duration: 0.2, ease: "power3"});
 
         window.addEventListener("mousemove", (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            xTo(mouseX);
-            yTo(mouseY);
             
-            // Двигаем фото художника
-            artistImages.forEach(img => {
-                if(img.style.opacity > 0) {
-                    gsap.to(img, {
-                        x: mouseX,
-                        y: mouseY, 
-                        duration: 0.8,
-                        ease: "power2.out"
-                    });
-                }
-            });
+            if (!isTouchDevice) {
+                xTo(mouseX);
+                yTo(mouseY);
+                
+                artistImages.forEach(img => {
+                    if(img.style.opacity > 0) {
+                        gsap.to(img, {
+                            x: mouseX,
+                            y: mouseY, 
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            }
         });
 
-        // Hover эффекты курсора
+        // Hover эффекты
         document.querySelectorAll('[data-cursor="active"]').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('active'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
@@ -327,7 +360,26 @@
         // 2. ХУДОЖНИКИ
         window.showArtist = (index) => {
             const img = artistImages[index - 1];
-            gsap.set(img, {x: mouseX, y: mouseY, rotation: -10}); 
+            
+            if (window.innerWidth < 768) {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                gsap.set(img, {
+                    x: centerX, 
+                    y: centerY, 
+                    rotation: 0,
+                    zIndex: 100 
+                });
+            } else {
+                gsap.set(img, {
+                    x: mouseX, 
+                    y: mouseY, 
+                    rotation: -10,
+                    zIndex: 50
+                });
+            }
+            
             gsap.to(img, {opacity: 1, scale: 1, rotation: 0, duration: 0.4});
         };
 
