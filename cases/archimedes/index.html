@@ -41,7 +41,7 @@
         body {
             background-color: #F5F5F0;
             color: #111111;
-            overflow-x: hidden; /* Блокируем нативный горизонт. скролл */
+            overflow-x: hidden;
             margin: 0;
         }
         
@@ -78,9 +78,11 @@
     <!-- HERO SECTION -->
     <header id="hero" class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
         <div class="absolute inset-0 z-0 img-mask">
-            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2574&auto=format&fit=crop" 
+            <!-- Оптимизировано: w=1600, q=75 -->
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=75&w=1600" 
                  class="w-full h-full object-cover opacity-90 hero-img scale-110 origin-center" 
-                 alt="Luxury Interior">
+                 alt="Luxury Interior"
+                 decoding="async">
         </div>
         
         <div class="z-10 text-center relative mix-blend-multiply px-4">
@@ -109,33 +111,35 @@
                 </p>
             </div>
             <div class="md:col-span-7 relative h-[60vh] img-mask group">
-                <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=2592&auto=format&fit=crop" 
+                <!-- Оптимизировано: w=1200, q=75 -->
+                <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&q=75&w=1200" 
                      class="absolute inset-0 w-full h-full object-cover intro-img transition-transform duration-1000 group-hover:scale-105" 
-                     alt="Interior Detail">
+                     alt="Interior Detail"
+                     loading="lazy"
+                     decoding="async">
             </div>
         </div>
     </section>
 
-    <!-- HORIZONTAL SCROLL PORTFOLIO (FIXED) -->
-    <!-- Важно: overflow-hidden на секции, чтобы не было полос прокрутки -->
+    <!-- HORIZONTAL SCROLL PORTFOLIO -->
     <section id="portfolio-section" class="relative h-screen bg-luxury-black text-luxury-bg overflow-hidden">
         
-        <!-- Заголовок, который остается на месте некоторое время -->
         <div class="absolute top-10 left-6 md:left-20 z-20 pointer-events-none mix-blend-difference">
             <h3 class="font-serif text-3xl italic text-white/80">Selected Works</h3>
         </div>
         
-        <!-- Wrapper с шириной 300vw (для 3 слайдов) -->
         <div class="gallery-wrapper flex flex-nowrap h-full w-[300vw]">
             
             <!-- Slide 1 -->
             <div class="w-screen h-full flex items-center justify-center relative border-r border-white/5 box-border p-0 m-0 shrink-0">
                 <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center">
                     <div class="w-[70%] h-full img-mask relative overflow-hidden">
-                        <!-- Класс gallery-img для параллакса внутри слайда -->
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2653&auto=format&fit=crop" 
+                        <!-- Оптимизировано: w=1000 (достаточно для слайда) -->
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=75&w=1000" 
                              class="gallery-img w-full h-full object-cover scale-125" 
-                             alt="Paris Project">
+                             alt="Paris Project"
+                             loading="lazy"
+                             decoding="async">
                     </div>
                     <div class="ml-8 md:ml-12 relative z-10 mix-blend-difference md:mix-blend-normal">
                         <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Paris</span>
@@ -148,9 +152,12 @@
             <div class="w-screen h-full flex items-center justify-center relative border-r border-white/5 box-border p-0 m-0 shrink-0">
                 <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center flex-row-reverse">
                     <div class="w-[70%] h-full img-mask relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2670&auto=format&fit=crop" 
+                        <!-- Оптимизировано: w=1000 -->
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=75&w=1000" 
                              class="gallery-img w-full h-full object-cover scale-125" 
-                             alt="Kyoto Project">
+                             alt="Kyoto Project"
+                             loading="lazy"
+                             decoding="async">
                     </div>
                     <div class="mr-8 md:mr-12 text-right relative z-10 mix-blend-difference md:mix-blend-normal">
                         <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Kyoto</span>
@@ -163,9 +170,12 @@
             <div class="w-screen h-full flex items-center justify-center relative box-border p-0 m-0 shrink-0">
                 <div class="w-[85%] h-[70%] md:w-[70%] md:h-[70%] relative flex items-center">
                     <div class="w-[70%] h-full img-mask relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2670&auto=format&fit=crop" 
+                        <!-- Оптимизировано: w=1000 -->
+                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=75&w=1000" 
                              class="gallery-img w-full h-full object-cover scale-125" 
-                             alt="Milan Project">
+                             alt="Milan Project"
+                             loading="lazy"
+                             decoding="async">
                     </div>
                     <div class="ml-8 md:ml-12 relative z-10 mix-blend-difference md:mix-blend-normal">
                         <span class="text-luxury-gold text-xs tracking-[0.3em] uppercase block mb-4">Milan</span>
@@ -189,8 +199,12 @@
                 <!-- Card 1 -->
                 <div class="details-card group cursor-pointer">
                     <div class="overflow-hidden mb-6 aspect-[4/5] relative">
-                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2000&auto=format&fit=crop" 
-                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Detail 1">
+                        <!-- Оптимизировано: w=800, q=70 -->
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=70&w=800" 
+                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" 
+                             alt="Detail 1"
+                             loading="lazy"
+                             decoding="async">
                     </div>
                     <div class="border-t border-luxury-gold/50 pt-4">
                         <h3 class="font-serif text-2xl">Materials</h3>
@@ -200,8 +214,12 @@
                 <!-- Card 2 -->
                 <div class="details-card group cursor-pointer md:mt-24">
                     <div class="overflow-hidden mb-6 aspect-[4/5] relative">
-                        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=2676&auto=format&fit=crop" 
-                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Detail 2">
+                        <!-- Оптимизировано: w=800, q=70 -->
+                        <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&q=70&w=800" 
+                             class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" 
+                             alt="Detail 2"
+                             loading="lazy"
+                             decoding="async">
                     </div>
                     <div class="border-t border-luxury-gold/50 pt-4">
                         <h3 class="font-serif text-2xl">Lighting</h3>
@@ -265,40 +283,34 @@
                 scrollTrigger: { trigger: ".intro-img", start: "top 90%", end: "bottom top", scrub: 1 }
             });
 
-            // --- ИСПРАВЛЕННЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ---
+            // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ---
             const wrapper = document.querySelector(".gallery-wrapper");
-            const portfolioSection = document.querySelector("#portfolio-section");
             
-            // Получаем точную ширину скролла: (ширина всего контента) - (ширина одного экрана)
-            // Это заставляет скролл остановиться ровно когда контент закончится
             function getScrollAmount() {
                 let wrapperWidth = wrapper.scrollWidth;
                 return -(wrapperWidth - window.innerWidth);
             }
 
             const tween = gsap.to(wrapper, {
-                x: getScrollAmount, // Используем функцию для динамического расчета
+                x: getScrollAmount,
                 ease: "none",
                 scrollTrigger: {
                     trigger: "#portfolio-section",
                     pin: true,
                     scrub: 1,
-                    // end определяет "длину" скролла. Чем больше значение, тем медленнее листается
                     end: () => "+=" + (wrapper.scrollWidth - window.innerWidth), 
-                    invalidateOnRefresh: true, // Пересчитывать при ресайзе окна
+                    invalidateOnRefresh: true,
                     anticipatePin: 1
                 }
             });
 
-            // Добавляем эффект параллакса для картинок ВНУТРИ слайдов
-            // Картинки двигаются чуть медленнее контейнера, создавая эффект "окна"
             gsap.utils.toArray(".gallery-img").forEach(img => {
                 gsap.to(img, {
-                    xPercent: -20, // Сдвиг внутри маски
+                    xPercent: -20, 
                     ease: "none",
                     scrollTrigger: {
                         trigger: "#portfolio-section",
-                        start: "top top", // Старт вместе с секцией
+                        start: "top top", 
                         end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
                         scrub: 1
                     }
