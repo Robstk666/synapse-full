@@ -195,7 +195,6 @@
 <!-- JS Logic -->
     <script>
         lucide.createIcons();
-        // Генерируем случайный ID сессии
         document.getElementById('session-id').innerText = '0x' + Math.floor(Math.random()*16777215).toString(16).toUpperCase();
 
         const steps = [
@@ -285,7 +284,7 @@
         const progressText = document.getElementById('progress-text');
         const statusText = document.getElementById('status-text');
         const nextBtnText = document.getElementById('nextBtnText');
-        const briefForm = document.getElementById('briefForm'); // Сама форма
+        const briefForm = document.getElementById('briefForm');
 
         function renderStep(index) {
             reviewContainer.classList.add('hidden');
@@ -460,11 +459,10 @@
             }
         });
 
-        // --- ИСПРАВЛЕННАЯ ЛОГИКА ОТПРАВКИ ---
+        // --- БЕЗОПАСНАЯ ОТПРАВКА ---
         briefForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // 1. Анимация загрузки на кнопке
             submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> СОЕДИНЕНИЕ...`;
             submitBtn.disabled = true;
 
@@ -477,13 +475,23 @@
                 messageBody += "-----------------------------------\n";
             });
 
+            // Проверяем, ввел ли пользователь Email или телефон
+            const contactInput = formData['contact_method'] || '';
+            const isEmail = contactInput.includes('@') && contactInput.includes('.');
+
             const payload = {
                 name: formData['contact_name'] || 'Аноним',
-                email: formData['contact_method'] && formData['contact_method'].includes('@') ? formData['contact_method'] : undefined,
-                contact: formData['contact_method'] || '-',
                 message: messageBody,
                 _subject: `Новый бриф: ${formData['company'] || 'Без названия'}`
             };
+
+            // Если это Email - добавляем поле email для Formspree
+            if (isEmail) {
+                payload.email = contactInput;
+            } else {
+                // Если это телефон - добавляем в отдельное поле (не в email!)
+                payload.contact_details = contactInput;
+            }
 
             try {
                 const response = await fetch("https://formspree.io/f/xrbwykje", {
@@ -495,27 +503,36 @@
                     }
                 });
 
+                const jsonResponse = await response.json();
+
                 if (response.ok) {
-                    // 2. УСПЕХ: Скрываем форму ПОЛНОСТЬЮ
-                    briefForm.style.display = 'none'; // Убираем форму
-                    document.querySelector('.px-8.pt-8').style.display = 'none'; // Убираем прогресс бар
-                    document.querySelector('.bg-[#111]').style.display = 'none'; // Убираем заголовок терминала
+                    // УСПЕХ
+                    briefForm.style.display = 'none';
+                    document.querySelector('.px-8.pt-8').style.display = 'none';
+                    document.querySelector('.bg-[#111]').style.display = 'none';
                     
-                    // 3. Показываем большой экран успеха
                     const successScreen = document.getElementById('success-screen');
                     successScreen.classList.remove('hidden');
-                    lucide.createIcons(); // Обновляем иконки на экране успеха
+                    lucide.createIcons();
 
-                    // 4. Ждем 3 секунды и редиректим
                     setTimeout(() => {
                         window.location.href = "index.html";
                     }, 3000); 
 
                 } else {
-                    throw new Error('Server returned ' + response.status);
+                    // ЕСЛИ СНОВА ОШИБКА - ПОКАЖЕМ ПОЧЕМУ
+                    console.error("Formspree Error:", jsonResponse);
+                    const errorScreen = document.getElementById('error-screen');
+                    const errorText = errorScreen.querySelector('p');
+                    
+                    // Выводим понятную ошибку
+                    errorText.innerText = "Ошибка сервера: " + (jsonResponse.error || "Некорректные данные");
+                    
+                    errorScreen.classList.remove('hidden');
+                    lucide.createIcons();
                 }
             } catch (error) {
-                console.error("Error:", error);
+                console.error("Network Error:", error);
                 document.getElementById('error-screen').classList.remove('hidden');
                 lucide.createIcons();
             }
