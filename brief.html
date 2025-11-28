@@ -178,21 +178,10 @@
                     </button>
                 </div>
             </form>
-
-            <!-- Error Screen -->
-            <div id="error-screen" class="hidden absolute inset-0 bg-black z-20 flex flex-col items-center justify-center text-center p-8">
-                <i data-lucide="alert-triangle" class="w-20 h-20 text-red-500 mb-6"></i>
-                <h2 class="font-display text-3xl text-white mb-2">СБОЙ СЕТИ</h2>
-                <p class="font-tech text-gray-400 text-sm mb-8">Ошибка передачи пакетов данных.</p>
-                <button onclick="location.reload()" class="px-6 py-3 border border-white text-white font-tech text-xs hover:bg-white hover:text-black transition-all">
-                    ПЕРЕЗАГРУЗИТЬ СИСТЕМУ
-                </button>
-            </div>
-
         </div>
     </main>
 
-<!-- JS Logic -->
+    <!-- JS Logic -->
     <script>
         lucide.createIcons();
         document.getElementById('session-id').innerText = '0x' + Math.floor(Math.random()*16777215).toString(16).toUpperCase();
@@ -291,7 +280,6 @@
             questionContainer.classList.remove('hidden');
             
             const step = steps[index];
-
             const progress = Math.round(((index) / steps.length) * 100);
             progressBar.style.width = `${progress}%`;
             progressText.innerText = `${progress}%`;
@@ -307,7 +295,6 @@
             step.questions.forEach(q => {
                 const wrapper = document.createElement('div');
                 wrapper.className = "group relative mb-6 step-enter";
-                
                 const label = document.createElement('label');
                 label.className = "block font-tech text-xs text-cyber-green mb-2 uppercase tracking-wider";
                 label.innerText = `> ${q.label}`;
@@ -342,7 +329,6 @@
                 input.addEventListener('input', (e) => {
                     formData[q.id] = e.target.value;
                 });
-
                 wrapper.appendChild(label);
                 wrapper.appendChild(input);
                 questionContainer.appendChild(wrapper);
@@ -369,15 +355,12 @@
         function renderReview() {
             isReviewMode = true;
             returnToReview = false;
-
             questionContainer.classList.add('hidden');
             reviewContainer.classList.remove('hidden');
             reviewContainer.classList.add('review-enter');
-            
             progressBar.style.width = '100%';
             progressText.innerText = '100%';
             statusText.innerText = "SYSTEM CHECK // FINALIZATION";
-
             prevBtn.style.opacity = '1';
             prevBtn.style.pointerEvents = 'auto';
             nextBtn.classList.add('hidden');
@@ -387,14 +370,11 @@
             steps.forEach((step, index) => {
                 const group = document.createElement('div');
                 group.className = "mb-6 border-b border-white/5 pb-4 last:border-0";
-                
                 const header = document.createElement('div');
                 header.className = "flex justify-between items-center mb-2";
-                
                 const title = document.createElement('h4');
                 title.className = "font-tech text-xs text-cyber-green opacity-70";
                 title.innerText = step.title;
-
                 const editBtn = document.createElement('button');
                 editBtn.type = "button";
                 editBtn.className = "text-gray-500 hover:text-white transition-colors p-1";
@@ -405,7 +385,6 @@
                     returnToReview = true;
                     renderStep(currentStep);
                 };
-
                 header.appendChild(title);
                 header.appendChild(editBtn);
                 group.appendChild(header);
@@ -419,12 +398,10 @@
                     const val = document.createElement('div');
                     val.className = "text-sm text-white font-sans break-words";
                     val.innerText = formData[q.id] || "—";
-                    
                     row.appendChild(label);
                     row.appendChild(val);
                     group.appendChild(row);
                 });
-
                 reviewList.appendChild(group);
             });
             lucide.createIcons();
@@ -435,7 +412,6 @@
         nextBtn.addEventListener('click', () => {
             const inputs = questionContainer.querySelectorAll('input, select, textarea');
             inputs.forEach(inp => formData[inp.dataset.id] = inp.value);
-
             if (returnToReview) {
                 renderReview();
             } else {
@@ -459,10 +435,11 @@
             }
         });
 
-        // --- БЕЗОПАСНАЯ ОТПРАВКА ---
+        // --- ФИНАЛЬНАЯ ЛОГИКА ОТПРАВКИ ---
         briefForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Анимация загрузки
             submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> СОЕДИНЕНИЕ...`;
             submitBtn.disabled = true;
 
@@ -475,23 +452,13 @@
                 messageBody += "-----------------------------------\n";
             });
 
-            // Проверяем, ввел ли пользователь Email или телефон
-            const contactInput = formData['contact_method'] || '';
-            const isEmail = contactInput.includes('@') && contactInput.includes('.');
-
+            // Формируем пакет данных без поля email, чтобы не вызывать ошибку валидации
             const payload = {
                 name: formData['contact_name'] || 'Аноним',
+                contact_details: formData['contact_method'] || '-', // Кастомное поле
                 message: messageBody,
                 _subject: `Новый бриф: ${formData['company'] || 'Без названия'}`
             };
-
-            // Если это Email - добавляем поле email для Formspree
-            if (isEmail) {
-                payload.email = contactInput;
-            } else {
-                // Если это телефон - добавляем в отдельное поле (не в email!)
-                payload.contact_details = contactInput;
-            }
 
             try {
                 const response = await fetch("https://formspree.io/f/xrbwykje", {
@@ -503,38 +470,28 @@
                     }
                 });
 
-                const jsonResponse = await response.json();
-
+                // Считаем, что если запрос ушел (200 OK), то все хорошо.
+                // Не пытаемся парсить JSON, чтобы избежать ошибки с CORS/блокировщиками.
                 if (response.ok) {
-                    // УСПЕХ
-                    briefForm.style.display = 'none';
-                    document.querySelector('.px-8.pt-8').style.display = 'none';
-                    document.querySelector('.bg-[#111]').style.display = 'none';
-                    
-                    const successScreen = document.getElementById('success-screen');
-                    successScreen.classList.remove('hidden');
+                    // УСПЕХ: Кнопка зеленеет
+                    submitBtn.classList.remove('bg-cyber-green', 'text-black');
+                    submitBtn.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                    submitBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ОТПРАВЛЕНО!`;
                     lucide.createIcons();
 
+                    // Редирект на главную через 1.5 сек
                     setTimeout(() => {
                         window.location.href = "index.html";
-                    }, 3000); 
-
+                    }, 1500);
                 } else {
-                    // ЕСЛИ СНОВА ОШИБКА - ПОКАЖЕМ ПОЧЕМУ
-                    console.error("Formspree Error:", jsonResponse);
-                    const errorScreen = document.getElementById('error-screen');
-                    const errorText = errorScreen.querySelector('p');
-                    
-                    // Выводим понятную ошибку
-                    errorText.innerText = "Ошибка сервера: " + (jsonResponse.error || "Некорректные данные");
-                    
-                    errorScreen.classList.remove('hidden');
-                    lucide.createIcons();
+                    throw new Error("Ошибка сервера");
                 }
             } catch (error) {
-                console.error("Network Error:", error);
-                document.getElementById('error-screen').classList.remove('hidden');
-                lucide.createIcons();
+                console.error("Submission Error:", error);
+                // На случай реального сбоя
+                alert("Не удалось отправить данные. Проверьте подключение.");
+                submitBtn.innerHTML = "ПОВТОРИТЬ";
+                submitBtn.disabled = false;
             }
         });
     </script>
