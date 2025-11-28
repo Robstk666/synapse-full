@@ -159,22 +159,25 @@
                         <!-- Review items injected here -->
                     </div>
                     <div class="text-center">
-                        <p class="font-tech text-xs text-gray-500 mb-4">ПРОВЕРЬТЕ ДАННЫЕ ПЕРЕД ОТПРАВКОЙ ПРОТОКОЛА</p>
+                        <p class="font-tech text-xs text-gray-500 mb-4">ПРОВЕРЬТЕ ДАННЫЕ ПЕРЕД ОТПРАВКОЙ</p>
                     </div>
                 </div>
 
                 <!-- Navigation Controls -->
-                <div class="flex justify-between items-center mt-8 pt-8 border-t border-white/5 bg-[#0a0a0a] z-10">
-                    <button type="button" id="prevBtn" class="px-6 py-2 border border-white/20 text-gray-400 font-tech text-xs hover:text-white hover:border-white transition-all opacity-0 pointer-events-none flex items-center gap-2">
-                        <i data-lucide="chevron-left" class="w-4 h-4"></i> НАЗАД
+                <!-- ИЗМЕНЕНИЕ: Уменьшил отступы px/py для мобильных (md: возвращает большие) -->
+                <div class="flex justify-between items-center mt-8 pt-8 border-t border-white/5 bg-[#0a0a0a] z-10 gap-2">
+                    
+                    <button type="button" id="prevBtn" class="px-4 py-2 md:px-6 md:py-2 border border-white/20 text-gray-400 font-tech text-[10px] md:text-xs hover:text-white hover:border-white transition-all opacity-0 pointer-events-none flex items-center gap-1 md:gap-2">
+                        <i data-lucide="chevron-left" class="w-3 h-3 md:w-4 md:h-4"></i> <span class="hidden md:inline">НАЗАД</span><span class="md:hidden"><</span>
                     </button>
                     
-                    <button type="button" id="nextBtn" class="px-8 py-3 bg-cyber-green text-black font-tech font-bold uppercase hover:bg-white transition-colors flex items-center gap-2 glow-box">
+                    <button type="button" id="nextBtn" class="px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white transition-colors flex items-center gap-2 glow-box">
                         <span id="nextBtnText">ДАЛЕЕ</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </button>
 
-                    <button type="submit" id="submitBtn" class="hidden px-8 py-3 bg-cyber-green text-black font-tech font-bold uppercase hover:bg-white hover:shadow-[0_0_20px_#00ff9d] transition-all flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4"></i> ПОДТВЕРДИТЬ И ОТПРАВИТЬ
+                    <!-- ИЗМЕНЕНИЕ: Переименовал кнопку и уменьшил размер на мобильных -->
+                    <button type="submit" id="submitBtn" class="hidden px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white hover:shadow-[0_0_20px_#00ff9d] transition-all flex items-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i> ОТПРАВИТЬ
                     </button>
                 </div>
             </form>
@@ -346,9 +349,10 @@
             submitBtn.classList.add('hidden');
 
             if (returnToReview) {
-                nextBtnText.innerText = "СОХРАНИТЬ И ВЕРНУТЬСЯ";
+                nextBtnText.innerText = "СОХРАНИТЬ";
             } else {
-                nextBtnText.innerText = (index === steps.length - 1) ? "ПРОВЕРИТЬ ДАННЫЕ" : "ДАЛЕЕ";
+                // ИЗМЕНЕНИЕ: Сократил "ПРОВЕРИТЬ ДАННЫЕ" до "ПРОВЕРИТЬ"
+                nextBtnText.innerText = (index === steps.length - 1) ? "ПРОВЕРИТЬ" : "ДАЛЕЕ";
             }
         }
 
@@ -360,7 +364,7 @@
             reviewContainer.classList.add('review-enter');
             progressBar.style.width = '100%';
             progressText.innerText = '100%';
-            statusText.innerText = "SYSTEM CHECK // FINALIZATION";
+            statusText.innerText = "SYSTEM CHECK";
             prevBtn.style.opacity = '1';
             prevBtn.style.pointerEvents = 'auto';
             nextBtn.classList.add('hidden');
@@ -435,11 +439,10 @@
             }
         });
 
-        // --- ФИНАЛЬНАЯ ЛОГИКА ОТПРАВКИ ---
+        // --- ОТПРАВКА ---
         briefForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Анимация загрузки
             submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> СОЕДИНЕНИЕ...`;
             submitBtn.disabled = true;
 
@@ -452,10 +455,9 @@
                 messageBody += "-----------------------------------\n";
             });
 
-            // Формируем пакет данных без поля email, чтобы не вызывать ошибку валидации
             const payload = {
                 name: formData['contact_name'] || 'Аноним',
-                contact_details: formData['contact_method'] || '-', // Кастомное поле
+                contact_details: formData['contact_method'] || '-',
                 message: messageBody,
                 _subject: `Новый бриф: ${formData['company'] || 'Без названия'}`
             };
@@ -470,16 +472,12 @@
                     }
                 });
 
-                // Считаем, что если запрос ушел (200 OK), то все хорошо.
-                // Не пытаемся парсить JSON, чтобы избежать ошибки с CORS/блокировщиками.
                 if (response.ok) {
-                    // УСПЕХ: Кнопка зеленеет
                     submitBtn.classList.remove('bg-cyber-green', 'text-black');
                     submitBtn.classList.add('bg-green-500', 'text-white', 'border-green-500');
                     submitBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ОТПРАВЛЕНО!`;
                     lucide.createIcons();
 
-                    // Редирект на главную через 1.5 сек
                     setTimeout(() => {
                         window.location.href = "index.html";
                     }, 1500);
@@ -488,7 +486,6 @@
                 }
             } catch (error) {
                 console.error("Submission Error:", error);
-                // На случай реального сбоя
                 alert("Не удалось отправить данные. Проверьте подключение.");
                 submitBtn.innerHTML = "ПОВТОРИТЬ";
                 submitBtn.disabled = false;
