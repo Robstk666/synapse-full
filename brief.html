@@ -462,9 +462,11 @@
         document.getElementById('briefForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> СВЯЗЬ СО СПУТНИКОМ...`;
+            // Визуализация загрузки
+            submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> СВЯЗЬ...`;
             submitBtn.disabled = true;
 
+            // Сбор данных
             let messageBody = "🚀 НОВЫЙ БРИФ ОТ КЛИЕНТА\n\n";
             steps.forEach(step => {
                 messageBody += `=== ${step.title} ===\n`;
@@ -474,12 +476,17 @@
                 messageBody += "-----------------------------------\n";
             });
 
+            // Данные для отправки
             const payload = {
                 name: formData['contact_name'] || 'Аноним',
-                contact: formData['contact_method'] || '-',
+                // Formspree любит поле email, но если его нет, используем contact
+                email: formData['contact_method'] && formData['contact_method'].includes('@') ? formData['contact_method'] : undefined,
                 message: messageBody,
-                _subject: `Новый бриф: ${formData['company'] || 'Без названия'}`
+                contact_details: formData['contact_method'] || '-',
+                _subject: `Бриф: ${formData['company'] || 'Новый проект'}`
             };
+
+            console.log("Отправка данных:", payload); // Для отладки в F12
 
             try {
                 const response = await fetch("https://formspree.io/f/xrbwykje", {
@@ -491,23 +498,30 @@
                     }
                 });
 
+                const jsonResponse = await response.json();
+
                 if (response.ok) {
-                    // Успех: меняем кнопку и делаем редирект
+                    // УСПЕХ
                     submitBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ОТПРАВЛЕНО!`;
                     submitBtn.classList.remove('bg-cyber-green', 'text-black');
                     submitBtn.classList.add('bg-green-500', 'text-white');
                     
-                    // Редирект через 1.5 секунды
                     setTimeout(() => {
                         window.location.href = "index.html";
                     }, 1500);
                 } else {
-                    throw new Error('Network response was not ok');
+                    // ОШИБКА ОТ СЕРВЕРА
+                    console.error("Ошибка Formspree:", jsonResponse);
+                    alert("Ошибка отправки: " + (jsonResponse.error || "Неизвестная ошибка"));
+                    submitBtn.innerHTML = "ПОВТОРИТЬ";
+                    submitBtn.disabled = false;
                 }
             } catch (error) {
-                console.error("Error:", error);
-                document.getElementById('error-screen').classList.remove('hidden');
-                lucide.createIcons();
+                // ОШИБКА СЕТИ (Например, запуск с компьютера)
+                console.error("Сетевая ошибка:", error);
+                alert("Ошибка сети! Если вы запускаете файл с компьютера (file://), отправка не сработает. Загрузите сайт на хостинг/GitHub.");
+                submitBtn.innerHTML = "ПОВТОРИТЬ";
+                submitBtn.disabled = false;
             }
         });
     </script>
