@@ -20,6 +20,8 @@
     <meta property="og:description" content="Запустите проект быстро. Static Site архитектура: мгновенная загрузка, защита от взлома, 0₽ за обслуживание.">
     <meta property="og:image" content="https://synapse-studio72h.ru/images/og-image.jpg">
     <meta property="og:site_name" content="Synapse Studio">
+    
+    <!-- Large Image for Telegram/Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://synapse-studio72h.ru/images/og-image.jpg">
     
@@ -70,7 +72,7 @@
         },
         {
           "@type": "Offer",
-          "name": "Разработка MVP / Лендинг Старт",
+          "name": "Разработка MVP / Старт",
           "price": "60000",
           "priceCurrency": "RUB",
           "description": "Полноценный лендинг (No-CMS) за 72 часа с анимацией."
@@ -146,10 +148,12 @@
             color: #e0e0e0;
             overflow-x: hidden;
         }
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #00ff9d; }
+        
         .bg-grid {
             background-size: 40px 40px;
             mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
@@ -489,6 +493,7 @@
                         </h3>
                         <div class="text-4xl font-bold text-white mb-6">72 ЧАСА</div>
                         <ul class="space-y-4 font-tech text-sm text-gray-300">
+                            <!-- KEYWORDS INJECTED HERE -->
                             <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Экспресс-брифинг</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Скорость загрузки (100/100)</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Цена 60,000 ₽</li>
@@ -537,64 +542,84 @@
                 </div>
             </div>
 
+            <!-- БЛОК ПОРТФОЛИО (Слайдер) -->
             <div id="cases" class="space-y-6 pt-10 border-t border-white/10 scroll-mt-24">
-                <div class="flex items-center gap-4 mb-8">
-                    <h3 class="font-tech text-cyber-green text-sm">ПОРТФОЛИО // КЕЙСЫ</h3>
-                    <div class="h-[1px] bg-cyber-green/30 flex-grow"></div>
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex items-center gap-4">
+                        <h3 class="font-tech text-cyber-green text-sm">ПОРТФОЛИО // КЕЙСЫ</h3>
+                        <div class="h-[1px] bg-cyber-green/30 w-24"></div>
+                    </div>
+                    <!-- Подсказка для скролла -->
+                    <div class="hidden md:flex text-xs font-tech text-gray-600 gap-2 items-center">
+                        <span>SCROLL</span> <i data-lucide="arrow-right" class="w-4 h-4 animate-pulse"></i>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Контейнер скролла (Лента) -->
+                <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scroll-smooth" style="scrollbar-color: #00ff9d #111; scrollbar-width: thin;">
+                    
                     <!-- Case 1: Aether -->
-                    <a href="./cases/aether/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
-                        <img src="images/case1.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
-                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
-                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Aether Gallery</h4>
-                            <div class="flex justify-between items-end">
-                                <span class="text-xs text-gray-400">Art Space</span>
-                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
-                            </div>
+                    <a href="./cases/aether/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case1.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">01 // ART SPACE</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Aether Gallery</h4>
+                            <p class="text-xs text-gray-400">Иммерсивная галерея цифрового искусства.</p>
                         </div>
                     </a>
 
                      <!-- Case 2: Archimedes -->
-                     <a href="./cases/archimedes/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
-                        <img src="images/case2.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
-                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
-                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Archimedes</h4>
-                            <div class="flex justify-between items-end">
-                                <span class="text-xs text-gray-400">Interior</span>
-                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
-                            </div>
+                     <a href="./cases/archimedes/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case2.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">02 // INTERIOR</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Archimedes</h4>
+                            <p class="text-xs text-gray-400">Студия архитектурного дизайна.</p>
                         </div>
                     </a>
 
                      <!-- Case 3: Quantum -->
-                     <a href="./cases/quantum/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
-                        <img src="images/case3.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
-                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
-                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Quantum Core</h4>
-                            <div class="flex justify-between items-end">
-                                <span class="text-xs text-gray-400">Tech</span>
-                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
-                            </div>
+                     <a href="./cases/quantum/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case3.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">03 // TECH</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Quantum Core</h4>
+                            <p class="text-xs text-gray-400">SaaS платформа для вычислений.</p>
                         </div>
                     </a>
 
                      <!-- Case 4: Summit -->
-                     <a href="./cases/summit/index.html" target="_blank" class="group h-64 relative overflow-hidden border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer">
-                        <img src="images/case4.jpg" class="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent z-10"></div>
-                        <div class="absolute bottom-0 left-0 p-4 z-20 w-full">
-                            <h4 class="text-white font-bold mb-1 group-hover:text-cyber-green transition-colors">Summit 2026</h4>
-                            <div class="flex justify-between items-end">
-                                <span class="text-xs text-gray-400">Event</span>
-                                <span class="text-xs font-tech text-cyber-green border border-cyber-green px-1">VIEW</span>
-                            </div>
+                     <a href="./cases/summit/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case4.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">04 // EVENT</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Summit 2026</h4>
+                            <p class="text-xs text-gray-400">Международный форум по ИИ.</p>
                         </div>
                     </a>
+
+                    <!-- Case 5: Marsel Auto (NEW) -->
+                    <!-- ЗАГЛУШКА: Ссылка пока ведет на Aether, замените href на ./cases/marselauto/index.html когда создадите папку -->
+                    <a href="./cases/marselauto/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case5.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Marsel Auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">05 // AUTO</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Marsel Auto</h4>
+                            <p class="text-xs text-gray-400">Детейлинг и автоподбор.</p>
+                        </div>
+                    </a>
+
+                    <!-- Пустая карточка "Скоро" -->
+                    <div class="group relative flex-shrink-0 w-[85vw] md:w-[200px] h-[500px] border border-white/5 border-dashed flex flex-col items-center justify-center text-center p-4">
+                        <i data-lucide="plus" class="text-gray-700 w-12 h-12 mb-4 group-hover:text-cyber-green transition-colors"></i>
+                        <span class="font-tech text-xs text-gray-600">ЗДЕСЬ МОЖЕТ БЫТЬ<br>ВАШ ПРОЕКТ</span>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -626,7 +651,7 @@
                 <div class="group bg-black p-8 border border-cyber-green/50 hover:border-cyber-green transition-all duration-300 relative scale-105 shadow-[0_0_20px_rgba(0,255,157,0.1)]">
                     <div class="absolute top-0 right-0 bg-cyber-green text-black px-2 py-1 font-tech text-xs font-bold">RECOMENDED</div>
                     <div class="font-tech text-cyber-green text-xs mb-4">PROTOCOL_02</div>
-                    <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Старт</h3>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Старт</h3>
                     <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: MVP, тест гипотезы, срочный запуск.</p>
                     
                     <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
@@ -643,7 +668,7 @@
                 <!-- Tariff 3 -->
                 <div class="group bg-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative">
                     <div class="font-tech text-gray-500 text-xs mb-4">PROTOCOL_03</div>
-                    <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Бизнес</h3>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Бизнес</h3>
                     <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: Максимальная конверсия, имидж, контроль.</p>
                     
                     <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
@@ -716,7 +741,7 @@
             
             <div class="bg-[#050505] border-x border-b border-cyber-green/30 p-8 md:p-12 shadow-[0_0_50px_rgba(0,255,157,0.1)]">
                 <h2 class="font-display text-3xl text-white mb-2">ВАШ БИЗНЕС НЕ ЖДЕТ.</h2>
-                <p class="font-tech text-cyber-green text-sm mb-8">Запуститесь уже вчера</p>
+                <p class="font-tech text-cyber-green text-sm mb-8">Сайт нужен был вчера? оставляй заявку.</p>
 
                 <form id="projectForm" class="space-y-6" action="https://formspree.io/f/mqaogzrv" method="POST"> 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -768,7 +793,6 @@
     </section>
 
     <!-- 7. Footer -->
-  <!-- 7. Footer -->
 <footer class="py-10 bg-cyber-dark border-t border-white/5">
     <div class="max-w-7xl mx-auto px-6 text-center font-tech">
         <p class="text-xs text-gray-600 mb-4">SYNAPSE STUDIO // PROTOCOL 72H // EST. 2025</p>
