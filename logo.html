@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Logo Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { cyber: { green: '#00ff9d' } },
+                    fontFamily: {
+                        tech: ['JetBrains Mono', 'monospace'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #050505; color: white; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center gap-20 p-10">
+
+    <!-- ВАРИАНТ 1: Логотип для сайта (Крупно) -->
+    <div class="text-center">
+        <p class="text-gray-500 mb-4 font-mono text-xs">ЛОГОТИП (Сделай скриншот только этого блока)</p>
+        <div class="inline-flex items-center gap-4 p-10 border border-white/10 bg-black rounded-xl">
+            <i data-lucide="cpu" class="text-cyber-green w-16 h-16"></i>
+            <div class="flex flex-col text-left">
+                <span class="font-display font-bold text-5xl tracking-wider leading-none text-white">SYNAPSE</span>
+                <span class="font-tech text-lg text-cyber-green tracking-[0.2em] leading-none mt-1">STUDIO_72H</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВАРИАНТ 2: Баннер для соцсетей (og-image.jpg) -->
+    <div class="text-center">
+        <p class="text-gray-500 mb-4 font-mono text-xs">БАННЕР 1200x630 (Сделай скриншот ровно по рамке)</p>
+        
+        <!-- Рамка 1200x630 -->
+        <div style="width: 1200px; height: 630px;" class="relative bg-[#0a0a0a] flex flex-col items-center justify-center border border-cyber-green overflow-hidden relative">
+            
+            <!-- Фон сетка -->
+            <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px); background-size: 40px 40px;"></div>
+            
+            <!-- Лого по центру -->
+            <div class="flex flex-col items-center gap-4 z-10 scale-150">
+                <i data-lucide="cpu" class="text-cyber-green w-20 h-20 mb-2"></i>
+                <div class="flex flex-col items-center">
+                    <span class="font-display font-bold text-6xl tracking-wider leading-none text-white">SYNAPSE</span>
+                    <span class="font-tech text-xl text-cyber-green tracking-[0.3em] leading-none mt-2">STUDIO_72H</span>
+                </div>
+            </div>
+
+            <!-- Текст внизу -->
+            <div class="absolute bottom-10 font-tech text-gray-500 text-xl tracking-widest">
+                WEB DEVELOPMENT // PURE CODE
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
