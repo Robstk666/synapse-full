@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- === SEO CONFIGURATION === -->
-    <title>Разработка сайтов за 72 часа | Synapse Studio</title>
-    <meta name="description" content="Разработка High-Speed сайтов на чистом коде (HTML/JS). Без конструкторов и переплат. Запуск MVP и лендингов за 3 дня.">
-    <meta name="keywords" content="разработка сайтов, создать лендинг, сайт на html, веб-студия, сайт быстро, synapse studio">
+    <!-- === SEO & AI CONFIGURATION === -->
+    <title>Разработка High-Speed сайтов за 72 часа | Synapse Studio (No-CMS)</title>
+    <meta name="description" content="Студия статической веб-разработки. Сайты на чистом коде (HTML/JS/Tailwind) за 72 часа. Green Zone в PageSpeed. Без конструкторов, без подписок, без уязвимостей.">
+    <meta name="keywords" content="разработка сайтов, static site, no-cms, чистый код, html верстка, сайт быстро, synapse studio, лендинг без тильды">
     <meta name="author" content="Synapse Studio">
     
     <!-- Canonical URL -->
@@ -16,14 +16,13 @@
     <!-- === SOCIAL MEDIA (Open Graph) === -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://synapse-studio72h.ru/">
-    <meta property="og:title" content="Synapse Studio | Сайт за 72 часа">
-    <meta property="og:description" content="Запустите проект быстро. Чистый код, защита от взлома, высокая скорость.">
-    <!-- Не забудьте загрузить картинку og-image.jpg в папку images -->
+    <meta property="og:title" content="Synapse Studio | Сайт за 72 часа (Pure Code)">
+    <meta property="og:description" content="Запустите проект быстро. Static Site архитектура: мгновенная загрузка, защита от взлома, 0₽ за обслуживание.">
     <meta property="og:image" content="https://synapse-studio72h.ru/images/og-image.jpg">
     <meta property="og:site_name" content="Synapse Studio">
     
     <!-- Favicon -->
-   <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +34,48 @@
     
     <!-- Icons (Lucide) -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- SCHEMA.ORG (PASSPORT FOR AI) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Synapse Studio",
+      "image": "https://synapse-studio72h.ru/images/og-image.jpg",
+      "@id": "https://synapse-studio72h.ru",
+      "url": "https://synapse-studio72h.ru",
+      "telephone": "+79990000000",
+      "priceRange": "28000-90000 RUB",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "RU"
+      },
+      "description": "Студия веб-разработки High-Speed сайтов за 72 часа. Чистый код (HTML/JS/Tailwind), без конструкторов. Разработка MVP и лендингов.",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "sameAs": [ "https://t.me/rob_serg" ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Разработка сайта-презентации",
+          "price": "28000",
+          "priceCurrency": "RUB",
+          "description": "Static Site за 48 часов для быстрого старта."
+        },
+        {
+          "@type": "Offer",
+          "name": "Разработка MVP / Старт",
+          "price": "60000",
+          "priceCurrency": "RUB",
+          "description": "Полноценный лендинг (No-CMS) за 72 часа с анимацией."
+        }
+      ]
+    }
+    </script>
 
     <script>
         tailwind.config = {
@@ -103,20 +144,14 @@
             color: #e0e0e0;
             overflow-x: hidden;
         }
-
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #00ff9d; }
-
-        /* Grid Background Effect */
         .bg-grid {
             background-size: 40px 40px;
             mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
         }
-
-        /* Neon Glow Utility */
         .glow-text { text-shadow: 0 0 10px rgba(0, 255, 157, 0.5); }
         .glow-box {
             box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
@@ -126,8 +161,6 @@
             box-shadow: 0 0 25px rgba(0, 255, 157, 0.3);
             border-color: #00ff9d;
         }
-
-        /* Matrix Animation */
         .matrix-mode {
             font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
@@ -141,12 +174,10 @@
             animation: matrix-rain 2s linear infinite;
             text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
         }
-
         @keyframes matrix-rain {
             0% { background-position: 0% -100%; }
             100% { background-position: 0% 200%; }
         }
-
         .matrix-mode::after {
             content: '';
             position: absolute;
@@ -156,7 +187,6 @@
             animation: matrix-flicker 3s infinite;
             pointer-events: none;
         }
-
         @keyframes matrix-flicker {
             0%, 90% { opacity: 0; }
             92% { opacity: 0.5; transform: skewX(10deg); }
@@ -164,18 +194,9 @@
             94% { opacity: 0.5; transform: skewX(-10deg); }
             100% { opacity: 0; }
         }
-        
         .animate-flicker-1 { animation: flicker 4s infinite; }
         .animate-flicker-2 { animation: flicker 5s infinite; animation-delay: 0.5s; }
         .animate-flicker-3 { animation: flicker 3s infinite; animation-delay: 1s; }
-        
-        /* Фоновая надпись */
-        .bg-neon-text {
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        /* Scanline Effect */
         .scanline {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
@@ -185,62 +206,9 @@
             z-index: 9999;
             opacity: 0.3;
         }
-
-        /* Terminal Cursor */
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     </style>
-    <!-- SCHEMA.ORG FOR AI -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Synapse Studio",
-      "image": "https://synapse-studio72h.ru/images/og-image.jpg",
-      "@id": "https://synapse-studio72h.ru",
-      "url": "https://synapse-studio72h.ru",
-      "telephone": "+79990000000",
-      "priceRange": "28000-90000 RUB",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "RU"
-      },
-      "description": "Студия веб-разработки High-Speed сайтов за 72 часа. Чистый код (HTML/JS/Tailwind), без конструкторов. Разработка MVP и лендингов.",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
-        ],
-        "opens": "00:00",
-        "closes": "23:59"
-      },
-      "sameAs": [
-        "https://t.me/rob_serg" 
-      ],
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Разработка сайта-презентации",
-          "price": "28000",
-          "priceCurrency": "RUB",
-          "description": "Сайт за 48 часов для быстрого старта."
-        },
-        {
-          "@type": "Offer",
-          "name": "Разработка MVP / Старт",
-          "price": "60000",
-          "priceCurrency": "RUB",
-          "description": "Полноценный лендинг за 72 часа с анимацией и формами."
-        }
-      ]
-    }
-    </script>
 </head>
 <body class="font-sans antialiased selection:bg-cyber-green selection:text-black">
 
@@ -256,7 +224,7 @@
         </span>
     </a>
 
-    <!-- 0. Header (Navigation) -->
+    <!-- Header -->
     <header class="fixed top-0 w-full z-50 bg-cyber-black/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
             <!-- Logo -->
@@ -296,7 +264,7 @@
             </button>
         </div>
 
-        <!-- Мобильное меню -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-black z-40 hidden flex-col items-center justify-start pt-32 gap-6 transition-all duration-300 h-screen w-screen overflow-y-auto">
             <a href="#tariffs" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
                 Цены [72ч]
@@ -319,13 +287,7 @@
 
     <!-- 1. Hero Section -->
     <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex items-center group">
-        <!-- BG Grid -->
         <div class="absolute inset-0 bg-grid-pattern opacity-20 -z-10 bg-grid"></div>
-        
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-20 w-full text-center overflow-hidden pointer-events-none select-none" style="top: 15%;">
-            <!-- Убран ЛЕНДИНГИ -->
-        </div>
-
         <div class="absolute inset-0 -z-10 overflow-hidden">
             <div class="absolute top-1/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-green to-transparent opacity-30 animate-pulse"></div>
             <div class="absolute top-3/4 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-green to-transparent opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
@@ -353,7 +315,7 @@
                 
                 <p class="text-cyber-gray text-lg md:text-xl max-w-lg leading-relaxed border-l-2 border-cyber-green pl-6">
                     Гибридная работа:<br>
-                    <span class="text-white">Скорость AI + экспертиза Арт-Дира.</span>
+                    <span class="text-white font-bold">Скорость AI</span> + <span class="text-white font-bold">экспертиза Арт-Дира</span>.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -404,7 +366,7 @@
                     <div class="font-tech text-cyber-green text-xs mb-4">MODULE_01</div>
                     <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Радикальная Скорость</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        Спринт 72 часа. Мы используем AI-генераторы для рутины, оставляя людям стратегию.
+                        Спринт 72 часа. <span class="text-white">Static Site</span> технология позволяет развернуть проект мгновенно.
                     </p>
                     <div class="mt-6 font-tech text-4xl font-bold text-white">72<span class="text-sm text-cyber-green">h</span></div>
                 </div>
@@ -416,7 +378,7 @@
                     <div class="font-tech text-cyber-green text-xs mb-4">MODULE_02</div>
                     <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Умный Бюджет</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        Вы не оплачиваете недели простоя. AI оптимизирует кодинг и верстку, снижая cost в 3 раза.
+                        Вы не платите за недели простоя. AI оптимизирует код и верстку,<br>снижая cost в 3 раза.
                     </p>
                     <div class="mt-6 font-tech text-4xl font-bold text-white">-60<span class="text-sm text-cyber-green">%</span></div>
                 </div>
@@ -428,7 +390,7 @@
                     <div class="font-tech text-cyber-green text-xs mb-4">MODULE_03</div>
                     <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Высокая Конверсия</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        Дизайн от эксперта. AI делает структуру, человек докручивает эмоции и конверсию.
+                        <span class="text-white">Green Zone</span> в Google PageSpeed. Мгновенная загрузка влияет на SEO и конверсию.
                     </p>
                     <div class="mt-6 font-tech text-4xl font-bold text-white">Hi<span class="text-sm text-cyber-green">Q</span></div>
                 </div>
@@ -437,7 +399,7 @@
     </section>
 
     <!-- 3. Process -->
-    <section id="process" class="py-20 relative overflow-hidden">
+    <section id="process" class="py-20 relative overflow-hidden scroll-mt-24">
         <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#00ff9d 1px, transparent 1px); background-size: 20px 20px;"></div>
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -526,9 +488,7 @@
                         <div class="text-4xl font-bold text-white mb-6">72 ЧАСА</div>
                         <ul class="space-y-4 font-tech text-sm text-gray-300">
                             <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Экспресс-брифинг</li>
-                            <!-- ИЗМЕНЕНИЕ: Новый пункт -->
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Сайт готовый зарабатывать</li>
-                            <!-- ИЗМЕНЕНИЕ: Новая цена -->
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Скорость загрузки (100/100)</li>
                             <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Цена 60,000 ₽</li>
                         </ul>
                     </div>
@@ -571,7 +531,6 @@
                 <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
                     <i data-lucide="monitor-play" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
                     <h3 class="font-bold text-white mb-2">Продукт</h3>
-                    <!-- ИЗМЕНЕНИЕ: Текст про продукт -->
                     <p class="text-sm text-gray-500">Презентация нового продукта или услуги.</p>
                 </div>
             </div>
@@ -640,7 +599,7 @@
     </section>
 
     <!-- ТАРИФЫ -->
-    <section id="tariffs" class="py-20 bg-cyber-panel border-y border-white/5">
+    <section id="tariffs" class="py-20 bg-cyber-panel border-y border-white/5 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12 uppercase">Протоколы Развертывания</h2>
             
