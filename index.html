@@ -72,7 +72,7 @@
         },
         {
           "@type": "Offer",
-          "name": "Разработка MVP / Лендинг Старт",
+          "name": "Разработка MVP / Старт",
           "price": "60000",
           "priceCurrency": "RUB",
           "description": "Полноценный лендинг (No-CMS) за 72 часа с анимацией."
@@ -108,6 +108,7 @@
                         'spin-slow': 'spin 10s linear infinite',
                         'float': 'float 3s ease-in-out infinite',
                         'faint-flicker': 'faint-flicker 4s infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
                     },
                     keyframes: {
                         float: {
@@ -135,6 +136,12 @@
                             '54%': { opacity: '0.15' },
                             '80%': { opacity: '0.03' },
                             '82%': { opacity: '0.1' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
                         }
                     }
                 }
@@ -214,6 +221,8 @@
         }
         .cursor-blink { animation: blink 1s step-end infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        
+        .error-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; border-color: #ef4444 !important; }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-cyber-green selection:text-black">
@@ -245,7 +254,7 @@
             <!-- Desktop Nav -->
             <nav class="hidden md:flex gap-8 text-sm font-tech tracking-widest uppercase">
                 <a href="#tariffs" class="hover:text-cyber-green transition-colors relative group">
-                    Цены [72ч]
+                    ТАРИФЫ
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyber-green transition-all group-hover:w-full"></span>
                 </a>
                 <a href="#cases" class="hover:text-cyber-green transition-colors relative group">
@@ -260,7 +269,7 @@
 
             <!-- Desktop CTA -->
             <a href="#ai-brief" class="hidden md:flex items-center gap-2 border border-cyber-green text-cyber-green px-6 py-2 font-tech text-xs uppercase hover:bg-cyber-green hover:text-black transition-all duration-300">
-                <span>AI ГЕНЕРАТОР БРИФА</span>
+                <span>ГЕНЕРАТОР ЗАДАНИЯ</span>
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </a>
             
@@ -273,7 +282,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-black z-40 hidden flex-col items-center justify-start pt-32 gap-6 transition-all duration-300 h-screen w-screen overflow-y-auto">
             <a href="#tariffs" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
-                Цены [72ч]
+                ТАРИФЫ
             </a>
             <a href="#cases" class="mobile-link w-3/4 py-4 bg-cyber-green text-black font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-white transition-all shadow-[0_0_15px_rgba(0,255,157,0.3)]">
                 Кейсы
@@ -282,7 +291,7 @@
                 Процесс
             </a>
             <a href="#ai-brief" class="mobile-link w-3/4 py-4 bg-transparent border-2 border-cyber-green text-cyber-green font-display font-bold text-xl text-center uppercase tracking-wider hover:bg-cyber-green hover:text-black transition-all">
-                <i data-lucide="brain" class="inline-block w-5 h-5 mr-2 -mt-1"></i> AI Генератор
+                <i data-lucide="brain" class="inline-block w-5 h-5 mr-2 -mt-1"></i> ГЕНЕРАТОР ЗАДАНИЯ
             </a>
             <div class="mt-auto pb-10 text-center opacity-50">
                 <div class="w-1 h-16 bg-gradient-to-b from-transparent via-cyber-green to-transparent mx-auto mb-4"></div>
@@ -321,8 +330,7 @@
                 
                 <!-- KEYWORDS INJECTED HERE -->
                 <p class="text-cyber-gray text-lg md:text-xl max-w-lg leading-relaxed border-l-2 border-cyber-green pl-6">
-                    Гибридная работа:<br>
-                    <span class="text-white font-bold">Скорость AI</span> + <span class="text-white font-bold">экспертиза Арт-Дира</span>.
+                    Разработка продающих лендингов на <br>  <span class="text-white font-bold">чистом коде</span>.<br>Без конструкторов, абонентской платы и технических сбоев.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 pt-4">
@@ -330,7 +338,7 @@
                         <i data-lucide="play"></i> Запустить протокол
                     </a>
                     <a href="#cases" class="px-8 py-4 border border-white/20 hover:border-cyber-green hover:text-cyber-green font-tech uppercase tracking-wider transition-all flex items-center justify-center gap-2">
-                        Смотреть демо
+                        Смотреть портфолио
                     </a>
                 </div>
             </div>
@@ -361,7 +369,7 @@
     <section id="features" class="py-20 bg-cyber-panel border-y border-white/5 relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ВЫ ПЛАТИТЕ ЗА ЗАПУСК, <span class="text-cyber-gray">А НЕ ЗА ОЖИДАНИЕ</span></h2>
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ПОЧЕМУ НЕ КОНСТРУКТОР?</h2>
                 <div class="h-1 w-24 bg-cyber-green mx-auto"></div>
             </div>
 
@@ -370,11 +378,10 @@
                     <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                         <i data-lucide="zap" class="text-cyber-green w-12 h-12"></i>
                     </div>
-                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_01</div>
-                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Радикальная Скорость</h3>
-                    <!-- KEYWORDS INJECTED HERE -->
+                    <div class="font-tech text-cyber-green text-xs mb-4">BENEFIT_01</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Готовый сайт за 3 дня</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        Спринт 72 часа. <span class="text-white">Static Site</span> технология позволяет развернуть проект мгновенно.
+                        Мы не затягиваем сроки.<br>  Спринт 72 часа от брифа до релиза.
                     </p>
                     <div class="mt-6 font-tech text-4xl font-bold text-white">72<span class="text-sm text-cyber-green">h</span></div>
                 </div>
@@ -383,30 +390,188 @@
                     <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
                         <i data-lucide="coins" class="text-cyber-green w-12 h-12"></i>
                     </div>
-                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_02</div>
-                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Умный Бюджет</h3>
-                    <!-- KEYWORDS INJECTED HERE -->
+                    <div class="font-tech text-cyber-green text-xs mb-4">BENEFIT_02</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Экономия бюджета</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        Вы не платите за недели простоя. AI оптимизирует код и верстку,<br>снижая cost в 3 раза.
+                        Вы платите за разработку один раз. <br> Никаких ежемесячных платежей платформе (как на Tilda).
                     </p>
-                    <div class="mt-6 font-tech text-4xl font-bold text-white">-60<span class="text-sm text-cyber-green">%</span></div>
+                    <div class="mt-6 font-tech text-4xl font-bold text-white">0<span class="text-sm text-cyber-green">₽/мес</span></div>
                 </div>
 
                 <div class="group bg-cyber-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative overflow-hidden glow-box">
                     <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <i data-lucide="trending-up" class="text-cyber-green w-12 h-12"></i>
+                        <i data-lucide="shield-check" class="text-cyber-green w-12 h-12"></i>
                     </div>
-                    <div class="font-tech text-cyber-green text-xs mb-4">MODULE_03</div>
-                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Высокая Конверсия</h3>
-                    <!-- KEYWORDS INJECTED HERE -->
+                    <div class="font-tech text-cyber-green text-xs mb-4">BENEFIT_03</div>
+                    <h3 class="font-display font-bold text-2xl mb-4 group-hover:text-cyber-green transition-colors">Надежность и кибербезопасность</h3>
                     <p class="text-cyber-gray text-sm leading-relaxed">
-                        <span class="text-white">Green Zone</span> в Google PageSpeed. Мгновенная загрузка влияет на SEO и конверсию.
-                    </p>
-                    <div class="mt-6 font-tech text-4xl font-bold text-white">Hi<span class="text-sm text-cyber-green">Q</span></div>
+    Высокая скорость загрузки. <br>Невозможно взломать. 
+    <br>
+    +30 дней техподдержки 
+    <span class="ml-1 inline-block border border-cyber-green text-cyber-green text-[10px] px-1 rounded font-bold animate-pulse">
+        FREE
+    </span>
+</p>
+                    <div class="mt-6 font-tech text-4xl font-bold text-white">SEC<span class="text-sm text-cyber-green">+</span></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- NEW SECTION: TARGET (ДЛЯ КОГО) -->
+    <section class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ДЛЯ КОГО?</h2>
+                <div class="h-1 w-24 bg-cyber-green mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="rocket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Стартап / MVP</h3>
+                    <p class="text-sm text-gray-500">Нужно протестировать идею ещё вчера, пока не закончились деньги.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="ticket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Ивент / Мероприятие</h3>
+                    <p class="text-sm text-gray-500">Событие уже скоро, билеты сами себя не продадут.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="briefcase" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Эксперт / Услуги</h3>
+                    <p class="text-sm text-gray-500">Нужна дорогая упаковка, чтобы поднять чек.</p>
+                </div>
+                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
+                    <i data-lucide="monitor-play" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                    <h3 class="font-bold text-white mb-2">Продукт</h3>
+                    <p class="text-sm text-gray-500">Презентация нового продукта или услуги.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TV Section (IPHONE STYLE) - MOVED UP -->
+    <section class="bg-cyber-panel pt-20 pb-20 flex justify-center px-4">
+        <div id="tv-container" class="relative w-[300px] h-[600px] border-[8px] border-[#1a1a1a] rounded-[3rem] bg-black overflow-hidden shadow-[0_0_50px_rgba(0,255,157,0.15)] group transition-all duration-500 hover:border-cyber-green/50 cursor-pointer ring-1 ring-white/10">
+            
+            <!-- Dynamic Island (Notch) -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 h-7 w-28 bg-black rounded-b-2xl z-40 pointer-events-none border-b border-x border-white/5"></div>
+
+            <!-- Screen Glare -->
+            <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_0%,transparent_40%,transparent_100%)] z-30 pointer-events-none"></div>
+            
+            <!-- Default Content: Text -->
+            <div id="tv-content" class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                <div class="font-display font-bold text-2xl text-white tracking-widest animate-pulse text-center px-4">
+                    ЗАЧЕМ НУЖЕН <span class="text-cyber-green">ЛЕНДИНГ</span>?
+                </div>
+                <div class="mt-4 px-4 py-2 border border-cyber-green text-cyber-green font-tech text-xs animate-bounce bg-black/80 backdrop-blur">
+                    [ СМОТРЕТЬ ВИДЕО ]
+                </div>
+            </div>
+
+            <!-- Hidden Video Container -->
+            <div id="video-wrapper" class="hidden absolute inset-0 z-20 bg-black">
+                <!-- Video Link -->
+                <video id="promo-video" class="w-full h-full object-cover">
+                    <source src="images/video.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+                <!-- Play/Pause Overlay Control -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity" id="play-overlay">
+                    <i data-lucide="play" class="w-12 h-12 text-white/50"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASES SECTION -->
+    <div id="cases" class="space-y-6 scroll-mt-24 pb-20 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <h3 class="font-tech text-cyber-green text-sm">ПОРТФОЛИО // КЕЙСЫ</h3>
+                    <div class="h-[1px] bg-cyber-green/30 w-24"></div>
+                </div>
+                <div class="flex text-xs font-tech text-gray-600 gap-2 items-center">
+                    <span>SCROLL</span> <i data-lucide="arrow-right" class="w-4 h-4 animate-pulse"></i>
+                </div>
+            </div>
+            
+            <div class="relative">
+                <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scroll-smooth" style="scrollbar-color: #00ff9d #111; scrollbar-width: thin;">
+                    
+                    <!-- Case 1 -->
+                    <a href="./cases/aether/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case1.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2">01 // ART SPACE</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1">Aether Gallery</h4>
+                            <p class="text-xs text-gray-400">Иммерсивная галерея цифрового искусства.</p>
+                        </div>
+                    </a>
+
+                    <!-- Case 2 -->
+                    <a href="./cases/archimedes/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case2.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2">02 // INTERIOR</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1">Archimedes</h4>
+                            <p class="text-xs text-gray-400">Студия архитектурного дизайна.</p>
+                        </div>
+                    </a>
+
+                    <!-- Case 3 -->
+                    <a href="./cases/quantum/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case3.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2">03 // TECH</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1">Quantum Core</h4>
+                            <p class="text-xs text-gray-400">SaaS платформа для вычислений.</p>
+                        </div>
+                    </a>
+
+                    <!-- Case 4 -->
+                    <a href="./cases/summit/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case4.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2">04 // EVENT</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1">Summit 2026</h4>
+                            <p class="text-xs text-gray-400">Международный форум по ИИ.</p>
+                        </div>
+                    </a>
+
+                    <!-- Case 5 -->
+                    <a href="https://marselauto.vercel.app/" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
+                        <img src="images/case5.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Marsel Auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
+                        <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
+                            <div class="font-tech text-cyber-green text-xs mb-2">05 // AUTO</div>
+                            <h4 class="text-white font-display font-bold text-2xl mb-1">Marsel Auto</h4>
+                            <p class="text-xs text-gray-400">Детейлинг и автоподбор.</p>
+                        </div>
+                    </a>
+
+                    <!-- Пустая карточка "Скоро" -->
+                    <div class="group relative flex-shrink-0 w-[85vw] md:w-[200px] h-[500px] border border-white/5 border-dashed flex flex-col items-center justify-center text-center p-4">
+                        <i data-lucide="plus" class="text-gray-700 w-12 h-12 mb-4 group-hover:text-cyber-green transition-colors"></i>
+                        <span class="font-tech text-xs text-gray-600">ЗДЕСЬ МОЖЕТ БЫТЬ<br>ВАШ ПРОЕКТ</span>
+                    </div>
+
+                </div>
+                
+                <!-- Right Arrow Overlay (Visible only on mobile to hint scroll) -->
+                <div class="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-black via-black/50 to-transparent z-10 pointer-events-none flex items-center justify-end pr-4 md:hidden">
+                    <i data-lucide="chevron-right" class="text-cyber-green w-8 h-8 animate-pulse"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 3. Process -->
     <section id="process" class="py-20 relative overflow-hidden scroll-mt-24">
@@ -416,12 +581,12 @@
             <div class="flex flex-col md:flex-row justify-between items-end mb-16">
                 <div>
                     <h2 class="font-display font-bold text-3xl md:text-4xl">ЭТАПЫ</h2>
-                    <p class="text-cyber-green font-tech mt-2 text-sm">SYNAPSE_PIPELINE_V.2.0</p>
+                    <p class="text-cyber-green font-tech mt-2 text-sm">SYNAPSE_PIPELINE_V.3.0</p>
                 </div>
                 <div class="hidden md:block w-1/3 h-[1px] bg-cyber-green/30 mb-2"></div>
             </div>
 
-            <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
+            <div class="relative grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4">
                 <div class="hidden md:block absolute top-12 left-0 w-full h-[2px] bg-gradient-to-r from-gray-800 via-cyber-green to-gray-800 -z-10"></div>
 
                 <div class="relative group">
@@ -429,8 +594,8 @@
                         <i data-lucide="brain-circuit" class="text-white w-10 h-10"></i>
                     </div>
                     <div class="md:pr-4">
-                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_01 // AI</div>
-                        <h4 class="font-display font-bold text-xl mb-2">Аналитика</h4>
+                        <div class="font-tech text-xs text-cyber-green mb-1">01 // ANALYTICS</div>
+                        <h4 class="font-display font-bold text-lg mb-2">Аналитика</h4>
                         <p class="text-xs text-cyber-gray">Нейросеть сканирует нишу и конкурентов за 1 час. Сбор структуры.</p>
                     </div>
                 </div>
@@ -440,9 +605,20 @@
                         <i data-lucide="layers" class="text-white w-10 h-10"></i>
                     </div>
                     <div class="md:pr-4">
-                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_02 // HYBRID</div>
-                        <h4 class="font-display font-bold text-xl mb-2">Синтез</h4>
-                        <p class="text-xs text-cyber-gray">AI генерирует блоки. Арт-директор собирает композицию.</p>
+                        <div class="font-tech text-xs text-cyber-green mb-1">02 // SYNTHESIS</div>
+                        <h4 class="font-display font-bold text-lg mb-2">Синтез</h4>
+                        <p class="text-xs text-cyber-gray">AI генерирует блоки и контент.</p>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <div class="w-24 h-24 bg-cyber-black border-2 border-cyber-green rounded-full flex items-center justify-center mx-auto md:mx-0 mb-6 group-hover:shadow-[0_0_20px_#00ff9d] transition-all z-20">
+                        <i data-lucide="layout-template" class="text-white w-10 h-10"></i>
+                    </div>
+                    <div class="md:pr-4">
+                        <div class="font-tech text-xs text-cyber-green mb-1">03 // PROTOTYPE</div>
+                        <h4 class="font-display font-bold text-lg mb-2">Прототип</h4>
+                        <p class="text-xs text-cyber-gray">Сборка макета, утверждение структуры и логики.</p>
                     </div>
                 </div>
 
@@ -451,8 +627,8 @@
                         <i data-lucide="pen-tool" class="text-white w-10 h-10"></i>
                     </div>
                     <div class="md:pr-4">
-                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_03 // HUMAN</div>
-                        <h4 class="font-display font-bold text-xl mb-2">UX Финализация</h4>
+                        <div class="font-tech text-xs text-cyber-green mb-1">04 // HUMAN</div>
+                        <h4 class="font-display font-bold text-lg mb-2">UX Финал</h4>
                         <p class="text-xs text-cyber-gray">Человек дорабатывает копирайтинг, триггеры и эмоции.</p>
                     </div>
                 </div>
@@ -462,173 +638,9 @@
                         <i data-lucide="rocket" class="text-black w-10 h-10"></i>
                     </div>
                     <div class="md:pr-4">
-                        <div class="font-tech text-xs text-cyber-green mb-1">PHASE_04 // DEPLOY</div>
-                        <h4 class="font-display font-bold text-xl mb-2">Запуск</h4>
-                        <p class="text-xs text-cyber-gray">Публикация, подключение домена, аналитика. Ровно через 72 часа.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Comparison -->
-    <section class="py-20 bg-cyber-panel">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12">
-                ПЕРЕПЛАЧИВАТЬ ЗА РУТИНУ <span class="text-red-500 line-through decoration-2">БОЛЬШЕ НЕ НУЖНО</span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 border border-white/10">
-                <div class="p-10 bg-[#151515] opacity-60 grayscale hover:grayscale-0 transition-all duration-500 border-b md:border-b-0 md:border-r border-white/10">
-                    <h3 class="font-tech text-gray-500 text-sm mb-2">СТАНДАРТНАЯ СТУДИЯ</h3>
-                    <div class="text-4xl font-bold text-gray-400 mb-6">6 НЕДЕЛЬ</div>
-                    <ul class="space-y-4 font-tech text-sm text-gray-500">
-                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Долгие брифы</li>
-                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Оплата часов менеджера</li>
-                        <li class="flex items-center gap-2"><i data-lucide="x" class="w-4 h-4"></i> Цена от 250,000 ₽</li>
-                    </ul>
-                </div>
-
-                <div class="p-10 bg-cyber-dark relative overflow-hidden">
-                    <div class="absolute inset-0 bg-cyber-green/5"></div>
-                    <div class="relative z-10">
-                        <h3 class="font-tech text-cyber-green text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2 h-2 bg-cyber-green rounded-full animate-pulse"></span> SYNAPSE STUDIO
-                        </h3>
-                        <div class="text-4xl font-bold text-white mb-6">72 ЧАСА</div>
-                        <ul class="space-y-4 font-tech text-sm text-gray-300">
-                            <!-- KEYWORDS INJECTED HERE -->
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Экспресс-брифинг</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Скорость загрузки (100/100)</li>
-                            <li class="flex items-center gap-2"><i data-lucide="check" class="text-cyber-green w-4 h-4"></i> Цена 60,000 ₽</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Cases & Niches -->
-    <section class="py-20 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-                <div>
-                    <h2 class="font-display font-bold text-3xl md:text-4xl">ИДЕАЛЬНЫЕ НИШИ</h2>
-                    <p class="text-gray-400 mt-2">Кому нужна скорость света?</p>
-                </div>
-                <div class="flex gap-2 mt-4 md:mt-0 font-tech text-xs">
-                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-1">STARTUPS</span>
-                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-2">EVENTS</span>
-                    <span class="px-2 py-1 border border-cyber-green text-cyber-green bg-cyber-green/10 cursor-default animate-flicker-3">MVP</span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
-                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
-                    <i data-lucide="rocket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                    <h3 class="font-bold text-white mb-2">Стартапы</h3>
-                    <p class="text-sm text-gray-500">MVP и Pre-Launch. Проверка гипотез без слива бюджета.</p>
-                </div>
-                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
-                    <i data-lucide="ticket" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                    <h3 class="font-bold text-white mb-2">Мероприятия</h3>
-                    <p class="text-sm text-gray-500">Анонс и продажа билетов. Срочный запуск под дату.</p>
-                </div>
-                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
-                    <i data-lucide="briefcase" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                    <h3 class="font-bold text-white mb-2">Консалтинг</h3>
-                    <p class="text-sm text-gray-500">Упаковка экспертизы.<br> Личный бренд за выходные.</p>
-                </div>
-                <div class="bg-[#0e0e0e] p-6 border border-white/5 hover:border-cyber-green/50 transition-colors group">
-                    <i data-lucide="monitor-play" class="text-cyber-green w-8 h-8 mb-4 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                    <h3 class="font-bold text-white mb-2">Продукт</h3>
-                    <p class="text-sm text-gray-500">Презентация нового продукта или услуги.</p>
-                </div>
-            </div>
-
-            <!-- БЛОК ПОРТФОЛИО (Слайдер) -->
-            <div id="cases" class="space-y-6 pt-10 border-t border-white/10 scroll-mt-24">
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex items-center gap-4">
-                        <h3 class="font-tech text-cyber-green text-sm">ПОРТФОЛИО // КЕЙСЫ</h3>
-                        <div class="h-[1px] bg-cyber-green/30 w-24"></div>
-                    </div>
-                    <!-- Подсказка для скролла -->
-                    <div class="flex text-xs font-tech text-gray-600 gap-2 items-center">
-                        <span>SCROLL</span> <i data-lucide="arrow-right" class="w-4 h-4 animate-pulse"></i>
-                    </div>
-                </div>
-                
-                <!-- Контейнер скролла (Лента) -->
-                <div class="relative">
-                    <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scroll-smooth" style="scrollbar-color: #00ff9d #111; scrollbar-width: thin;">
-                        
-                        <!-- Case 1: Aether -->
-                        <a href="./cases/aether/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
-                            <img src="images/case1.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Aether Gallery">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
-                            <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
-                                <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">01 // ART SPACE</div>
-                                <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Aether Gallery</h4>
-                                <p class="text-xs text-gray-400">Иммерсивная галерея цифрового искусства.</p>
-                            </div>
-                        </a>
-
-                        <!-- Case 2: Archimedes -->
-                        <a href="./cases/archimedes/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
-                            <img src="images/case2.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Archimedes Design">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
-                            <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
-                                <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">02 // INTERIOR</div>
-                                <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Archimedes</h4>
-                                <p class="text-xs text-gray-400">Студия архитектурного дизайна.</p>
-                            </div>
-                        </a>
-
-                        <!-- Case 3: Quantum -->
-                        <a href="./cases/quantum/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
-                            <img src="images/case3.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Quantum Core">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
-                            <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
-                                <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">03 // TECH</div>
-                                <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Quantum Core</h4>
-                                <p class="text-xs text-gray-400">SaaS платформа для вычислений.</p>
-                            </div>
-                        </a>
-
-                        <!-- Case 4: Summit -->
-                        <a href="./cases/summit/index.html" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
-                            <img src="images/case4.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Summit 2026">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
-                            <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
-                                <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">04 // EVENT</div>
-                                <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Summit 2026</h4>
-                                <p class="text-xs text-gray-400">Международный форум по ИИ.</p>
-                            </div>
-                        </a>
-
-                        <!-- Case 5: Marsel Auto (NEW) -->
-                        <a href="https://marselauto.vercel.app" target="_blank" class="group relative flex-shrink-0 w-[85vw] md:w-[400px] h-[500px] border border-white/10 hover:border-cyber-green transition-all bg-[#111] block cursor-pointer snap-center overflow-hidden">
-                            <img src="images/case5.jpg" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" alt="Marsel Auto">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10"></div>
-                            <div class="absolute bottom-0 left-0 p-6 z-20 w-full">
-                                <div class="font-tech text-cyber-green text-xs mb-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">05 // AUTO</div>
-                                <h4 class="text-white font-display font-bold text-2xl mb-1 group-hover:text-cyber-green transition-colors">Marsel Auto</h4>
-                                <p class="text-xs text-gray-400">Детейлинг студия.</p>
-                            </div>
-                        </a>
-
-                        <!-- Пустая карточка "Скоро" -->
-                        <div class="group relative flex-shrink-0 w-[85vw] md:w-[200px] h-[500px] border border-white/5 border-dashed flex flex-col items-center justify-center text-center p-4">
-                            <i data-lucide="plus" class="text-gray-700 w-12 h-12 mb-4 group-hover:text-cyber-green transition-colors"></i>
-                            <span class="font-tech text-xs text-gray-600">ЗДЕСЬ МОЖЕТ БЫТЬ<br>ВАШ ПРОЕКТ</span>
-                        </div>
-
-                    </div>
-                    
-                    <!-- Right Arrow Overlay (Visible only on mobile to hint scroll) -->
-                    <div class="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-black via-black/50 to-transparent z-10 pointer-events-none flex items-center justify-end pr-4 md:hidden">
-                        <i data-lucide="chevron-right" class="text-cyber-green w-8 h-8 animate-pulse"></i>
+                        <div class="font-tech text-xs text-cyber-green mb-1">05 // DEPLOY</div>
+                        <h4 class="font-display font-bold text-lg mb-2">Запуск</h4>
+                        <p class="text-xs text-cyber-gray">Публикация, подключение домена, передача прав.</p>
                     </div>
                 </div>
             </div>
@@ -638,22 +650,23 @@
     <!-- ТАРИФЫ -->
     <section id="tariffs" class="py-20 bg-cyber-panel border-y border-white/5 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12 uppercase">Протоколы Развертывания</h2>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-center mb-12 uppercase">ТАРИФЫ</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Tariff 1 -->
                 <div class="group bg-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative">
                     <div class="font-tech text-gray-500 text-xs mb-4">PROTOCOL_01</div>
-                    <h3 class="font-display font-bold text-2xl text-white mb-2">Презентация</h3>
-                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: Быстрый старт, трипваер.</p>
+                    <h3 class="font-display font-bold text-2xl text-white mb-2">Web-Презентация</h3>
+                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Сайт-презентация до 10 слайдов. Идеально для спикеров.</p>
                     
-                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 transition-all duration-300 inline-block origin-left">
                         28 000 ₽
                     </div>
                     
                     <ul class="space-y-3 font-tech text-xs text-gray-400">
                         <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 48 часов</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 1 итерация правок</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> Адаптивная верстка</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> Кнопка на мессенджер</li>
                     </ul>
                 </div>
 
@@ -664,14 +677,14 @@
                     <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Старт</h3>
                     <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: MVP, тест гипотезы, срочный запуск.</p>
                     
-                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 transition-all duration-300 inline-block origin-left">
                         60 000 ₽
                     </div>
                     
                     <ul class="space-y-3 font-tech text-xs text-gray-400">
                         <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 72 часа</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 2 итерации правок</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 2 варианта дизайна на выбор</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> Анимация и Формы</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> SEO-база</li>
                     </ul>
                 </div>
 
@@ -679,16 +692,16 @@
                 <div class="group bg-black p-8 border border-white/10 hover:border-cyber-green transition-all duration-300 relative">
                     <div class="font-tech text-gray-500 text-xs mb-4">PROTOCOL_03</div>
                     <h3 class="font-display font-bold text-2xl text-white mb-2">Лендинг Бизнес</h3>
-                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Цель: Максимальная конверсия, имидж, контроль.</p>
+                    <p class="text-sm text-gray-400 mb-6 min-h-[40px]">Максимальная конверсия, имидж, контроль.</p>
                     
-                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,255,157,0.5)] transition-all duration-300 inline-block origin-left">
+                    <div class="text-3xl font-bold text-white mb-6 group-hover:text-cyber-green group-hover:scale-110 transition-all duration-300 inline-block origin-left">
                         90 000 ₽
                     </div>
                     
                     <ul class="space-y-3 font-tech text-xs text-gray-400">
                         <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 7 дней</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 4 итерации правок</li>
-                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> 4 варианта дизайна на выбор</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> Сложная логика</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-cyber-green"></div> Помощь с контентом</li>
                     </ul>
                 </div>
             </div>
@@ -702,7 +715,7 @@
                 <div class="inline-flex items-center gap-2 text-cyber-green font-tech text-xs mb-2">
                     <i data-lucide="brain" class="w-4 h-4"></i> AI ARCHITECT MODULE
                 </div>
-                <h2 class="font-display font-bold text-3xl md:text-4xl text-white">ГЕНЕРАТОР ПЕРВИЧНОГО БРИФА</h2>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-white">ГЕНЕРАТОР ЗАДАНИЯ</h2>
                 <p class="text-gray-500 text-sm mt-2">Опишите идею хаотично. AI структурирует её и предложит стек.</p>
             </div>
 
@@ -713,7 +726,7 @@
                         <textarea id="ai-input" class="w-full bg-[#111] text-gray-300 p-4 border border-gray-800 focus:border-cyber-green focus:outline-none font-tech text-sm rounded h-32 resize-none" placeholder="Пример: Хочу сайт для продажи авторских туров на Марс. Нужно ярко, дорого, с анимацией ракеты..."></textarea>
                         
                         <button onclick="generateBrief()" class="w-full py-3 bg-cyber-green/10 border border-cyber-green text-cyber-green font-tech text-xs uppercase hover:bg-cyber-green hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group">
-                            <i data-lucide="sparkles" class="w-4 h-4"></i> СИНТЕЗИРОВАТЬ БРИФ
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> СГЕНЕРИРОВАТЬ ЗАДАНИЕ
                         </button>
                     </div>
 
@@ -789,18 +802,19 @@
                             <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ОПИШИТЕ ЗАДАЧУ</span>
                         </div>
                         <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800 resize-none"></textarea>
-                    </div>     
+                    </div>
+
                     <div class="pt-6 w-full relative z-30">
                         <button type="submit" id="submit-button" class="w-full h-full cursor-pointer px-8 py-4 bg-cyber-green text-black font-tech font-bold uppercase tracking-wider hover:bg-white transition-colors flex items-center justify-center gap-2 glow-box">
                             <span class="mr-2">&gt;</span> Отправить Запрос
                             <span class="cursor-blink">|</span>
                         </button>
-            <!-- ЮРИДИЧЕСКАЯ ПРИПИСКА -->
+                        
+                        <!-- ЮРИДИЧЕСКАЯ ПРИПИСКА -->
                         <p class="text-[10px] text-gray-600 mt-3 text-center font-tech leading-tight">
                             Нажимая кнопку, вы соглашаетесь с 
                             <a href="policy.html" target="_blank" class="underline hover:text-cyber-green transition-colors">Политикой конфиденциальности</a>
                         </p>
-                    </div>
                     </div>
                 </form> 
             </div>
@@ -808,19 +822,28 @@
     </section>
 
     <!-- 7. Footer -->
-  <!-- 7. Footer -->
-<footer class="py-10 bg-cyber-dark border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-6 text-center font-tech">
-        <p class="text-xs text-gray-600 mb-2">SYNAPSE STUDIO // PROTOCOL 72H // EST. 2025</p>
-<a href="policy.html" target="_blank" class="text-[10px] text-gray-700 hover:text-gray-500 block mb-4">Политика конфиденциальности</a>
-        
-        <!-- Ссылка на бриф (скрытая, но доступная) -->
-        <a href="brief.html" target="_blank" class="inline-flex items-center gap-2 text-[10px] text-gray-700 hover:text-cyber-green transition-colors duration-300 group">
-            <i data-lucide="file-code" class="w-3 h-3 group-hover:animate-pulse"></i>
-            <span>[ ЗАПУСТИТЬ РАСШИРЕННЫЙ БРИФ ]</span>
-        </a>
+    <footer class="py-10 bg-cyber-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center font-tech">
+            <p class="text-xs text-gray-600 mb-2">SYNAPSE STUDIO // PROTOCOL 72H // EST. 2025</p>
+            <a href="policy.html" target="_blank" class="text-[10px] text-gray-700 hover:text-gray-500 block mb-4">Политика конфиденциальности</a>
+            
+            <!-- Ссылка на бриф (скрытая, но доступная) -->
+            <a href="brief.html" target="_blank" class="inline-flex items-center gap-2 text-[10px] text-gray-700 hover:text-cyber-green transition-colors duration-300 group">
+                <i data-lucide="file-code" class="w-3 h-3 group-hover:animate-pulse"></i>
+                <span>[ ЗАПУСТИТЬ РАСШИРЕННЫЙ БРИФ ]</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 w-full bg-[#111] border-t border-cyber-green/30 p-4 z-50 hidden flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs text-gray-400 text-center md:text-left">
+            Мы используем файлы cookie и Яндекс.Метрику для аналитики. Оставаясь на сайте, вы соглашаетесь с этим.
+        </p>
+        <button id="accept-cookies" class="px-4 py-2 bg-cyber-green text-black font-tech text-xs font-bold uppercase hover:bg-white transition-colors">
+            Принять [OK]
+        </button>
     </div>
-</footer>
 
     <!-- Initialize Lucide Icons -->
     <script>
@@ -828,16 +851,32 @@
     </script>
 
     <script>
-        // Form Validation
+        // Form Validation Highlight (NO ALERT)
         document.getElementById('projectForm').addEventListener('submit', function(e) {
-            const name = document.getElementById('name').value.trim();
-            const contact = document.getElementById('contact').value.trim();
-            const message = document.getElementById('message').value.trim();
+            const inputs = [
+                document.getElementById('name'),
+                document.getElementById('contact'),
+                document.getElementById('message')
+            ];
+            
+            let isValid = true;
 
-            if (!name || !contact || !message) {
-                e.preventDefault(); 
-                alert('SYSTEM ERROR: Заполните все обязательные поля для отправки протокола.');
-            }
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    e.preventDefault();
+                    isValid = false;
+                    
+                    // Visual Error Effect
+                    input.classList.add('error-shake');
+                    input.classList.remove('border-gray-700');
+                    
+                    // Remove error style after 2 seconds
+                    setTimeout(() => {
+                        input.classList.remove('error-shake');
+                        input.classList.add('border-gray-700');
+                    }, 2000);
+                }
+            });
         });
 
         // ИЗМЕНЕНИЕ: Умная логика Генератора (На русском)
@@ -847,7 +886,12 @@
             const resultArea = document.getElementById('ai-result');
             
             if(!input.trim()) {
-                alert('Сначала опишите вашу идею.');
+                // Shake animation for AI input too
+                const aiInput = document.getElementById('ai-input');
+                aiInput.classList.add('error-shake', 'border-red-500');
+                setTimeout(() => {
+                    aiInput.classList.remove('error-shake', 'border-red-500');
+                }, 2000);
                 return;
             }
 
@@ -892,7 +936,7 @@
    [Блок 04] Целевое действие (Форма / Покупка)
 
 [ПЛАН РЕАЛИЗАЦИИ]
-РЕКОМЕНДУЕМЫЙ ПРОТОКОЛ: Protocol_02 (Лендинг Старт) или Protocol_03 (Лендинг Бизнес)
+РЕКОМЕНДУЕМЫЙ ПРОТОКОЛ: Protocol_02 (Старт) или Protocol_03 (Бизнес)
 ОЖИДАЕМЫЙ ЭФФЕКТ: Высокий потенциал конверсии.
 
 // СТАТУС: ГОТОВ К РАЗВЕРТЫВАНИЮ`;
@@ -925,46 +969,75 @@
     
     <!-- Script for Mobile Menu -->
     <script>
-        // Логика мобильного меню
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = menuBtn.querySelector('i'); // Иконка внутри кнопки
+        const menuIcon = menuBtn.querySelector('i'); 
 
         if (menuBtn && mobileMenu) {
             menuBtn.addEventListener('click', () => {
-                // 1. Переключаем классы видимости
                 mobileMenu.classList.toggle('hidden');
                 mobileMenu.classList.toggle('flex');
-                
-                // 2. Блокируем прокрутку основного сайта, когда меню открыто
                 document.body.classList.toggle('overflow-hidden');
 
-                // 3. Меняем иконку (Меню <-> Крестик)
                 const isOpened = mobileMenu.classList.contains('flex');
                 if (isOpened) {
                     menuIcon.setAttribute('data-lucide', 'x');
                 } else {
                     menuIcon.setAttribute('data-lucide', 'menu');
                 }
-                
-                // Перерисовываем иконку
                 lucide.createIcons();
             });
 
-            // 4. Закрываем меню при клике на любую ссылку внутри
             const mobileLinks = document.querySelectorAll('.mobile-link');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
                     mobileMenu.classList.remove('flex');
                     document.body.classList.remove('overflow-hidden');
-                    
-                    // Возвращаем иконку меню
                     menuIcon.setAttribute('data-lucide', 'menu');
                     lucide.createIcons();
                 });
             });
         }
+
+        // Script for TV/iPhone Video
+        const tvContainer = document.getElementById('tv-container');
+        const tvContent = document.getElementById('tv-content');
+        const videoWrapper = document.getElementById('video-wrapper');
+        const promoVideo = document.getElementById('promo-video');
+
+        if(tvContainer) {
+            tvContainer.addEventListener('click', function() {
+                if(videoWrapper.classList.contains('hidden')) {
+                    tvContent.classList.add('hidden');
+                    videoWrapper.classList.remove('hidden');
+                    promoVideo.play();
+                } else {
+                    if (promoVideo.paused) {
+                        promoVideo.play();
+                    } else {
+                        promoVideo.pause();
+                    }
+                }
+            });
+        }
+
+        // Script for Cookie Banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptBtn = document.getElementById('accept-cookies');
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('hidden');
+                cookieBanner.classList.add('flex');
+            }, 2000);
+        }
+
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+            cookieBanner.classList.remove('flex');
+        });
     </script>
 
 </body>
