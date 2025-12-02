@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Synapse Studio | Protocol Initialization</title>
     
-    <!-- Google Fonts -->
+    <!-- SEO & Icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Icons (Lucide) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
@@ -22,13 +19,8 @@
                 extend: {
                     colors: {
                         cyber: {
-                            black: '#050505',
-                            dark: '#0a0a0a',
-                            panel: '#111111',
-                            green: '#00ff9d',
-                            greenDim: 'rgba(0, 255, 157, 0.1)',
-                            text: '#e0e0e0',
-                            gray: '#888888'
+                            black: '#050505', green: '#00ff9d',
+                            text: '#e0e0e0', gray: '#888888'
                         }
                     },
                     fontFamily: {
@@ -48,52 +40,21 @@
     </script>
 
     <style>
-        body {
-            background-color: #050505;
-            color: #e0e0e0;
-            overflow-x: hidden;
-        }
-
-        /* Scanline Effect */
+        body { background-color: #050505; color: #e0e0e0; overflow-x: hidden; }
         .scanline {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.3;
+            background-size: 100% 4px; pointer-events: none; z-index: 9999; opacity: 0.3;
         }
-
-        /* Neon Focus */
-        .input-cyber:focus {
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
-            border-color: #00ff9d;
-        }
-
-        /* Animations */
+        .input-cyber:focus { box-shadow: 0 0 15px rgba(0, 255, 157, 0.3); border-color: #00ff9d; }
         .step-enter { animation: fadeInRight 0.4s ease-out forwards; }
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
         .review-enter { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .progress-bar-fill {
-            box-shadow: 0 0 10px #00ff9d;
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Scrollbar for review section */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .progress-bar-fill { box-shadow: 0 0 10px #00ff9d; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: #111; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #00ff9d; }
     </style>
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col relative selection:bg-cyber-green selection:text-black">
@@ -145,7 +106,7 @@
             </div>
 
             <!-- Content Area -->
-            <form id="briefForm" class="p-8 min-h-[450px] flex flex-col relative">
+            <form id="briefForm" class="p-8 min-h-[450px] flex flex-col justify-between relative">
                 
                 <!-- Dynamic Questions Container -->
                 <div id="question-container" class="space-y-8 flex-grow">
@@ -163,29 +124,30 @@
                     </div>
                 </div>
 
-                <!-- Navigation Controls -->
-                <!-- ИЗМЕНЕНИЕ: Уменьшил отступы px/py для мобильных (md: возвращает большие) -->
-                <div class="flex justify-between items-center mt-8 pt-8 border-t border-white/5 bg-[#0a0a0a] z-10 gap-2">
+                <!-- Navigation Controls (ИСПРАВЛЕНО) -->
+                <div class="mt-8 pt-8 border-t border-white/5 bg-[#0a0a0a] z-10 flex flex-col gap-4">
                     
-                    <button type="button" id="prevBtn" class="px-4 py-2 md:px-6 md:py-2 border border-white/20 text-gray-400 font-tech text-[10px] md:text-xs hover:text-white hover:border-white transition-all opacity-0 pointer-events-none flex items-center gap-1 md:gap-2">
-                        <i data-lucide="chevron-left" class="w-3 h-3 md:w-4 md:h-4"></i> <span class="hidden md:inline">НАЗАД</span><span class="md:hidden"><</span>
-                    </button>
-                    
-                    <button type="button" id="nextBtn" class="px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white transition-colors flex items-center gap-2 glow-box">
-                        <span id="nextBtnText">ДАЛЕЕ</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
+                    <!-- 1. ЭТАЖ: КНОПКИ -->
+                    <div class="flex justify-between items-center w-full gap-2">
+                        <button type="button" id="prevBtn" class="px-4 py-2 md:px-6 md:py-2 border border-white/20 text-gray-400 font-tech text-[10px] md:text-xs hover:text-white hover:border-white transition-all opacity-0 pointer-events-none flex items-center gap-1 md:gap-2">
+                            <i data-lucide="chevron-left" class="w-3 h-3 md:w-4 md:h-4"></i> <span class="hidden md:inline">НАЗАД</span><span class="md:hidden"><</span>
+                        </button>
+                        
+                        <button type="button" id="nextBtn" class="px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white transition-colors flex items-center gap-2 glow-box">
+                            <span id="nextBtnText">ДАЛЕЕ</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
 
-                    <!-- ИЗМЕНЕНИЕ: Переименовал кнопку и уменьшил размер на мобильных -->
-                    <button type="submit" id="submitBtn" class="hidden px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white hover:shadow-[0_0_20px_#00ff9d] transition-all flex items-center gap-2">
-                        <i data-lucide="send" class="w-4 h-4"></i> ОТПРАВИТЬ
-                    </button>
-                     <!-- ЮРИДИЧЕСКАЯ ПРИПИСКА (Видна всегда) -->
-                    <div class="text-center mt-4">
+                        <button type="submit" id="submitBtn" class="hidden px-5 py-3 md:px-8 md:py-3 bg-cyber-green text-black font-tech font-bold uppercase text-xs md:text-sm hover:bg-white hover:shadow-[0_0_20px_#00ff9d] transition-all flex items-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i> ОТПРАВИТЬ
+                        </button>
+                    </div>
+
+                    <!-- 2. ЭТАЖ: ТЕКСТ (Строго внизу) -->
+                    <div class="text-center w-full">
                         <p class="text-[10px] text-gray-600 font-tech">
-                            Продолжая, вы принимаете <a href="policy.html" target="_blank" class="underline hover:text-cyber-green">Политику обработки данных</a>
+                            Продолжая, вы принимаете <a href="policy.html" target="_blank" class="underline hover:text-cyber-green transition-colors">Политику обработки данных</a>
                         </p>
                     </div>
-                </div>
                 </div>
             </form>
         </div>
@@ -296,7 +258,6 @@
             statusText.innerText = `STEP ${index + 1}/${steps.length} // CONFIGURATION`;
 
             questionContainer.innerHTML = '';
-            
             const titleEl = document.createElement('h3');
             titleEl.className = "font-display text-2xl text-white mb-6 animate-pulse";
             titleEl.innerText = step.title;
@@ -308,7 +269,6 @@
                 const label = document.createElement('label');
                 label.className = "block font-tech text-xs text-cyber-green mb-2 uppercase tracking-wider";
                 label.innerText = `> ${q.label}`;
-                
                 let input;
                 const savedValue = formData[q.id] || '';
 
@@ -334,7 +294,6 @@
                     input.placeholder = q.placeholder;
                     input.value = savedValue;
                 }
-
                 input.dataset.id = q.id;
                 input.addEventListener('input', (e) => {
                     formData[q.id] = e.target.value;
@@ -358,7 +317,6 @@
             if (returnToReview) {
                 nextBtnText.innerText = "СОХРАНИТЬ";
             } else {
-                // ИЗМЕНЕНИЕ: Сократил "ПРОВЕРИТЬ ДАННЫЕ" до "ПРОВЕРИТЬ"
                 nextBtnText.innerText = (index === steps.length - 1) ? "ПРОВЕРИТЬ" : "ДАЛЕЕ";
             }
         }
@@ -446,7 +404,7 @@
             }
         });
 
-        // --- ОТПРАВКА ---
+        // --- FINAL SUBMIT LOGIC (3s Delay & Visual Fix) ---
         briefForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -480,14 +438,15 @@
                 });
 
                 if (response.ok) {
-                    submitBtn.classList.remove('bg-cyber-green', 'text-black');
-                    submitBtn.classList.add('bg-green-500', 'text-white', 'border-green-500');
+                    // Force green style without hover effects
+                    submitBtn.className = "px-5 py-3 md:px-8 md:py-3 !bg-green-500 !text-white font-tech font-bold uppercase text-xs md:text-sm flex items-center gap-2 border border-green-500 rounded-none cursor-default";
                     submitBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> ОТПРАВЛЕНО!`;
                     lucide.createIcons();
 
+                    // Wait 3 seconds
                     setTimeout(() => {
                         window.location.href = "index.html";
-                    }, 1000);
+                    }, 3000);
                 } else {
                     throw new Error("Ошибка сервера");
                 }
