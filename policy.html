@@ -4,19 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Политика конфиденциальности</title>
+    <!-- Подключаем шрифты как на основном сайте, чтобы было красиво -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #a3a3a3; font-family: sans-serif; padding: 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; font-size: 14px; }
-        h1 { color: #fff; margin-bottom: 20px; }
-        a { color: #00ff9d; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        body { background: #050505; color: #a3a3a3; font-family: 'JetBrains Mono', monospace; padding: 40px; line-height: 1.6; max-width: 800px; margin: 0 auto; font-size: 13px; }
+        h1 { color: #fff; margin-bottom: 30px; font-size: 18px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        strong { color: #fff; }
+        a { color: #00ff9d; text-decoration: none; transition: 0.3s; }
+        a:hover { text-shadow: 0 0 10px #00ff9d; }
+        
+        /* Кнопка назад */
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            border: 1px solid #333;
+            color: #888;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .back-btn:hover {
+            border-color: #00ff9d;
+            color: #00ff9d;
+            background: rgba(0, 255, 157, 0.05);
+            text-decoration: none;
+            text-shadow: none;
+        }
     </style>
 </head>
 <body>
     <h1>Политика в отношении обработки персональных данных</h1>
-    <p><strong>1. Общие положения</strong><br>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Synapse Studio (далее – Оператор).</p>
-    <p><strong>2. Оператор может обрабатывать следующие данные пользователя:</strong><br>- Имя;<br>- Номер телефона / Ник в Telegram;<br>- Иные данные, указанные пользователем в формах.</p>
-    <p><strong>3. Цели обработки:</strong><br>Связь с клиентом для уточнения деталей заказа.</p>
-    <p><strong>4. Правовые основания:</strong><br>Согласие субъекта на обработку данных (проставляется путем нажатия кнопки отправки формы).</p>
-    <p style="margin-top: 40px;"><a href="index.html">← Вернуться на сайт</a></p>
+    
+    <p><strong>1. Общие положения</strong><br>
+    Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Synapse Studio (далее – Оператор).</p>
+    
+    <br>
+    <p><strong>2. Оператор может обрабатывать следующие данные пользователя:</strong><br>
+    - Имя;<br>
+    - Номер телефона / Ник в Telegram;<br>
+    - Иные данные, указанные пользователем в формах.</p>
+
+    <br>
+    <p><strong>3. Цели обработки:</strong><br>
+    Связь с клиентом для уточнения деталей заказа, направление брифов и коммерческих предложений.</p>
+
+    <br>
+    <p><strong>4. Правовые основания:</strong><br>
+    Согласие субъекта на обработку данных (проставляется путем нажатия кнопки отправки формы на сайте).</p>
+
+    <!-- Умная кнопка назад -->
+    <a id="smart-back-link" href="index.html" class="back-btn">← Вернуться на сайт</a>
+
+    <script>
+        // Скрипт проверки "Откуда пришел пользователь"
+        const backLink = document.getElementById('smart-back-link');
+        const referrer = document.referrer; // Адрес предыдущей страницы
+
+        if (referrer.includes('brief.html')) {
+            backLink.href = 'brief.html';
+            backLink.innerText = '← Вернуться к брифу';
+        } else {
+            backLink.href = 'index.html';
+            backLink.innerText = '← Вернуться на главную';
+        }
+    </script>
 </body>
 </html>
