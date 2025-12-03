@@ -930,6 +930,12 @@
                 }
             });
         });
+          if (isValid) {
+                // Отправляем цель в Метрику (номер счетчика подставится сам)
+                ym(105638632, 'reachGoal', 'form_sent'); 
+                console.log('Goal sent to Yandex Metrica');
+            }
+           });
 
         // ИЗМЕНЕНИЕ: Умная логика Генератора (На русском)
         function generateBrief() {
