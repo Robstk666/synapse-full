@@ -902,69 +902,156 @@
         lucide.createIcons();
     </script>
 
-    <script>
-        // Form Validation Highlight (NO ALERT)
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
-            const inputs = [
-                document.getElementById('name'),
-                document.getElementById('contact'),
-                document.getElementById('message')
-            ];
+  <script>
+        document.addEventListener('DOMContentLoaded', () => {
             
-            let isValid = true;
+            // === 1. ВАЛИДАЦИЯ ФОРМЫ + МЕТРИКА (ПОЧИНЕНО) ===
+            const form = document.getElementById('projectForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const inputs = [
+                        document.getElementById('name'),
+                        document.getElementById('contact'),
+                        document.getElementById('message')
+                    ];
+                    
+                    let isValid = true;
 
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    e.preventDefault();
-                    isValid = false;
-                    
-                    // Visual Error Effect
-                    input.classList.add('error-shake');
-                    input.classList.remove('border-gray-700');
-                    
-                    // Remove error style after 2 seconds
-                    setTimeout(() => {
-                        input.classList.remove('error-shake');
-                        input.classList.add('border-gray-700');
-                    }, 2000);
-                }
-            });
-        });
-          if (isValid) {
-                // Отправляем цель в Метрику (номер счетчика подставится сам)
-                ym(105638632, 'reachGoal', 'form_sent'); 
-                console.log('Goal sent to Yandex Metrica');
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            isValid = false;
+                            
+                            // Красная тряска (Визуальный эффект)
+                            input.classList.add('error-shake');
+                            input.classList.remove('border-gray-700');
+                            input.classList.add('border-red-500'); // Добавил явную красную рамку
+                            
+                            // Убираем ошибку через 2 секунды
+                            setTimeout(() => {
+                                input.classList.remove('error-shake');
+                                input.classList.remove('border-red-500');
+                                input.classList.add('border-gray-700');
+                            }, 2000);
+                        }
+                    });
+
+                    if (!isValid) {
+                        e.preventDefault(); // Если есть ошибки, не отправляем
+                    } else {
+                        // Если всё ок — отправляем цель в Яндекс
+                        if (typeof ym !== 'undefined') {
+                            ym(105638632, 'reachGoal', 'form_sent');
+                            console.log('Цель form_sent отправлена');
+                        }
+                    }
+                });
             }
-           });
 
-        // ИЗМЕНЕНИЕ: Умная логика Генератора (На русском)
+            // === 2. МОБИЛЬНОЕ МЕНЮ ===
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuBtn && mobileMenu) {
+                const menuIcon = menuBtn.querySelector('i'); 
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                    document.body.classList.toggle('overflow-hidden');
+
+                    const isOpened = mobileMenu.classList.contains('flex');
+                    if (isOpened) {
+                        menuIcon.setAttribute('data-lucide', 'x');
+                    } else {
+                        menuIcon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                const mobileLinks = document.querySelectorAll('.mobile-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        document.body.classList.remove('overflow-hidden');
+                        menuIcon.setAttribute('data-lucide', 'menu');
+                        lucide.createIcons();
+                    });
+                });
+            }
+
+            // === 3. TV / ВИДЕО (с фиксом звука) ===
+            const tvContainer = document.getElementById('tv-container');
+            const tvContent = document.getElementById('tv-content');
+            const videoWrapper = document.getElementById('video-wrapper');
+            const promoVideo = document.getElementById('promo-video');
+
+            if(tvContainer) {
+                tvContainer.addEventListener('click', function() {
+                    if(videoWrapper.classList.contains('hidden')) {
+                        tvContent.classList.add('hidden');
+                        videoWrapper.classList.remove('hidden');
+                        promoVideo.muted = false; // Включаем звук
+                        promoVideo.play();
+                    } else {
+                        if (promoVideo.paused) {
+                            promoVideo.play();
+                        } else {
+                            promoVideo.pause();
+                        }
+                    }
+                });
+            }
+
+            // === 4. COOKIE BANNER ===
+            const cookieBanner = document.getElementById('cookie-banner');
+            const acceptBtn = document.getElementById('accept-cookies');
+
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieBanner.classList.remove('hidden');
+                    cookieBanner.classList.add('flex');
+                }, 2000);
+            }
+
+            if(acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    cookieBanner.classList.add('hidden');
+                    cookieBanner.classList.remove('flex');
+                });
+            }
+        });
+
+        // === 5. ГЕНЕРАТОР ЗАДАНИЯ (AI) ===
+        // Эта функция должна быть глобальной, чтобы работать через onclick=""
         function generateBrief() {
-            const input = document.getElementById('ai-input').value;
+            const inputField = document.getElementById('ai-input');
             const outputContainer = document.getElementById('ai-output-container');
             const resultArea = document.getElementById('ai-result');
             
-            if(!input.trim()) {
-                // Shake animation for AI input too
-                const aiInput = document.getElementById('ai-input');
-                aiInput.classList.add('error-shake', 'border-red-500');
-                setTimeout(() => {
-                    aiInput.classList.remove('error-shake', 'border-red-500');
-                }, 2000);
+            if(!inputField || !inputField.value.trim()) {
+                // Если пусто - трясем поле
+                if(inputField) {
+                    inputField.classList.add('error-shake', 'border-red-500');
+                    setTimeout(() => {
+                        inputField.classList.remove('error-shake', 'border-red-500');
+                    }, 2000);
+                }
                 return;
             }
 
-            // Массивы для "Галлюцинаций" ИИ (Mock Data) RU
+            const input = inputField.value;
+
+            // Данные для генерации
             const styles = ['Киберпанк / Неоновый Мрак', 'Минимализм / Швейцарский стиль', 'Премиум Корпоративный', 'Брутализм / Экспериментальный'];
             const techStack = ['Tailwind CSS + HTML5', 'React + GSAP Анимации', 'WebGL + Three.js Элементы', 'Vue.js + Canvas'];
             const audiences = ['Поколение Z & Диджитал-нативы', 'B2B Принимающие решения', 'Премиум сегмент', 'Новаторы и ранние последователи'];
 
-            // Выбор случайных значений
             const randomStyle = styles[Math.floor(Math.random() * styles.length)];
             const randomTech = techStack[Math.floor(Math.random() * techStack.length)];
             const randomAudience = audiences[Math.floor(Math.random() * audiences.length)];
             const sessionId = Math.floor(Math.random() * 999999);
 
-            // Формирование "умного" ответа RU
             const generatedText = `// ЯДРО_SYNAPSE_AI // ID_СЕССИИ: ${sessionId}
 // СИСТЕМНЫЙ_АНАЛИЗ_ЗАВЕРШЕН
 
@@ -1004,17 +1091,19 @@
             
             // Эффект печати
             let i = 0;
+            resultArea.textContent = ""; // Очистка перед стартом
+            
+            // Задержка перед печатью для реализма
             setTimeout(() => {
-                resultArea.textContent = "";
                 const interval = setInterval(() => {
                     resultArea.textContent += generatedText.charAt(i);
                     i++;
-                    resultArea.scrollTop = resultArea.scrollHeight;
-                    if (i > generatedText.length) {
+                    resultArea.scrollTop = resultArea.scrollHeight; // Автоскролл вниз
+                    if (i >= generatedText.length) {
                         clearInterval(interval);
                     }
                 }, 5); 
-            }, 500);
+            }, 300);
         }
 
         function copyBrief() {
@@ -1024,79 +1113,5 @@
             });
         }
     </script>
-    
-    <!-- Script for Mobile Menu -->
-    <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = menuBtn.querySelector('i'); 
-
-        if (menuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('flex');
-                document.body.classList.toggle('overflow-hidden');
-
-                const isOpened = mobileMenu.classList.contains('flex');
-                if (isOpened) {
-                    menuIcon.setAttribute('data-lucide', 'x');
-                } else {
-                    menuIcon.setAttribute('data-lucide', 'menu');
-                }
-                lucide.createIcons();
-            });
-
-            const mobileLinks = document.querySelectorAll('.mobile-link');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.classList.remove('flex');
-                    document.body.classList.remove('overflow-hidden');
-                    menuIcon.setAttribute('data-lucide', 'menu');
-                    lucide.createIcons();
-                });
-            });
-        }
-
-        // Script for TV/iPhone Video
-        const tvContainer = document.getElementById('tv-container');
-        const tvContent = document.getElementById('tv-content');
-        const videoWrapper = document.getElementById('video-wrapper');
-        const promoVideo = document.getElementById('promo-video');
-
-        if(tvContainer) {
-            tvContainer.addEventListener('click', function() {
-                if(videoWrapper.classList.contains('hidden')) {
-                    tvContent.classList.add('hidden');
-                    videoWrapper.classList.remove('hidden');
-                    promoVideo.play();
-                } else {
-                    if (promoVideo.paused) {
-                        promoVideo.play();
-                    } else {
-                        promoVideo.pause();
-                    }
-                }
-            });
-        }
-
-        // Script for Cookie Banner
-        const cookieBanner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('accept-cookies');
-
-        if (!localStorage.getItem('cookiesAccepted')) {
-            setTimeout(() => {
-                cookieBanner.classList.remove('hidden');
-                cookieBanner.classList.add('flex');
-            }, 2000);
-        }
-
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookieBanner.classList.add('hidden');
-            cookieBanner.classList.remove('flex');
-        });
-    </script>
-
 </body>
 </html>
