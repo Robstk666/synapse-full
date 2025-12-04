@@ -22,9 +22,6 @@
     <!-- YANDEX: Этот тег заменяет файл, который выдавал ошибку 308 -->
     <meta name="yandex-verification" content="e4ffb40c98492d16" />
     
-    <!-- GOOGLE SEARCH CONSOLE: Вставьте код ниже, если есть -->
-    <!-- <meta name="google-site-verification" content="ВАШ_КОД_GOOGLE" /> -->
-    
     <!-- Canonical URL -->
     <link rel="canonical" href="https://synapse-studio72h.ru/">
 
@@ -58,36 +55,18 @@
     <!-- === ANALYTICS (GTAG & YANDEX METRICA) === -->
     
    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105638632', 'ym');
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=105638632', 'ym');
 
-    ym(105638632, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/105638632" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-       });
-
-    
+        ym(105638632, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
     </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/XXXXXX" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    -->
-
-    <!-- 2. Google Analytics (GA4) (ВСТАВЬТЕ СВОЙ ID ВМЕСТО G-XXXXXX) -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-XXXXXX');
-    </script>
-    -->
+    <noscript><div><img src="https://mc.yandex.ru/watch/105638632" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 
     <!-- SCHEMA.ORG (PASSPORT FOR AI) -->
     <script type="application/ld+json">
@@ -826,6 +805,7 @@
                                 <label for="name" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ИМЯ *</label>
                                 <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
                             </div>
+                            <!-- УБРАН AUTOFOCUS ОТСЮДА -->
                             <input type="text" id="name" name="Name" placeholder="Иван Петров" class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800">
                         </div>
 
@@ -850,7 +830,7 @@
                     <!-- СООБЩЕНИЕ (Обязательно) -->
                     <div class="relative group pt-4 input-container">
                         <div class="flex justify-between">
-                            <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ДЕТАЛИ ПРОЕКТА *</label>
+                            <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ДЕТАЛИ ПРОЕКТА</label>
                             <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ОПИШИТЕ ЗАДАЧУ</span>
                         </div>
                         <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-transparent border-b border-gray-700 text-white py-2 focus:outline-none focus:border-cyber-green font-tech transition-colors placeholder-gray-800 resize-none"></textarea>
@@ -911,8 +891,8 @@
                 form.addEventListener('submit', function(e) {
                     const inputs = [
                         document.getElementById('name'),
-                        document.getElementById('contact'),
-                        document.getElementById('message')
+                        document.getElementById('contact')
+                        // 'message' removed from validation
                     ];
                     
                     let isValid = true;
@@ -1019,6 +999,28 @@
                     cookieBanner.classList.add('hidden');
                     cookieBanner.classList.remove('flex');
                 });
+            }
+
+            // === 6. SMART FOCUS (УМНЫЙ ФОКУС) ===
+            // Когда пользователь докручивает до формы, фокус ставится сам
+            // ВНИМАНИЕ: Работает только на экранах шире 768px (на ПК), 
+            // чтобы на мобилке не выскакивала клавиатура сама по себе
+            
+            const contactSection = document.getElementById('start');
+            const nameInput = document.getElementById('name');
+            let hasFocused = false;
+
+            if (contactSection && nameInput && window.innerWidth > 768) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !hasFocused) {
+                            nameInput.focus();
+                            hasFocused = true; // Срабатывает только 1 раз
+                        }
+                    });
+                }, { threshold: 0.3 }); // Сработает когда 30% формы появится на экране
+
+                observer.observe(contactSection);
             }
         });
 
