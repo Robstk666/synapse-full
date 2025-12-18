@@ -410,7 +410,7 @@
     <section id="features" class="py-20 bg-cyber-panel border-y border-white/5 relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ПОЧЕМУ НЕ КОНСТРУКТОР?</h2>
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ПОЧЕМУ НЕ КОНСТРУКТОР</h2>
                 <div class="h-1 w-24 bg-cyber-green mx-auto"></div>
             </div>
 
@@ -463,7 +463,7 @@
     <section class="py-20 relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ДЛЯ КОГО?</h2>
+                <h2 class="font-display font-bold text-3xl md:text-4xl mb-4">ДЛЯ КОГО</h2>
                 <div class="h-1 w-24 bg-cyber-green mx-auto"></div>
             </div>
             
@@ -505,7 +505,7 @@
             <!-- Default Content: Text -->
             <div id="tv-content" class="absolute inset-0 flex flex-col items-center justify-center z-10">
                 <div class="font-display font-bold text-2xl text-white tracking-widest animate-pulse text-center px-4">
-                    ЗАЧЕМ НУЖЕН <span class="text-cyber-green">ЛЕНДИНГ</span>?
+                    ЗАЧЕМ НУЖЕН <span class="text-cyber-green">ЛЕНДИНГ</span>
                 </div>
                 <div class="mt-4 px-4 py-2 border border-cyber-green text-cyber-green font-tech text-xs animate-bounce bg-black/80 backdrop-blur">
                     [ СМОТРЕТЬ ВИДЕО ]
@@ -804,7 +804,7 @@
             </div>
             
             <div class="bg-[#050505] border-x border-b border-cyber-green/30 p-8 md:p-12 shadow-[0_0_50px_rgba(0,255,157,0.1)]">
-                <h2 class="font-display text-3xl text-white mb-2">ВАШ БИЗНЕС НЕ ЖДЕТ.</h2>
+                <h2 class="font-display text-3xl text-white mb-2">ВАШ БИЗНЕС НЕ ЛЮБИТ ЖДАТЬ</h2>
                 <p class="font-tech text-cyber-green text-sm mb-8">Запуститесь уже вчера</p>
 
                 <form id="projectForm" class="space-y-6" action="https://formspree.io/f/mqaogzrv" method="POST"> 
@@ -1099,6 +1099,121 @@
             navigator.clipboard.writeText(text).then(() => {
                 alert('Бриф скопирован.');
             });
+        }
+
+        // === PORTFOLIO DATA ===
+        const portfolioData = {
+            landings: {
+                title: "Лендинги",
+                items: [
+                    { name: "Concept Auto", description: "Детейлинговая студия", image: "images/case5.jpg", link: "https://marselauto.vercel.app/", priority: 1 },
+                    { name: "Aether Gallery", description: "Иммерсивная галерея цифрового искусства", image: "images/case1.jpg", link: "./cases/aether/index.html", priority: 2 },
+                    { name: "Archimedes", description: "Студия архитектурного дизайна", image: "images/case2.jpg", link: "./cases/archimedes/index.html", priority: 3 },
+                    { name: "Summit", description: "Саммит 2026", image: "images/case4.jpg", link: "./cases/summit/index.html", priority: 4 }
+                ]
+            },
+            web_presentations: {
+                title: "Web-Презентация",
+                items: [
+                    { name: "Nova Motion", description: "Анимированный фон", link: "https://presentsynapse.vercel.app/" },
+                    { name: "Cinematic Vision", description: "Видео-бэкграунд", link: "https://presentation2-psi.vercel.app" }
+                ]
+            },
+            web_cv: {
+                title: "Web-CV",
+                items: [
+                    { name: "Dennis Rodman CV", description: "Интерактивное резюме", link: "https://ro-b-cv-lye8.vercel.app/" }
+                ]
+            },
+            web_invitations: {
+                title: "Web-Пригласительные",
+                items: [
+                    { name: "Wedding", description: "Свадебное пригласительное", link: "https://annaserg.vercel.app" }
+                ]
+            }
+        };
+
+        // === PORTFOLIO MODAL LOGIC ===
+        function openPortfolioModal(categoryId) {
+            const modal = document.getElementById('portfolio-modal');
+            const track = document.getElementById('roulette-track');
+            const title = document.getElementById('modal-title');
+            const data = portfolioData[categoryId];
+            const body = document.body;
+
+            if (!data) return;
+
+            // Set Title
+            title.innerText = data.title;
+
+            // Clear Track
+            track.innerHTML = '';
+
+            // Handle Looping Logic - DISABLED (Single Variant, No Red Strip)
+            let displayItems = data.items;
+
+            // Generate Items
+            displayItems.forEach((item, index) => {
+                // Card Container
+                const card = document.createElement('a');
+                card.href = item.link || '#';
+                card.target = "_blank";
+                card.className = "flex-shrink-0 w-[300px] md:w-[400px] h-[500px] bg-[#111] border border-white/10 relative overflow-hidden group snap-center transition-all duration-300 hover:scale-105 hover:border-cyber-green hover:shadow-[0_0_30px_rgba(0,255,157,0.2)] flex flex-col justify-end";
+
+                // Background
+                let bgContent = '';
+                if (item.image) {
+                    bgContent = `<img src="${item.image}" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700">`;
+                } else {
+                    // Placeholder pattern for items without image
+                    bgContent = `
+                        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-50 group-hover:opacity-80 transition-opacity">
+                            <i data-lucide="image-off" class="w-24 h-24 text-gray-700 mb-4"></i>
+                            <span class="font-display font-bold text-xl text-gray-600 uppercase tracking-widest">Coming Soon...</span>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    ${bgContent}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
+                    <div class="relative z-20 p-6 border-t border-white/10 group-hover:border-cyber-green/50 bg-black/60 backdrop-blur-sm transition-colors">
+                        <div class="font-tech text-cyber-green text-xs mb-2">CASE // 0${index + 1}</div>
+                        <h4 class="font-display font-bold text-2xl text-white mb-1 group-hover:text-cyber-green transition-colors">${item.name}</h4>
+                        ${item.description ? `<p class="text-xs text-gray-400 font-tech">${item.description}</p>` : ''}
+                    </div>
+                `;
+
+                track.appendChild(card);
+            });
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+
+            body.classList.add('overflow-hidden'); // Prevent background scrolling
+
+            // Refresh Icons inside modal
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function closePortfolioModal() {
+            const modal = document.getElementById('portfolio-modal');
+            const body = document.body;
+
+            modal.classList.add('opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500); // Match transition duration
+
+            body.classList.remove('overflow-hidden');
         }
     </script>
 </body>
