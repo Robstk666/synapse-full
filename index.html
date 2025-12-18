@@ -36,7 +36,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -73,7 +73,7 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         tech: ['JetBrains Mono', 'monospace'],
-                        display: ['Rajdhani', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif'],
                     },
                     backgroundImage: {
                         'grid-pattern': "linear-gradient(to right, #1a1a1a 1px, transparent 1px), linear-gradient(to bottom, #1a1a1a 1px, transparent 1px)",
@@ -548,35 +548,35 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Категория 1: Landings -->
-                <div onclick="openPortfolioModal('landings')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64">
+                <div onclick="openPortfolioModal('landings')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64 bg-gradient-to-br from-white/5 to-transparent">
                     <div class="absolute inset-0 bg-cyber-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <i data-lucide="layout" class="w-12 h-12 text-gray-500 group-hover:text-cyber-green transition-colors mb-4"></i>
-                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center uppercase">Лендинги</h3>
-                    <p class="font-tech text-xs text-gray-500 mt-2">Landings</p>
+                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center">Лендинги</h3>
+                    <p class="font-tech text-xs text-gray-500 mt-2">Одностраничный сайт</p>
                 </div>
 
-                <!-- Категория 2: Web-Презентации -->
-                <div onclick="openPortfolioModal('web_presentations')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64">
+                <!-- Категория 2: Web-Презентация -->
+                <div onclick="openPortfolioModal('web_presentations')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64 bg-gradient-to-br from-white/5 to-transparent">
                     <div class="absolute inset-0 bg-cyber-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <i data-lucide="monitor-play" class="w-12 h-12 text-gray-500 group-hover:text-cyber-green transition-colors mb-4"></i>
-                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center uppercase">Web-Презентации</h3>
-                    <p class="font-tech text-xs text-gray-500 mt-2">Presentations</p>
+                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center">Web-Презентация</h3>
+                    <p class="font-tech text-xs text-gray-500 mt-2">Замена PDF</p>
                 </div>
 
                 <!-- Категория 3: Web-CV -->
-                <div onclick="openPortfolioModal('web_cv')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64">
+                <div onclick="openPortfolioModal('web_cv')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64 bg-gradient-to-br from-white/5 to-transparent">
                     <div class="absolute inset-0 bg-cyber-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <i data-lucide="user-circle" class="w-12 h-12 text-gray-500 group-hover:text-cyber-green transition-colors mb-4"></i>
-                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center uppercase">Web-CV</h3>
-                    <p class="font-tech text-xs text-gray-500 mt-2">Personal Brand</p>
+                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center">Web-CV</h3>
+                    <p class="font-tech text-xs text-gray-500 mt-2">Портфолио</p>
                 </div>
 
                 <!-- Категория 4: Web-Пригласительные -->
-                <div onclick="openPortfolioModal('web_invitations')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64">
+                <div onclick="openPortfolioModal('web_invitations')" class="bg-black border border-white/10 hover:border-cyber-green p-6 cursor-pointer group transition-all duration-300 relative overflow-hidden glow-box flex flex-col items-center justify-center h-48 md:h-64 bg-gradient-to-br from-white/5 to-transparent">
                     <div class="absolute inset-0 bg-cyber-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <i data-lucide="mail-open" class="w-12 h-12 text-gray-500 group-hover:text-cyber-green transition-colors mb-4"></i>
-                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center uppercase">Web-Пригласительные</h3>
-                    <p class="font-tech text-xs text-gray-500 mt-2">Invitations</p>
+                    <h3 class="font-display font-bold text-xl text-white group-hover:text-cyber-green transition-colors text-center">Web-Пригласительные</h3>
+                    <p class="font-tech text-xs text-gray-500 mt-2">Для мероприятий</p>
                 </div>
             </div>
         </div>
@@ -872,9 +872,9 @@
             <!-- ROULETTE SCROLL -->
             <div class="relative w-full h-[500px] flex items-center">
                  <!-- Center Line Indicator -->
-                 <div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-cyber-green/50 z-30 transform -translate-x-1/2 pointer-events-none shadow-[0_0_15px_#00ff9d]"></div>
-                 <div class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 text-cyber-green rotate-180"><i data-lucide="triangle" class="w-6 h-6 fill-current"></i></div>
-                 <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2 text-cyber-green"><i data-lucide="triangle" class="w-6 h-6 fill-current"></i></div>
+                 <div class="absolute left-1/2 top-0 bottom-0 w-[2px] bg-cyber-green/50 z-[60] transform -translate-x-1/2 pointer-events-none shadow-[0_0_15px_#00ff9d]"></div>
+                 <div class="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 text-cyber-green rotate-180 z-[60]"><i data-lucide="triangle" class="w-6 h-6 fill-current"></i></div>
+                 <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2 text-cyber-green z-[60]"><i data-lucide="triangle" class="w-6 h-6 fill-current"></i></div>
 
                 <div id="roulette-track" class="flex overflow-x-auto gap-8 px-[50vw] snap-x snap-mandatory scroll-smooth w-full h-full items-center no-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
                     <!-- Items will be injected here -->
@@ -1105,31 +1105,31 @@
         // === PORTFOLIO DATA ===
         const portfolioData = {
             landings: {
-                title: "Лендинги (Landings)",
+                title: "Лендинги",
                 items: [
-                    { name: "Marsel Auto", image: "images/case5.jpg", link: "https://marselauto.vercel.app/", priority: 1 },
-                    { name: "Aether Gallery", image: "images/case1.jpg", link: "./cases/aether/index.html", priority: 2 },
-                    { name: "Archimedes", image: "images/case2.jpg", link: "./cases/archimedes/index.html", priority: 3 },
-                    { name: "Summit 2026", image: "images/case4.jpg", link: "./cases/summit/index.html", priority: 4 }
+                    { name: "Concept Auto", description: "Детейлинговая студия", image: "images/case5.jpg", link: "https://marselauto.vercel.app/", priority: 1 },
+                    { name: "Aether Gallery", description: "Иммерсивная галерея цифрового искусства", image: "images/case1.jpg", link: "./cases/aether/index.html", priority: 2 },
+                    { name: "Archimedes", description: "Студия архитектурного дизайна", image: "images/case2.jpg", link: "./cases/archimedes/index.html", priority: 3 },
+                    { name: "Summit", description: "Саммит 2026", image: "images/case4.jpg", link: "./cases/summit/index.html", priority: 4 }
                 ]
             },
             web_presentations: {
-                title: "Web-Презентации",
+                title: "Web-Презентация",
                 items: [
                     { name: "Nova Motion", description: "Анимированный фон", link: "https://presentsynapse.vercel.app/" },
                     { name: "Cinematic Vision", description: "Видео-бэкграунд", link: "https://presentation2-psi.vercel.app" }
                 ]
             },
             web_cv: {
-                title: "Web-CV (Личный бренд)",
+                title: "Web-CV",
                 items: [
-                    { name: "Robert Grzhimaylo CV", description: "Interactive Resume", link: "https://ro-b-cv-lye8.vercel.app/" }
+                    { name: "Dennis Rodman CV", description: "Интерактивное резюме", link: "https://ro-b-cv-lye8.vercel.app/" }
                 ]
             },
             web_invitations: {
                 title: "Web-Пригласительные",
                 items: [
-                    { name: "Event Invitation", description: "Anna & Serg", link: "https://annaserg.vercel.app" }
+                    { name: "Wedding", description: "Свадебное пригласительное", link: "https://annaserg.vercel.app" }
                 ]
             }
         };
@@ -1150,8 +1150,25 @@
             // Clear Track
             track.innerHTML = '';
 
+            // Handle Looping Logic
+            let displayItems = data.items;
+            const shouldLoop = data.items.length > 3;
+
+            if (shouldLoop) {
+                // Duplicate items with separator
+                displayItems = [...data.items, { type: 'separator' }, ...data.items];
+            }
+
             // Generate Items
-            data.items.forEach((item, index) => {
+            displayItems.forEach((item, index) => {
+                if (item.type === 'separator') {
+                     // Red Neon Strip
+                     const separator = document.createElement('div');
+                     separator.className = "flex-shrink-0 w-2 h-[500px] bg-red-600 shadow-[0_0_20px_#ff0000] animate-pulse mx-4 snap-center";
+                     track.appendChild(separator);
+                     return;
+                }
+
                 // Card Container
                 const card = document.createElement('a');
                 card.href = item.link || '#';
@@ -1166,8 +1183,9 @@
                     // Placeholder pattern for items without image
                     bgContent = `
                         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity">
-                            <i data-lucide="box" class="w-32 h-32 text-cyber-green"></i>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center opacity-50 group-hover:opacity-80 transition-opacity">
+                            <i data-lucide="image-off" class="w-24 h-24 text-gray-700 mb-4"></i>
+                            <span class="font-display font-bold text-xl text-gray-600 uppercase tracking-widest">Coming Soon...</span>
                         </div>
                     `;
                 }
@@ -1176,7 +1194,7 @@
                     ${bgContent}
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
                     <div class="relative z-20 p-6 border-t border-white/10 group-hover:border-cyber-green/50 bg-black/60 backdrop-blur-sm transition-colors">
-                        <div class="font-tech text-cyber-green text-xs mb-2">CASE // 0${index + 1}</div>
+                        <div class="font-tech text-cyber-green text-xs mb-2">CASE // 0${(index % data.items.length) + 1}</div>
                         <h4 class="font-display font-bold text-2xl text-white mb-1 group-hover:text-cyber-green transition-colors">${item.name}</h4>
                         ${item.description ? `<p class="text-xs text-gray-400 font-tech">${item.description}</p>` : ''}
                     </div>
