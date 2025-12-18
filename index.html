@@ -1150,25 +1150,11 @@
             // Clear Track
             track.innerHTML = '';
 
-            // Handle Looping Logic
+            // Handle Looping Logic - DISABLED (Single Variant, No Red Strip)
             let displayItems = data.items;
-            const shouldLoop = data.items.length > 3;
-
-            if (shouldLoop) {
-                // Duplicate items with separator
-                displayItems = [...data.items, { type: 'separator' }, ...data.items];
-            }
 
             // Generate Items
             displayItems.forEach((item, index) => {
-                if (item.type === 'separator') {
-                     // Red Neon Strip
-                     const separator = document.createElement('div');
-                     separator.className = "flex-shrink-0 w-2 h-[500px] bg-red-600 shadow-[0_0_20px_#ff0000] animate-pulse mx-4 snap-center";
-                     track.appendChild(separator);
-                     return;
-                }
-
                 // Card Container
                 const card = document.createElement('a');
                 card.href = item.link || '#';
@@ -1194,7 +1180,7 @@
                     ${bgContent}
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
                     <div class="relative z-20 p-6 border-t border-white/10 group-hover:border-cyber-green/50 bg-black/60 backdrop-blur-sm transition-colors">
-                        <div class="font-tech text-cyber-green text-xs mb-2">CASE // 0${(index % data.items.length) + 1}</div>
+                        <div class="font-tech text-cyber-green text-xs mb-2">CASE // 0${index + 1}</div>
                         <h4 class="font-display font-bold text-2xl text-white mb-1 group-hover:text-cyber-green transition-colors">${item.name}</h4>
                         ${item.description ? `<p class="text-xs text-gray-400 font-tech">${item.description}</p>` : ''}
                     </div>

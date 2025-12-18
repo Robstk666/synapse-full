@@ -1,0 +1,8 @@
+127.0.0.1 - - [18/Dec/2025 13:36:51] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:36:53] "GET /images/video.mp4 HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:47] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:47] "GET /images/video.mp4 HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:48] "GET /images/case5.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:48] "GET /images/case1.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:48] "GET /images/case2.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [18/Dec/2025 13:37:48] "GET /images/case4.jpg HTTP/1.1" 200 -
