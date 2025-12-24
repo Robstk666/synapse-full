@@ -152,7 +152,7 @@
 
         /* === LIGHT THEME OVERRIDES === */
         body.light-theme {
-            background-color: #ffffff;
+            background-color: #f5f5f5;
             color: #1f2937;
         }
         /* Белые блоки с тенью */
@@ -166,15 +166,27 @@
             border-color: #e5e7eb;
             box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.08); 
         }
-        body.light-theme .group:hover {
+
+        /* Исправленный hover только для карточек с фоном, чтобы не ломать Process section */
+        body.light-theme .bg-black.group:hover,
+        body.light-theme .bg-cyber-black.group:hover,
+        body.light-theme .bg-cyber-panel.group:hover,
+        body.light-theme .bg-\[\#0e0e0e\].group:hover {
             box-shadow: 0 10px 20px -3px rgba(0, 189, 126, 0.2);
             border-color: #00bd7e;
         }
+
         /* Тексты */
         body.light-theme .text-white { color: #111827; }
         body.light-theme .text-gray-400, 
         body.light-theme .text-gray-500,
         body.light-theme .text-cyber-gray { color: #4b5563; }
+
+        /* === MODAL FIX FOR LIGHT THEME (Force Dark Inside Modal) === */
+        body.light-theme #portfolio-modal .text-white { color: #ffffff !important; }
+        body.light-theme #portfolio-modal .text-gray-400 { color: #9ca3af !important; }
+        body.light-theme #portfolio-modal .text-gray-500 { color: #6b7280 !important; }
+        body.light-theme #portfolio-modal .border-white\/10 { border-color: rgba(255,255,255,0.1) !important; }
         body.light-theme .text-cyber-green { color: #00bd7e !important; text-shadow: none; }
         body.light-theme .bg-cyber-green { background-color: #00bd7e; color: #ffffff; }
         body.light-theme .border-cyber-green { border-color: #00bd7e; }
