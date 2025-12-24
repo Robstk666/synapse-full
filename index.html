@@ -775,7 +775,7 @@
                 <h2 class="font-display text-3xl text-white mb-2">ВАШ БИЗНЕС НЕ ЛЮБИТ ЖДАТЬ</h2>
                 <p class="font-tech text-cyber-green text-sm mb-8">Запуститесь уже вчера</p>
 
-                <form id="projectForm" class="space-y-6" action="https://formspree.io/f/mqaogzrv" method="POST"> 
+                <form id="contactForm" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- ИМЯ (Обязательно) -->
                         <div class="relative group input-container">
@@ -784,7 +784,7 @@
                                 <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
                             </div>
                             <!-- УБРАН AUTOFOCUS ОТСЮДА -->
-                            <input type="text" id="name" name="Name" placeholder="Иван Петров" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
+                            <input type="text" id="name" name="name" placeholder="Иван Петров" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
                         </div>
 
                         <!-- КОНТАКТ (Обязательно) -->
@@ -793,7 +793,7 @@
                                 <label for="contact" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">КОНТАКТ *</label>
                                 <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ЗАПОЛНИТЕ</span>
                             </div>
-                            <input type="text" id="contact" name="Contact" placeholder="+7 (999) 000-00-00" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
+                            <input type="text" id="contact" name="contact" placeholder="+7 (999) 000-00-00" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
                         </div>
 
                         <!-- TELEGRAM (НЕ обязательно) -->
@@ -801,7 +801,7 @@
                             <div class="flex justify-between">
                                 <label for="telegram" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">TELEGRAM</label>
                             </div>
-                            <input type="text" id="telegram" name="Telegram" placeholder="@username" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
+                            <input type="text" id="telegram" name="telegram" placeholder="@username" class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors cyber-input">
                         </div>
                     </div>
                     
@@ -811,7 +811,7 @@
                             <label for="message" class="block font-tech text-xs text-gray-500 mb-2 group-focus-within:text-cyber-green transition-colors">ДЕТАЛИ ПРОЕКТА</label>
                             <span class="error-msg text-red-500 font-tech text-xs animate-pulse hidden">[!] ОПИШИТЕ ЗАДАЧУ</span>
                         </div>
-                        <textarea id="message" name="Message" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors resize-none cyber-input"></textarea>
+                        <textarea id="message" name="details" rows="4" placeholder="Опишите ваш проект и главную задачу." class="w-full bg-cyber-green/5 border border-cyber-green/20 text-cyber-green placeholder-cyber-green/30 p-2 focus:outline-none focus:border-cyber-green font-tech transition-colors resize-none cyber-input"></textarea>
                     </div>
 
                     <div class="pt-6 w-full relative z-30">
@@ -915,10 +915,12 @@
             // 2. Гарантированный старт в ТЕМНОЙ теме
             document.body.classList.remove('light-theme');
 
-            // 3. Логика формы (валидация + отправка)
-            const form = document.getElementById('projectForm');
+            // 3. Логика формы (валидация + отправка в Telegram)
+            const form = document.getElementById('contactForm');
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
                     const inputs = [
                         document.getElementById('name'),
                         document.getElementById('contact')
@@ -937,13 +939,46 @@
                         }
                     });
 
-                    if (!isValid) {
-                        e.preventDefault(); // Ошибка - не отправляем
-                    } else {
-                        // Успех - отправляем цель в метрику
-                        if (typeof ym !== 'undefined') {
-                            ym(105638632, 'reachGoal', 'form_sent');
+                    if (!isValid) return;
+
+                    // Собираем данные
+                    const formData = {
+                        name: document.getElementById('name').value,
+                        contact: document.getElementById('contact').value,
+                        telegram: document.getElementById('telegram').value,
+                        details: document.getElementById('message').value
+                    };
+
+                    const submitButton = document.getElementById('submit-button');
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = 'ОТПРАВКА...';
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch('/api/send-telegram', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        if (response.ok) {
+                            alert('Заявка успешно отправлена!');
+                            form.reset();
+                            // Успех - отправляем цель в метрику
+                            if (typeof ym !== 'undefined') {
+                                ym(105638632, 'reachGoal', 'form_sent');
+                            }
+                        } else {
+                            alert('Ошибка отправки. Попробуйте позже или напишите в Telegram.');
                         }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('Произошла ошибка сети.');
+                    } finally {
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
                     }
                 });
             }
