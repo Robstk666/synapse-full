@@ -287,9 +287,33 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* PRELOADER STYLES */
+        .loader-progress {
+            animation: loading 2s infinite ease-in-out;
+        }
+        @keyframes loading {
+            0% { left: -50%; }
+            100% { left: 100%; }
+        }
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-cyber-green selection:text-black">
+
+    <!-- PRELOADER -->
+    <div id="preloader" style="position:fixed; inset:0; z-index:99999; background:#050505; display:flex; justify-content:center; align-items:center; flex-direction:column;">
+        <h1 style="color:white; font-family:'JetBrains Mono', monospace; font-size:24px; letter-spacing:2px; margin-bottom: 20px;">
+            SYNAPSE<span style="color:#00ff00">_</span>
+        </h1>
+        <div class="loader-line" style="width:200px; height:2px; background:#333; overflow:hidden; position:relative;">
+            <div class="loader-progress" style="width:50%; height:100%; background:#00ff00; position:absolute; left:-50%;"></div>
+        </div>
+    </div>
 
     <div class="scanline"></div>
 
@@ -926,6 +950,29 @@
     </script>
 
   <script>
+        // === PRELOADER LOGIC ===
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('fade-out');
+                // Remove from DOM after transition to free up memory
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
+            }
+        });
+
+        // Backup safety timeout (4s)
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader && !preloader.classList.contains('fade-out')) {
+                preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
+            }
+        }, 4000);
+
         // === ГЛОБАЛЬНАЯ ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ===
         // Она вынесена наружу, чтобы работать по onclick в HTML
         window.toggleTheme = function() {
