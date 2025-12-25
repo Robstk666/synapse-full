@@ -42,7 +42,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Icons (Lucide) - Стабильная версия -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
 
     <!-- Yandex.Metrika -->
     <script type="text/javascript">
@@ -1232,7 +1232,8 @@
                 // Background
                 let bgContent = '';
                 if (item.image) {
-                    bgContent = `<img src="${item.image}" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700">`;
+                    // Lazy load images with explicit dimensions to prevent layout shifts
+                    bgContent = `<img src="${item.image}" loading="lazy" width="400" height="500" class="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700">`;
                 } else {
                     // Placeholder pattern for items without image
                     bgContent = `
